@@ -111,7 +111,7 @@
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="col-lg-4 col-md-6 col-sm-8 col-10"> <!-- Bootstrap grid -->
             <div class="login-box shadow p-4 rounded bg-white">
-                <form action="login_process.php" method="POST">
+                <form action="../service/auth.php" method="POST">
                     <div class="mb-4">
                         <h2 class="text-center">Login</h2>
                     </div>
@@ -140,7 +140,7 @@
 
                     <!-- Tombol Sign In -->
                     <div class="d-grid mb-4">
-                        <button type="submit" class="btn btn-primary">Sign in</button>
+                        <button type="submit" name="type" value="login" class="btn btn-primary">Sign in</button>
                     </div>
 
                     <!-- Link Tambahan -->

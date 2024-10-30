@@ -3,7 +3,7 @@ session_start();
 
 include '../service/utility.php';
 
-if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -11,6 +11,7 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,18 +30,23 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
             width: 250px;
             position: fixed;
         }
+
         .sidebar h4 {
             margin-top: 20px;
             font-size: 18px;
         }
+
         .nav-link {
             color: white;
             padding-left: 20px;
         }
-        .nav-link:hover, .dropdown-item:hover {
+
+        .nav-link:hover,
+        .dropdown-item:hover {
             background-color: #2a4b8e;
             color: #ffffff !important;
         }
+
         .dropdown-item {
             padding-left: 30px;
         }
@@ -52,11 +58,13 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
             background-color: #f1f1f1;
             min-height: 100vh;
         }
+
         .stat-box {
             background-color: #1d3c6e;
             color: white;
             border-radius: 8px;
         }
+
         .cert-box {
             background-color: #ffffff;
             border-radius: 8px;
@@ -64,15 +72,17 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
             color: #333333;
             cursor: pointer;
         }
+
         .btn-dark {
             background-color: #4c4c4c;
             color: white;
             border: none;
         }
+
         .btn-dark:hover {
             background-color: #333333;
         }
-     
+
         .container {
             width: 1201px;
             height: 200px;
@@ -81,10 +91,12 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
             align-items: center;
             justify-content: center;
         }
+
         .stat-box {
             width: 300px;
             height: 150px;
-            background-color: #0A3067; /* Navy blue color */
+            background-color: #0A3067;
+            /* Navy blue color */
             color: white;
             display: flex;
             align-items: flex-start;
@@ -97,29 +109,36 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
         body {
             background-color: #f8f9fa;
         }
+
         .sidebar {
             background-color: #003366;
             color: white;
             height: 100vh;
             padding: 20px;
         }
+
         .sidebar a {
             color: white;
             text-decoration: none;
         }
+
         .sidebar a:hover {
             text-decoration: underline;
         }
+
         .content {
             padding: 20px;
         }
+
         .form-container {
             background-color: #003366;
             padding: 20px;
             border-radius: 10px;
             color: white;
         }
-        .form-container input, .form-container textarea {
+
+        .form-container input,
+        .form-container textarea {
             background-color: #e9ecef;
             border: none;
             border-radius: 5px;
@@ -127,16 +146,20 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
             width: 100%;
             margin-bottom: 10px;
         }
+
         .form-container input[type="file"] {
             padding: 3px;
         }
+
         .form-container label {
             margin-bottom: 5px;
         }
+
         .form-container .btn {
             width: 100px;
             margin: 5px;
         }
+
         .footer {
             background-color: #003366;
             color: white;
@@ -146,6 +169,7 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
             bottom: 0;
             width: 100%;
         }
+
         .header {
             background-color: #e9ecef;
             padding: 10px;
@@ -154,11 +178,12 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
             align-items: center;
         }
 
-        .selected{
+        .selected {
             border: 3px solid blue;
         }
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <div class="text-center my-3">
@@ -194,92 +219,94 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
         </ul>
     </div>
 
-<div class="content flex-grow-1">
-    <div class="header">
-     <h5>
-      Buat Sertifikat
-     </h5>
-     <div>
-      <span>
-       Administrator
-      </span>
-      <i class="fas fa-user-circle">
-      </i>
-      <i class="fas fa-cog">
-      </i>
-     </div>
-    </div>
-    <div class="form-container mt-4">
-     <form>
-      <div class="mb-3">
-       <label for="judulSertifikat">
-        Judul Sertifikat :
-       </label>
-       <input id="judulSertifikat" placeholder="Ketik judul di sini" type="text"/>
-      </div>
-      <div class="mb-3">
-       <label for="namaPeserta">
-        Nama Peserta :
-       </label>
-       <input id="namaPeserta" placeholder="Masukan Nama Peserta" type="text"/>
-      </div>
-      <div class="mb-3">
-       <label for="tanggalPenerbitan">
-        Tanggal Penerbitan :
-       </label>
-       <input id="tanggalPenerbitan" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text"/>
-      </div>
-      <div class="mb-3">
-       <label for="deskripsiSertifikat">
-        Deskripsi Sertifikat :
-       </label>
-       <textarea id="deskripsiSertifikat" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
-      </div>
-
-      <div class="mb-3">
-       <label for="unggahTemplate">
-        Unggah Template Sertifikat :
-       </label>
-       <div class="input-group">
-        <input aria-describedby="inputGroupFileAddon01" aria-label="Upload" class="form-control" id="unggahTemplate" type="file"/>
-        
-       </div>
-      </div>
-
-      <div class="mb-3">
-       <label for="unggahTemplate">
-        Unggah Template Sertifikat :
-       </label>
-       <div class="row g-3" style="display: flex; justify-content:center;">
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm box" data-value="template1" id="tmp1">Sertif 1</div>
-            </div>
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm box" data-value="template2" id="tmp2">Sertif 1</div>
-            </div>
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm box" data-value="template3" id="tmp3">Sertif 1</div>
-            </div>
+    <div class="content flex-grow-1">
+        <div class="header">
+            <h5>
+                Buat Sertifikat
+            </h5>
+            <div>
+                <span>
+                    Administrator
+                </span>
+                <i class="fas fa-user-circle">
+                </i>
+                <i class="fas fa-cog">
+                </i>
             </div>
         </div>
+        <div class="form-container mt-4">
+            <form>
+                <div class="mb-3">
+                    <label for="judulSertifikat">
+                        Judul Sertifikat :
+                    </label>
+                    <input id="judulSertifikat" placeholder="Ketik judul di sini" type="text" />
+                </div>
+                <div class="mb-3">
+                    <label for="namaPeserta">
+                        Nama Peserta :
+                    </label>
+                    <input id="namaPeserta" placeholder="Masukan Nama Peserta" type="text" />
+                </div>
+                <div class="mb-3">
+                    <label for="tanggalPenerbitan">
+                        Tanggal Penerbitan :
+                    </label>
+                    <input id="tanggalPenerbitan" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
+                </div>
+                <div class="mb-3">
+                    <label for="deskripsiSertifikat">
+                        Deskripsi Sertifikat :
+                    </label>
+                    <textarea id="deskripsiSertifikat" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="unggahTemplate">
+                        Unggah Template Sertifikat :
+                    </label>
+                    <div class="input-group">
+                        <input aria-describedby="inputGroupFileAddon01" aria-label="Upload" class="form-control" id="unggahTemplate" type="file" />
+
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="unggahTemplate">
+                        Unggah Template Sertifikat :
+                    </label>
+                    <div class="row g-3" style="display: flex; justify-content:center;">
+                        <div class="col-md-2">
+                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template1" id="tmp1">Sertif 1</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template2" id="tmp2">Sertif 1</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template3" id="tmp3">Sertif 1</div>
+                        </div>
+                    </div>
+                </div>
 
 
-      <div class="d-flex justify-content-end">
-       <button class="btn btn-danger" type="button">
-        Batal
-       </button>
-       <button class="btn btn-success" type="submit">
-        Simpan
-       </button>
-      </div>
-     </form>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-danger" type="button">
+                        Batal
+                    </button>
+                    <button class="btn btn-success" type="submit">
+                        Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-   </div>
-  </div>
+    </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        const boxes =document.querySelectorAll('.box');
+        const boxes = document.querySelectorAll('.box');
         let selectedBox = null;
 
         boxes.forEach(box => {
@@ -294,7 +321,6 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
             });
         });
     </script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

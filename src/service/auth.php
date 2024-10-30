@@ -118,11 +118,11 @@ function find_username()
 function login()
 {
   global $conn;
-  // get username and password
-  $username = htmlspecialchars($_POST['username']);
+  // get email and password
+  $email = htmlspecialchars($_POST['email']);
   $password = htmlspecialchars($_POST['password']);
 
-  $sql = "SELECT * FROM users WHERE username = '$username'";
+  $sql = "SELECT * FROM users WHERE email = '$email'";
 
   $res = $conn->query($sql)->fetch_array();
 
@@ -133,22 +133,27 @@ function login()
   $currentHashPassword = generateHashWithSalt($password, $salt);
 
   if ($currentHashPassword !== $hashPassword) {
-    $_SESSION['error'] = "Username atau password tidak di temukan.";
+    $_SESSION['error'] = "email atau password tidak di temukan.";
     header('Location: ../login.php');
     exit();
   }
 
   if ($res != null) {
+    // set 1st user to admin
+    if($res['id'] == 1 && $res['role'] != 'admin') {
+      $conn->query("UPDATE users SET role = 'admin' WHERE email = '$email'");
+    }
+
     $_SESSION['email'] = $res['email'];
     $_SESSION['full_name'] = $res['full_name'];
     $_SESSION['role'] = $res['role'];
     $_SESSION['avatar'] = $res['avatar'];
+    $_SESSION['is_auth'] = true;
 
     // $_SESSION['success'] = "Berhasil Login";
     // header('Location: ../dashboard.php');
     // exit();
     return redirect("dashboard");
-
   } else {
     return redirect("auth/login.php", "email atau password tidak di temukan.", "error");
   }
@@ -166,10 +171,11 @@ function logout()
 function register()
 {
   global $conn;
-  
+
   // get all user input
+  $nik = htmlspecialchars($_POST['nik']);
   $f_name = htmlspecialchars($_POST['f_name']);
-  $username = htmlspecialchars($_POST['username']);
+  $phone_number = htmlspecialchars($_POST['phone_number']);
   $email = htmlspecialchars($_POST['email']);
   $password = htmlspecialchars($_POST['password']);
   $c_password = htmlspecialchars($_POST['c_password']);
@@ -186,12 +192,12 @@ function register()
   $avatar = get_gravatar($email);
 
   // add data to database
-  $user = $conn->query("SELECT * FROM users WHERE username = '$username' OR email = '$email'");
+  $user = $conn->query("SELECT * FROM users WHERE nik = '$nik' OR email = '$email'");
 
   if ($user->num_rows > 0) {
     return redirect("auth/register.php", "email sudah digunakan", 'error');
   } else {
-    $sql = "INSERT INTO users VALUES (NULL, '$username', '$salt;$hashPassword', '$f_name', current_timestamp(), 'users', '$avatar', '$email')";
+    $sql = "INSERT INTO users (nik, full_name, email, phone_number, password, role, created_at) VALUES ('$nik', '$f_name', '$email', '$phone_number', '$salt;$hashPassword', 'participant', current_timestamp())";
 
     if ($conn->query($sql)) {
       return redirect("auth/login.php", "berhasil membuat akun baru");
@@ -207,6 +213,6 @@ function generateSalt($length = 16)
 
 function generateHashWithSalt($password, $salt)
 {
-  // Menggabungkan password dengan salt <da></da>n menghasilkan hash SHA-256
+  // Menggabungkan password dengan salt dan menghasilkan hash SHA-256
   return hash('sha256', $salt . $password);
 }

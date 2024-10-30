@@ -4,8 +4,8 @@ $username = 'root';
 $password = 'kazukikun';
 $database = "certificate";
 
-$connection = mysqli_connect($server_name, $username, $password, $database);
+$conn = new mysqli($server_name, $username, $password, $database);
 
-if ($connection->connect_error) {
-    die("gagal". $connection->connect_error);
+if ($conn->connect_errno) {
+  die("Failed Connect to database: " . $conn->connect_error);
 }

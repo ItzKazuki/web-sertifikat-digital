@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+include '../service/utility.php';
+
+if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 

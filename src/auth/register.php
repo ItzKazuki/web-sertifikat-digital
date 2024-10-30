@@ -48,11 +48,11 @@
             <!-- Form Registrasi -->
             <div class="register-box">
                 <h3 class="text-center mb-4">Register</h3>
-                <form action="register_process.php" method="POST">
+                <form action="../service/auth.php" method="POST">
                     <!-- Nama Lengkap -->
                     <div class="form-group mb-3">
                         <label for="nama" class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama lengkap" required>
+                        <input type="text" class="form-control" id="nama" name="f_name" placeholder="Masukkan nama lengkap" required>
                     </div>
                     <!-- NIK -->
                     <div class="form-group mb-3">
@@ -64,6 +64,11 @@
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email" required>
                     </div>
+                    <!-- Phone Number -->
+                    <div class="form-group mb-3">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Masukkan nomor handphone" required>
+                    </div>
                     <!-- Password -->
                     <div class="form-group mb-3">
                         <label for="password" class="form-label">Password</label>
@@ -72,12 +77,12 @@
                     <!-- Konfirmasi Password -->
                     <div class="form-group mb-3">
                         <label for="confirm_password" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Konfirmasi password" required>
+                        <input type="password" class="form-control" id="confirm_password" name="c_password" placeholder="Konfirmasi password" required>
                     </div>
                     <br>
                     <!-- Tombol Sign Up -->
                     <div class="d-grid mb-3">
-                        <button type="submit" class="btn btn-primary">Sign up</button>
+                        <button type="submit" name="type" value="register" class="btn btn-primary">Sign up</button>
                     </div>
                 </form>
             </div>
