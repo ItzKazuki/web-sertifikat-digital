@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-include '../service/utility.php';
+include '../../service/utility.php';
 
-if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -234,36 +234,53 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
                 Formulir Tambah Pengguna
             </h2>
             <div class="form-container">
-                <form>
+                <form method="POST" action="../../service/users.php">
+                    <label for="nik">
+                        NIK
+                    </label>
+                    <input id="nik" name="nik" placeholder="Ketik nik di sini" type="number" />
+
                     <label for="username">
                         Nama Pengguna
                     </label>
-                    <input id="username" placeholder="Ketik nama di sini" type="text" />
+                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" />
+
+                    <label for="phone_number">
+                        Nomor Telepon Pengguna
+                    </label>
+                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" />
+
                     <label for="email">
                         Email Pengguna
                     </label>
-                    <input id="email" placeholder="Ketik email di sini" type="email" />
+                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" />
+
                     <label for="password">
                         Kata Sandi
                     </label>
-                    <input id="password" placeholder="Ketik kata sandi di sini" type="password" />
+                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" />
+
                     <label for="confirm-password">
                         Konfirmasi Kata Sandi
                     </label>
-                    <input id="confirm-password" placeholder="Ketik ulang kata sandi di sini" type="password" />
+                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" />
+
                     <label for="category">
                         Kategori Pengguna
                     </label>
-                    <select id="category">
+                    <select id="category" name="role">
                         <option>
                             Pilih Kategori Pengguna
                         </option>
+                        <option value="participant">participant</option>
+                        <option value="admin">admin</option>
                     </select>
+
                     <div class="d-flex justify-content-end mt-3">
                         <button class="btn btn-cancel me-2" type="button">
                             Batal
                         </button>
-                        <button class="btn btn-save" type="submit">
+                        <button class="btn btn-save" type="submit" name="type" value="create">
                             Simpan
                         </button>
                     </div>
