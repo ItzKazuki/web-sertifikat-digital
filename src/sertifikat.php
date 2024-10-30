@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Sertifikat</title>
-    <link rel="stylesheet" href="../../css/output.css">
+    <link rel="stylesheet" href="assets/css/tailwind.css">
 </head>
+
 <body class="flex flex-col min-h-screen font-sans bg-white text-gray-800">
 
     <header class="flex justify-between items-center p-5 bg-white shadow-md">
@@ -44,4 +46,5 @@
     </footer>
 
 </body>
+
 </html>
