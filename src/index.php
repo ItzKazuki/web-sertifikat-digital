@@ -22,7 +22,11 @@
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
                 <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
-                <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
+                <?php if(isset($_SESSION['email'])) { ?>
+                    <a href="auth/login.php" class="btn btn-outline-primary">Logout</a>
+                <?php } else { ?>
+                    <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
+                <?php } ?>
             </nav>
         </div>
     </header>

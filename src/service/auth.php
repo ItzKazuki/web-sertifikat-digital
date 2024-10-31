@@ -137,9 +137,7 @@ function login()
   $currentHashPassword = generateHashWithSalt($password, $salt);
 
   if ($currentHashPassword !== $hashPassword) {
-    $_SESSION['error'] = "email atau password tidak di temukan.";
-    header('Location: ../login.php');
-    exit();
+    return redirect("auth/login.php", "email atau password tidak di temukan.", "error");
   }
 
   if ($res != null) {

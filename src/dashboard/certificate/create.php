@@ -265,12 +265,12 @@ while ($row = $getUsers->fetch_array()) {
                         Nama Peserta :
                     </label>
                     <!-- <input id="namaPeserta" placeholder="Masukan Nama Peserta" name="participation_name" type="text" /> -->
-                     <select name="nama_peserta" id="namaPeserta">
-                     <option selected="selected">Pilih User</option>
-                        <?php foreach($users as $user): ?>
-                            <option value=""><?= $user[2] ?></option>
+                    <select name="id_peserta" id="namaPeserta">
+                        <option selected="selected">Pilih User</option>
+                        <?php foreach ($users as $user): ?>
+                            <option value="<?= $user[0] ?>"><?= $user[2] ?></option>
                         <?php endforeach; ?>
-                     </select>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="pilihPelatihan">
@@ -278,7 +278,7 @@ while ($row = $getUsers->fetch_array()) {
                     </label>
                     <!-- <input id="pilihPelatihan" placeholder="Masukan Nama Peserta" type="text" /> -->
                     <select name="id_courses" id="pilihPelatihan">
-                     <option selected="selected">Pilih Pelatihan</option>
+                        <option selected="selected">Pilih Pelatihan</option>
                         <?php foreach ($courses as $course): ?>
                             <option value="<?= $course[0] ?>"><?= $course[1] ?></option>
                         <?php endforeach; ?>

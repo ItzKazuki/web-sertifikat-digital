@@ -47,24 +47,26 @@ function createCertificate()
   // get all user input
   $name = htmlspecialchars($_POST['title']);
   $desc = htmlspecialchars($_POST['desc']);
-  $participation_name = htmlspecialchars($_POST['participation_name']);
+  $id_participation = htmlspecialchars($_POST['id_peserta']);
   $id_courses = htmlspecialchars($_POST['id_courses']);
   $template = htmlspecialchars($_POST['template']);
 
   $cert_id = generateRandomString() . "-" . date("Y");
 
-  // get users
-
-  $getUser = "SELECT * FROM users WHERE full_name = '$participation_name'";
+  // echo $cert_id; die;
 
   // $sql = "INSERT INTO courses (event_name, event_description, event_date, organizer, created_at) VALUES ('$name', '$desc', '$course_date', '$organizer', current_timestamp())";
-  $sql = "INSERT INTO certificates (user_id, event_id, certificate_code, issued_at, certificate_template)
-VALUES (". $_SESSION['id'] .", $id_courses, '$cert_id', current_timestamp(), '$template)";
+  $createCertificate = "INSERT INTO certificates (user_id, event_id, certificate_code, issued_at, certificate_template)
+VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$template')";
 
-$sql2 = "INSERT INTO certificate_fields (certificate_id, field_name, field_value)
-VALUES (1, '$name', 'Introduction to SQL');
-";
-  if ($conn->query($sql)) {
-    return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
+  if ($conn->query($createCertificate)) {
+    $certificate = $conn->query("SELECT * FROM certificates WHERE certificate_code = '$cert_id' ")->fetch_array();
+  }
+
+  $createCertificateField = "INSERT INTO certificate_fields (certificate_id, field_name, field_value)
+VALUES (" . $certificate['id'] . ", '$name', '$desc')";
+
+  if ($conn->query($createCertificateField)) {
+    return redirect("dashboard/certificate", "berhasil membuat pelatihan baru");
   }
 }

@@ -50,15 +50,14 @@ function get_gravatar(
   return $url;
 }
 
-function generateRandomString(int $length = 50): string
-{
-  $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-  $charLength = strlen($char);
-  $random_str = '';
+function generateRandomString($length = 10) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $randomString = '';
 
-  for ($i = 0; $i > $length; $i++) {
-    $random_str += $char[rand(0, $charLength - 1)];
+  for ($i = 0; $i < $length; $i++) {
+      $randomString .= $characters[random_int(0, $charactersLength - 1)];
   }
 
-  return $random_str;
+  return $randomString;
 }
