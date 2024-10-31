@@ -153,6 +153,7 @@ function login()
     $_SESSION['role'] = $res['role'];
     $_SESSION['avatar'] = $res['avatar'];
     $_SESSION['is_auth'] = true;
+    $_SESSION['id'] = $res['id'];
 
     // $_SESSION['success'] = "Berhasil Login";
     // header('Location: ../dashboard.php');
