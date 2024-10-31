@@ -64,7 +64,7 @@ function edit_password()
     return redirect("auth/forgot.php", "Something error, please try again from start.", "error");
   }
 
-  $sql = "SELECT * FROM reset_password WHERE reset = '$reset'";
+  $sql = "SELECT * FROM reset_password WHERE reset_token = '$reset'";
 
   $res = $conn->query($sql)->fetch_array();
 
@@ -79,16 +79,20 @@ function edit_password()
   $confirmNewPassword = htmlspecialchars($_POST['confirm_new_password']);
 
   if ($newPassword !== $confirmNewPassword) {
-    return redirect('auth/forgot.php?email=' . $res['reset']);
+    return redirect('auth/forgot.php?email=' . $res['reset_token']);
   }
 
   //hash new password
   $salt = generateSalt();
   $hashNewPassword = generateHashWithSalt($newPassword, $salt);
 
-  $conn->query("UPDATE users SET password = '$salt;$hashNewPassword' WHERE email = '$email'");
+  if($conn->query("UPDATE users SET password = '$salt;$hashNewPassword' WHERE email = '$email'")) {
+    $conn->query("DELETE FROM reset_password WHERE reset_token = '" . $res['reset_token'] ."'");
+    return redirect("auth/login.php", "Berhasil mengubah password, silahkan login!");
+  }
 
-  return redirect("auth/login.php", "Berhasil mengubah password, silahkan login!");
+  return redirect("auth/forgot.php", "Failed while reset your password.", "error");
+
 }
 
 function find_username()
@@ -105,7 +109,7 @@ function find_username()
 
     $reset = bin2hex(random_bytes(40));
     $email = $res->fetch_array()['email']; // get the email
-    $sql = "INSERT INTO reset_password (`reset`, `email`, `created_at`) VALUES('$reset', '$email', current_timestamp())";
+    $sql = "INSERT INTO reset_password (`reset_token`, `email`) VALUES('$reset', '$email')";
 
     $conn->query($sql);
 

@@ -222,11 +222,11 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     <div class="content flex-grow-1">
         <div class="header">
             <h5>
-                Buat Sertifikat
+                Buat Pelatihan Baru
             </h5>
             <div>
                 <span>
-                    Administrator
+                    <?= $_SESSION['full_name'] ?>
                 </span>
                 <i class="fas fa-user-circle">
                 </i>
@@ -235,65 +235,37 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             </div>
         </div>
         <div class="form-container mt-4">
-            <form>
+            <form action="../../service/courses.php" method="post">
                 <div class="mb-3">
-                    <label for="judulSertifikat">
-                        Judul Sertifikat :
+                    <label for="course_name">
+                        Nama Pelatihan :
                     </label>
-                    <input id="judulSertifikat" placeholder="Ketik judul di sini" type="text" />
+                    <input id="course_name" name="course_name" placeholder="Ketik nama pelatihan di sini" type="text" />
                 </div>
                 <div class="mb-3">
-                    <label for="namaPeserta">
-                        Nama Peserta :
+                    <label for="course_date">
+                        Tanggal Pelatihan :
                     </label>
-                    <input id="namaPeserta" placeholder="Masukan Nama Peserta" type="text" />
+                    <input id="course_date" name="course_date" placeholder="Masukan Nama Peserta" type="date" />
                 </div>
                 <div class="mb-3">
-                    <label for="tanggalPenerbitan">
-                        Tanggal Penerbitan :
+                    <label for="organization">
+                        Pembuat Acara/Organisasi/PT Pelatihan :
                     </label>
-                    <input id="tanggalPenerbitan" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
+                    <input id="organization" name="course_organizer" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
                 </div>
                 <div class="mb-3">
-                    <label for="deskripsiSertifikat">
-                        Deskripsi Sertifikat :
+                    <label for="descrtiption">
+                        Deskripsi Pelatihan :
                     </label>
-                    <textarea id="deskripsiSertifikat" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
+                    <textarea id="descrtiption" name="description" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
                 </div>
-
-                <div class="mb-3">
-                    <label for="unggahTemplate">
-                        Unggah Template Sertifikat :
-                    </label>
-                    <div class="input-group">
-                        <input aria-describedby="inputGroupFileAddon01" aria-label="Upload" class="form-control" id="unggahTemplate" type="file" />
-
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="unggahTemplate">
-                        Unggah Template Sertifikat :
-                    </label>
-                    <div class="row g-3" style="display: flex; justify-content:center;">
-                        <div class="col-md-2">
-                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template1" id="tmp1">Sertif 1</div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template2" id="tmp2">Sertif 1</div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template3" id="tmp3">Sertif 1</div>
-                        </div>
-                    </div>
-                </div>
-
 
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-danger" type="button">
                         Batal
                     </button>
-                    <button class="btn btn-success" type="submit">
+                    <button class="btn btn-success" type="submit" name="type" value="create">
                         Simpan
                     </button>
                 </div>

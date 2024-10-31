@@ -226,7 +226,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             </h5>
             <div>
                 <span>
-                    Administrator
+                    <?= $_SESSION['full_name'] ?>
                 </span>
                 <i class="fas fa-user-circle">
                 </i>

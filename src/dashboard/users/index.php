@@ -12,8 +12,8 @@ $getUser = $conn->query("SELECT * FROM users");
 
 while ($row = $getUser->fetch_row()) {
     $users[] = $row;
-  }
-  
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -252,7 +252,7 @@ while ($row = $getUser->fetch_row()) {
     <div class="header">
         <div class="title">Manajemen Pengguna</div>
         <div class="user-info">
-            Administrator
+            <?= $_SESSION['full_name'] ?>
             <i class="fas fa-user-circle"></i>
             <i class="fas fa-sign-out-alt"></i> <!-- Icon logout lebih ke kiri -->
         </div>
@@ -274,14 +274,14 @@ while ($row = $getUser->fetch_row()) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($users as $user): ?>
+                    <?php foreach ($users as $user) : ?>
                         <tr>
                             <td><?= $user[2] ?></td>
                             <td><?= $user[3] ?></td>
                             <td><?= $user[7] ?></td>
                             <td>
-                            <button class="btn btn-sm btn-primary">Edit</button>
-                            <button class="btn btn-sm btn-danger">Hapus</button>
+                                <button class="btn btn-sm btn-primary">Edit</button>
+                                <button class="btn btn-sm btn-danger">Hapus</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>

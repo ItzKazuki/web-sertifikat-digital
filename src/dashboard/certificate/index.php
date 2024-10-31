@@ -3,7 +3,7 @@ session_start();
 
 include '../../service/utility.php';
 
-if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -100,7 +100,7 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                         <div class="collapse" id="sertifikatMenu">
                             <a href="sertificate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                            <a href="sertificate/daftarsertif.php" class="dropdown-item">Daftar Sertifikat</a>
+                            <a href="sertificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
                         </div>
                     </li>
                     <!-- Manajemen Pengguna Dropdown -->
@@ -138,7 +138,7 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role
                             </div>
                         </div>
                         <div class="d-flex justify-content-end p-3">
-                            <span>Administrator</span>
+                            <span><?= $_SESSION['full_name'] ?></span>
                             <a href="../index.php" class="bi bi-person-circle ms-2" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
                         </div>
                     </div>
