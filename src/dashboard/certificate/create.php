@@ -2,9 +2,22 @@
 session_start();
 
 include '../../service/utility.php';
+include '../../service/connection.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
+}
+
+$getCourses = $conn->query("SELECT * FROM courses");
+
+while ($row = $getCourses->fetch_array()) {
+    $courses[] = $row;
+}
+
+$getUsers = $conn->query("SELECT * FROM users WHERE role = 'participant'");
+
+while ($row = $getUsers->fetch_array()) {
+    $users[] = $row;
 }
 
 ?>
@@ -29,6 +42,10 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             height: 100vh;
             width: 250px;
             position: fixed;
+        }
+
+        .col-md-2 {
+            width: 20% !important;
         }
 
         .sidebar h4 {
@@ -138,6 +155,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
         }
 
         .form-container input,
+        select,
         .form-container textarea {
             background-color: #e9ecef;
             border: none;
@@ -196,23 +214,23 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="#" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="#" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="certficate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                    <a href="certificate" class="dropdown-item">Daftar Sertifikat</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="#" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="#" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="users" class="dropdown-item">Daftar Pengguna</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="#" class="dropdown-item">Tambah Pelatihan</a>
-                    <a href="#" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="courses" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
             <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
@@ -235,33 +253,51 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             </div>
         </div>
         <div class="form-container mt-4">
-            <form>
+            <form action="../../service/certificate.php" method="POST">
                 <div class="mb-3">
                     <label for="judulSertifikat">
                         Judul Sertifikat :
                     </label>
-                    <input id="judulSertifikat" placeholder="Ketik judul di sini" type="text" />
+                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" />
                 </div>
                 <div class="mb-3">
                     <label for="namaPeserta">
                         Nama Peserta :
                     </label>
-                    <input id="namaPeserta" placeholder="Masukan Nama Peserta" type="text" />
+                    <!-- <input id="namaPeserta" placeholder="Masukan Nama Peserta" name="participation_name" type="text" /> -->
+                    <select name="id_peserta" id="namaPeserta">
+                        <option selected="selected">Pilih User</option>
+                        <?php foreach ($users as $user): ?>
+                            <option value="<?= $user[0] ?>"><?= $user[2] ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="mb-3">
+                    <label for="pilihPelatihan">
+                        Pelatihan :
+                    </label>
+                    <!-- <input id="pilihPelatihan" placeholder="Masukan Nama Peserta" type="text" /> -->
+                    <select name="id_courses" id="pilihPelatihan">
+                        <option selected="selected">Pilih Pelatihan</option>
+                        <?php foreach ($courses as $course): ?>
+                            <option value="<?= $course[0] ?>"><?= $course[1] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <!-- <div class="mb-3">
                     <label for="tanggalPenerbitan">
                         Tanggal Penerbitan :
                     </label>
                     <input id="tanggalPenerbitan" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
-                </div>
+                </div> -->
                 <div class="mb-3">
                     <label for="deskripsiSertifikat">
                         Deskripsi Sertifikat :
                     </label>
-                    <textarea id="deskripsiSertifikat" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
+                    <textarea id="deskripsiSertifikat" name="desc" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="unggahTemplate">
                         Unggah Template Sertifikat :
                     </label>
@@ -269,21 +305,22 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                         <input aria-describedby="inputGroupFileAddon01" aria-label="Upload" class="form-control" id="unggahTemplate" type="file" />
 
                     </div>
-                </div>
+                </div> -->
 
                 <div class="mb-3">
                     <label for="unggahTemplate">
-                        Unggah Template Sertifikat :
+                        Pilih Template Sertifikat :
                     </label>
+                    <input type="hidden" name="template" id="select_template">
                     <div class="row g-3" style="display: flex; justify-content:center;">
                         <div class="col-md-2">
-                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template1" id="tmp1">Sertif 1</div>
+                            <img width="200px" src="../../assets/uploads/certificates/Blue and Gold Classic Certificate of Participation.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
                         </div>
                         <div class="col-md-2">
-                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template2" id="tmp2">Sertif 1</div>
+                            <img width="200px" src="../../assets/uploads/certificates/White and Blue Geometric Modern Recognition Certificate.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
                         </div>
                         <div class="col-md-2">
-                            <div class="cert-box p-4 text-center shadow-sm box" data-value="template3" id="tmp3">Sertif 1</div>
+                            <img width="200px" src="../../assets/uploads/certificates/Yellow and Cream Bordered Appreciation Document.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
                         </div>
                     </div>
                 </div>
@@ -293,7 +330,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                     <button class="btn btn-danger" type="button">
                         Batal
                     </button>
-                    <button class="btn btn-success" type="submit">
+                    <button class="btn btn-success" name="type" value="create" type="submit">
                         Simpan
                     </button>
                 </div>
@@ -303,8 +340,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const boxes = document.querySelectorAll('.box');
         let selectedBox = null;
@@ -314,8 +350,10 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                 if (selectedBox) {
                     selectedBox.classList.remove('selected');
                 }
+
                 box.classList.add('selected');
                 selectedBox = box;
+                document.getElementById('select_template').value = box.getAttribute('data-value');
 
                 document.getElementById('selectedValue').value = box.getAttribute('data-value');
             });

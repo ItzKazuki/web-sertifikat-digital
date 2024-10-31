@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +28,17 @@
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
                 <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
-                <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
+                <?php if ($_SESSION['role'] != "admin") { ?>
+                    <a href="akun.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Akun</a>
+                <?php } else { ?>
+                    <a href="dashboard/" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Dashboard</a>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['email'])) { ?>
+                    <a href="auth/login.php" class="btn btn-outline-primary">Logout</a>
+                <?php } else { ?>
+                    <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
+                <?php } ?>
             </nav>
         </div>
     </header>
@@ -62,7 +78,7 @@
         <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

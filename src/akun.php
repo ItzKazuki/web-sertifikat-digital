@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include '../service/utility.php';
+include 'service/utility.php';
 
 if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
@@ -24,7 +24,7 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
 
     <header class="d-flex justify-content-between align-items-center p-4 bg-white shadow-sm">
         <div class="d-flex align-items-center">
-            <img src="assets/logo.php" alt="Logo" class="img-fluid" style="height: 50px; width: auto; margin-right: 1rem;">
+            <img src="assets/logo.png" alt="Logo" class="img-fluid" style="height: 50px; width: auto; margin-right: 1rem;">
             <h1 class="h4 text-dark font-weight-bold">E-Sertifikat</h1>
         </div>
         <nav>
@@ -32,13 +32,13 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
                 <li class="nav-item"><a href="index.php" class="nav-link font-weight-bold text-dark">Home</a></li>
                 <li class="nav-item"><a href="#" class="nav-link font-weight-bold text-dark">Tentang Kami</a></li>
                 <li class="nav-item"><a href="cekindex.php" class="nav-link font-weight-bold text-dark">Cari Sertifikat</a></li>
-                <li class="nav-item"><a href="#" class="nav-link font-weight-bold text-dark">DUMMY123</a></li>
+                <li class="nav-item"><a href="#" class="nav-link font-weight-bold text-dark"><?= $_SESSION['full_name'] ?></a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container text-center my-5 p-4">
-        <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang DUMMY123</h1>
+        <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $_SESSION['full_name'] ?></h1>
         <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
         <div class="row">

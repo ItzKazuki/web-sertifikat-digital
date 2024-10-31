@@ -22,130 +22,166 @@ while ($row = $getUser->fetch_row()) {
 <head>
     <meta charset="UTF-8">
     <title>Manajemen Pengguna</title>
+    <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f3f3;
-        }
-
-        /* Sidebar */
+        /* Sidebar styling */
         .sidebar {
-            width: 220px;
-            height: 100vh;
-            background-color: #2f4b7c;
-            position: fixed;
-            top: 0;
-            left: 0;
+            background-color: #1d3c6e;
             color: white;
-            padding-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-y: auto;
+            height: 100vh;
+            width: 250px;
+            position: fixed;
         }
 
-        .sidebar img {
-            width: 80px;
-            margin-bottom: 10px;
-        }
-
-        .sidebar h2 {
+        .sidebar h4 {
+            margin-top: 20px;
             font-size: 18px;
-            text-align: center;
-            margin: 0;
-            margin-bottom: 20px;
         }
 
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-            width: 100%;
+        .nav-link {
+            color: white;
+            padding-left: 20px;
         }
 
-        .sidebar ul li {
-            padding: 10px 20px;
-            font-size: 14px;
+        .nav-link:hover,
+        .dropdown-item:hover {
+            background-color: #2a4b8e;
+            color: #ffffff !important;
         }
 
-        .sidebar ul li a {
+        .dropdown-item {
+            padding-left: 30px;
+        }
+
+        /* Main content styling */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            min-height: 100vh;
+        }
+
+        .stat-box {
+            background-color: #1d3c6e;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .cert-box {
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .btn-dark {
+            background-color: #4c4c4c;
+            color: white;
+            border: none;
+        }
+
+        .btn-dark:hover {
+            background-color: #333333;
+        }
+
+        .container {
+            width: 1201px;
+            height: 200px;
+            background-color: gray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-box {
+            width: 300px;
+            height: 150px;
+            background-color: #0A3067;
+            /* Navy blue color */
+            color: white;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin: 0 10px;
+            border-radius: 10px;
+            font-size: 1.2em;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            background-color: #003366;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .sidebar a {
             color: white;
             text-decoration: none;
-            display: block;
         }
 
-        .sidebar ul li a:hover {
+        .sidebar a:hover {
             text-decoration: underline;
         }
 
-        /* Sub-menu styling */
-        .sidebar ul li ul {
-            list-style-type: disc;
-            /* Show bullets */
-            padding-left: 20px;
-            /* Indent sub-items */
-            margin-top: 5px;
-        }
-
-        /* Header */
-        .header {
-            height: 60px;
-            background-color: #e9ecef;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            width: calc(100% - 240px);
-            /* Additional margin to accommodate sidebar */
-            margin-left: 220px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header .title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .header .user-info {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            color: #333;
-            gap: 10px;
-        }
-
-        .header .user-info i {
-            cursor: pointer;
-            color: gray;
-            margin-left: 8px;
-            /* Added margin for logout icon visibility */
-        }
-
-        /* Main content */
-        .main-content {
-            margin-left: 220px;
-            margin-top: 60px;
+        .content {
             padding: 20px;
-            background-color: #ffffff;
-            min-height: 100vh;
-            padding-top: 60px;
         }
 
-        .main-content h2 {
-            font-size: 24px;
-            font-weight: bold;
+        .form-container {
+            background-color: #003366;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="file"] {
+            padding: 3px;
+        }
+
+        .form-container label {
             margin-bottom: 5px;
-            margin-top: 0;
         }
 
-        /* Button */
-        .add-button {
+        .form-container .btn {
+            width: 100px;
+            margin: 5px;
+        }
+
+        .footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .header {
+            background-color: #e9ecef;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+                /* Button */
+                .add-button {
             background-color: #2f4b7c;
             color: white;
             padding: 8px 12px;
@@ -189,63 +225,41 @@ while ($row = $getUser->fetch_row()) {
         .table td {
             color: #333;
         }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #2f4b7c;
-            color: white;
-            font-size: 14px;
-            margin-top: 20px;
-        }
-
-        /* Button Container */
-        .button-container {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
-        }
-
-        /* Responsive */
-        @media screen and (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .header {
-                width: 100%;
-                margin-left: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding-top: 60px;
-            }
-        }
     </style>
 </head>
 
 <body>
-    <div class="sidebar">
-        <img src="../../assets/logo.png" alt="Logo Sekolah">
-        <h2>Dashboard Sertifikat</h2>
-        <ul>
-            <li><a href="#">Beranda</a></li>
-            <li><a href="#">Manajemen Sertifikat</a>
-                <ul>
-                    <li><a href="#">Buat Sertifikat</a></li>
-                    <li><a href="#">Daftar Sertifikat</a></li>
-                </ul>
+<div class="sidebar">
+        <div class="text-center my-3">
+            <img src="../../assets/logo.png" alt="Logo" style="max-width: 80px;">
+            <h4>Dashboard Sertifikat</h4>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="#" class="nav-link">Beranda</a></li>
+            <!-- Manajemen Sertifikat Dropdown -->
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
+                <div class="collapse" id="sertifikatMenu">
+                    <a href="certicate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                    <a href="certificate" class="dropdown-item">Daftar Sertifikat</a>
+                </div>
             </li>
-            <li><a href="#">Manajemen Pengguna</a>
-                <ul>
-                    <li><a href="#">Tambah Pengguna</a></li>
-                    <li><a href="#">Daftar Pengguna</a></li>
-                </ul>
+            <!-- Manajemen Pengguna Dropdown -->
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
+                <div class="collapse" id="penggunaMenu">
+                    <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="users" class="dropdown-item">Daftar Pengguna</a>
+                </div>
             </li>
-            <li><a href="#">Laporan</a></li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
+                <div class="collapse" id="pelatihanMenu">
+                    <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="courses" class="dropdown-item">Daftar Pelatihan</a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
         </ul>
     </div>
 
@@ -258,7 +272,7 @@ while ($row = $getUser->fetch_row()) {
         </div>
     </div>
 
-    <div class="main-content">
+    <div class="content flex-grow-1">
         <h2>Daftar Pengguna</h2>
         <div class="button-container">
             <button class="add-button">Tambah Pengguna +</button>
@@ -293,6 +307,9 @@ while ($row = $getUser->fetch_row()) {
     <div class="footer">
         &copy; 2024 Kelompok 1. Semua hak dilindungi.
     </div>
+
+    <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

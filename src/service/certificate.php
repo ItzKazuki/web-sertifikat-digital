@@ -23,6 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 include 'connection.php';
 
+// print_r($_POST); die;
+
 // now you can access $conn from connection.php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $type = $_POST['type'];
@@ -43,14 +45,28 @@ function createCertificate()
   global $conn;
 
   // get all user input
-  $name = htmlspecialchars($_POST['course_name']);
-  $desc = htmlspecialchars($_POST['description']);
-  $course_date = htmlspecialchars($_POST['course_date']);
-  $organizer = htmlspecialchars($_POST['course_organizer']);
+  $name = htmlspecialchars($_POST['title']);
+  $desc = htmlspecialchars($_POST['desc']);
+  $id_participation = htmlspecialchars($_POST['id_peserta']);
+  $id_courses = htmlspecialchars($_POST['id_courses']);
+  $template = htmlspecialchars($_POST['template']);
 
-  $sql = "INSERT INTO courses (event_name, event_description, event_date, organizer, created_at) VALUES ('$name', '$desc', '$course_date', '$organizer', current_timestamp())";
+  $cert_id = generateRandomString() . "-" . date("Y");
 
-  if ($conn->query($sql)) {
-    return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
+  // echo $cert_id; die;
+
+  // $sql = "INSERT INTO courses (event_name, event_description, event_date, organizer, created_at) VALUES ('$name', '$desc', '$course_date', '$organizer', current_timestamp())";
+  $createCertificate = "INSERT INTO certificates (user_id, event_id, certificate_code, issued_at, certificate_template)
+VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$template')";
+
+  if ($conn->query($createCertificate)) {
+    $certificate = $conn->query("SELECT * FROM certificates WHERE certificate_code = '$cert_id' ")->fetch_array();
+  }
+
+  $createCertificateField = "INSERT INTO certificate_fields (certificate_id, field_name, field_value)
+VALUES (" . $certificate['id'] . ", '$name', '$desc')";
+
+  if ($conn->query($createCertificateField)) {
+    return redirect("dashboard/certificate", "berhasil membuat pelatihan baru");
   }
 }

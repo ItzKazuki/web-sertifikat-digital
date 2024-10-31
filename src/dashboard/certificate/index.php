@@ -2,10 +2,21 @@
 session_start();
 
 include '../../service/utility.php';
+include '../../service/connection.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
+
+$getAllCertificateWithField = $conn->query("SELECT c.*, cf.field_name, cf.field_value, u.full_name
+FROM certificates c
+JOIN certificate_fields cf ON c.id = cf.certificate_id JOIN users u ON c.user_id = u.id");
+
+while($row = $getAllCertificateWithField->fetch_array()) {
+    $certificates[] = $row;
+}
+
+// print_r($certificates); die;
 
 ?>
 
@@ -100,22 +111,22 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                         <div class="collapse" id="sertifikatMenu">
                             <a href="sertificate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                            <a href="sertificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
+                            <a href="daftar-crtf.php" class="dropdown-item">Daftar Sertifikat</a>
                         </div>
                     </li>
                     <!-- Manajemen Pengguna Dropdown -->
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                         <div class="collapse" id="penggunaMenu">
-                            <a href="#" class="dropdown-item">Tambah Pengguna</a>
-                            <a href="#" class="dropdown-item">Daftar Pengguna</a>
+                            <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                            <a href="users" class="dropdown-item">Daftar Pengguna</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                         <div class="collapse" id="pelatihanMenu">
-                            <a href="#" class="dropdown-item">Tambah Pelatihan</a>
-                            <a href="#" class="dropdown-item">Daftar Pelatihan</a>
+                            <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                            <a href="courses" class="dropdown-item">Daftar Pelatihan</a>
                         </div>
                     </li>
                     <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
@@ -158,21 +169,23 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                                 <th scope="col">No</th>
                                 <th scope="col">Nama Sertifikat</th>
                                 <th scope="col">Tanggal Diterbitkan</th>
-                                <th scope="col">Jumlah Pengguna</th>
+                                <th scope="col">Cert ID</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($certificates as $key => $cert): ?>
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>2022-01-01</td>
-                                <td>2023-01-01</td>
+                                <th scope="row"><?= $key + 1 ?></th>
+                                <td><?= $cert['full_name']?></td>
+                                <td><?= $cert['issued_at'] ?></td>
+                                <td><?= $cert['certificate_code'] ?></td>
                                 <td>
                                     <button class="btn btn-sm btn-primary">Edit</button>
                                     <button class="btn btn-sm btn-danger">Hapus</button>
                                 </td>
                             </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -180,6 +193,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
 
         </div>
     </div>
+    <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
