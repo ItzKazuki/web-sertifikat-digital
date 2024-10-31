@@ -214,23 +214,23 @@ while ($row = $getUsers->fetch_array()) {
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="#" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="#" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="certficate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                    <a href="certificate" class="dropdown-item">Daftar Sertifikat</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="#" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="#" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="users" class="dropdown-item">Daftar Pengguna</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="#" class="dropdown-item">Tambah Pelatihan</a>
-                    <a href="#" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="courses" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
             <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
@@ -340,8 +340,7 @@ while ($row = $getUsers->fetch_array()) {
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const boxes = document.querySelectorAll('.box');
         let selectedBox = null;

@@ -113,8 +113,8 @@ while ($row = $getCourses->fetch_row()) {
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                         <div class="collapse" id="penggunaMenu">
-                            <a href="#" class="dropdown-item">Tambah Pengguna</a>
-                            <a href="#" class="dropdown-item">Daftar Pengguna</a>
+                            <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                            <a href="users/" class="dropdown-item">Daftar Pengguna</a>
                         </div>
                     </li>
                     <li class="nav-item">

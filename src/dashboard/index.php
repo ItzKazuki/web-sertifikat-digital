@@ -126,8 +126,8 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="#" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="#" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="users/" class="dropdown-item">Daftar Pengguna</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -205,7 +205,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
