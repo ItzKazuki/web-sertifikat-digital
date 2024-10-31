@@ -1,7 +1,7 @@
 <?php
 $server_name = 'localhost';
 $username = 'root';
-$password = 'kazukikun';
+$password = '';
 $database = "certificate";
 
 $conn = new mysqli($server_name, $username, $password, $database);
