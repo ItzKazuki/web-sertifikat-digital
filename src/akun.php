@@ -3,7 +3,7 @@ session_start();
 
 include 'service/utility.php';
 
-if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
@@ -103,7 +103,7 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
         </script>";
         unset($_SESSION['success']); // Clear the session variable
     }
-    
+
     if (isset($_SESSION['error'])) {
         echo "<script>
             Swal.fire({

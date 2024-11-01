@@ -38,14 +38,14 @@ session_start();
                         <a href="dashboard/" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Dashboard</a>
                     <?php } ?>
                 <?php } ?>
-                
+
                 <?php if (isset($_SESSION['email'])) { ?>
                     <form style="margin-left: 1em!important;" action="service/auth.php" method="post">
                         <button type="submit" name="type" value="logout" class="btn btn-outline-primary">Logout</button>
                     </form>
-                    <?php } else { ?>
-                        <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
-                    <?php } ?>
+                <?php } else { ?>
+                    <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
+                <?php } ?>
             </nav>
         </div>
     </header>
@@ -60,7 +60,7 @@ session_start();
 
         <section class="about-section py-5">
             <div class="container">
-                <div class="row">   
+                <div class="row">
                     <div class="col-lg-6">
                         <h3>Apa Itu E-Sertifikat</h3>
                         <p>E-sertifikat adalah sertifikat yang dikeluarkan dalam bentuk digital dan disimpan dalam format elektronik. Berbeda dengan sertifikat tradisional yang berbentuk fisik, e-sertifikat dapat diakses melalui perangkat elektronik seperti komputer, tablet, atau smartphone.</p>
@@ -98,7 +98,7 @@ session_start();
         </script>";
         unset($_SESSION['success']); // Clear the session variable
     }
-    
+
     if (isset($_SESSION['error'])) {
         echo "<script>
             Swal.fire({
