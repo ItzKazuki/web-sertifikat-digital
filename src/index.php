@@ -24,7 +24,7 @@ session_start();
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
                 <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
             </div>
-            <nav>
+            <nav style="    display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
                 <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
@@ -37,7 +37,9 @@ session_start();
                 <?php } ?>
                 
                 <?php if (isset($_SESSION['email'])) { ?>
-                        <a href="auth/login.php" class="btn btn-outline-primary">Logout</a>
+                    <form style="margin-left: 1em!important;" action="service/auth.php" method="post">
+                        <button type="submit" name="type" value="logout" class="btn btn-outline-primary">Logout</button>
+                    </form>
                     <?php } else { ?>
                         <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
                     <?php } ?>
@@ -55,7 +57,7 @@ session_start();
 
         <section class="about-section py-5">
             <div class="container">
-                <div class="row">
+                <div class="row">   
                     <div class="col-lg-6">
                         <h3>Apa Itu E-Sertifikat</h3>
                         <p>E-sertifikat adalah sertifikat yang dikeluarkan dalam bentuk digital dan disimpan dalam format elektronik. Berbeda dengan sertifikat tradisional yang berbentuk fisik, e-sertifikat dapat diakses melalui perangkat elektronik seperti komputer, tablet, atau smartphone.</p>

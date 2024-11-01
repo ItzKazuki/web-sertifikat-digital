@@ -235,7 +235,7 @@ while ($row = $getUser->fetch_row()) {
             <h4>Dashboard Sertifikat</h4>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="index.php" class="nav-link">Beranda</a></li>
+            <li class="nav-item"><a href="../index.php" class="nav-link">Beranda</a></li>
             <!-- Manajemen Sertifikat Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
@@ -294,8 +294,8 @@ while ($row = $getUser->fetch_row()) {
                             <td><?= $user[3] ?></td>
                             <td><?= $user[7] ?></td>
                             <td>
-                                <button class="btn btn-sm btn-primary">Edit</button>
-                                <button class="btn btn-sm btn-danger">Hapus</button>
+                                <a href="edit.php?id=<?= $user[0] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                <a class="btn btn-sm btn-danger" onclick="editUser('<?= $user[0] ?>')" data-bs-toggle="modal" data-bs-target="#exampleModal">Hapus</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -308,7 +308,35 @@ while ($row = $getUser->fetch_row()) {
         &copy; 2024 Kelompok 1. Semua hak dilindungi.
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Setelah di hapus, data tidak dapat dikembalikan.
+                </div>
+                <div class="modal-footer">
+                    <form action="../../service/users.php" method="post">
+                        <input type="hidden" id="deleteUserWithID" name="id">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="type" value="delete" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function editUser(id) {
+            // console.log(id);
+            document.getElementById('deleteUserWithID').value = id;
+        }
+    </script>
 
 </body>
 

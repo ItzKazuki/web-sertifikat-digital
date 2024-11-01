@@ -5,6 +5,8 @@ body {
 .navbar {
     background-color: #ffffff;
     border-bottom: 1px solid #ddd;
+    margin-right: 20px;
+    justify-content: space-between;
 }
 
 .hero-section {
@@ -73,6 +75,8 @@ html, body {
     padding: 10px 20px;
     font-size: 18px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
 }
 
 .nav-link:hover {

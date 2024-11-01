@@ -2,18 +2,14 @@
 session_start();
 
 include '../../service/utility.php';
-include '../../service/connection.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
 if(!isset($_GET['id'])) {
-    return redirect("/users");
+    return redirect("dashboard/courses");
 }
-
-$getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_array();
-// print_r($getUser);
 
 ?>
 
@@ -77,6 +73,8 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
             background-color: #ffffff;
             border-radius: 8px;
             border: 1px solid #ddd;
+            color: #333333;
+            cursor: pointer;
         }
 
         .btn-dark {
@@ -143,7 +141,7 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
             color: white;
         }
 
-        .form-container input, select,
+        .form-container input,
         .form-container textarea {
             background-color: #e9ecef;
             border: none;
@@ -183,6 +181,10 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
             justify-content: space-between;
             align-items: center;
         }
+
+        .selected {
+            border: 3px solid blue;
+        }
     </style>
 </head>
 
@@ -199,106 +201,101 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
                     <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="../certificate" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="../certificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="create.php" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="index.php" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="../users/" class="dropdown-item">Daftar Pengguna</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
-                    <a href="../courses" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="index.php" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
             <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
         </ul>
     </div>
 
-    </div>
     <div class="content flex-grow-1">
         <div class="header">
-            <h1>
-                Tambah Pengguna
-            </h1>
-            <div class="user-info">
+            <h5>
+                Buat Pelatihan Baru
+            </h5>
+            <div>
                 <span>
                     <?= $_SESSION['full_name'] ?>
                 </span>
                 <i class="fas fa-user-circle">
                 </i>
-                <i class="fas fa-sign-out-alt">
+                <i class="fas fa-cog">
                 </i>
             </div>
         </div>
-        <div class="mt-4">
-            <h2>
-                Formulir Tambah Pengguna
-            </h2>
-            <div class="form-container">
-                <form method="POST" action="../../service/users.php">
-                    <input type="hidden" name="id" value="<?= $getUser['id'] ?>">
-                    <label for="nik">
-                        NIK
+        <div class="form-container mt-4">
+            <form action="../../service/courses.php" method="post">
+                <div class="mb-3">
+                    <label for="course_name">
+                        Nama Pelatihan :
                     </label>
-                    <input id="nik" name="nik" placeholder="Ketik nik di sini" type="number" value="<?= $getUser['nik'] ?>" />
-
-                    <label for="username">
-                        Nama Pengguna
+                    <input id="course_name" name="course_name" placeholder="Ketik nama pelatihan di sini" type="text" />
+                </div>
+                <div class="mb-3">
+                    <label for="course_date">
+                        Tanggal Pelatihan :
                     </label>
-                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" value="<?= $getUser['full_name'] ?>"/>
-
-                    <label for="phone_number">
-                        Nomor Telepon Pengguna
+                    <input id="course_date" name="course_date" placeholder="Masukan Nama Peserta" type="date" />
+                </div>
+                <div class="mb-3">
+                    <label for="organization">
+                        Pembuat Acara/Organisasi/PT Pelatihan :
                     </label>
-                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" value="<?= $getUser['phone_number'] ?>" />
-
-                    <label for="email">
-                        Email Pengguna
+                    <input id="organization" name="course_organizer" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
+                </div>
+                <div class="mb-3">
+                    <label for="descrtiption">
+                        Deskripsi Pelatihan :
                     </label>
-                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" value="<?= $getUser['email'] ?>" />
+                    <textarea id="descrtiption" name="description" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
+                </div>
 
-                    <label for="password">
-                        Kata Sandi
-                    </label>
-                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" />
-
-                    <label for="confirm-password">
-                        Konfirmasi Kata Sandi
-                    </label>
-                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" />
-
-                    <label for="category">
-                        Kategori Pengguna
-                    </label>
-                    <select id="category" name="role">
-                        <option value="<?= $getUser["role"] ?>" selected>default: <?= $getUser["role"] ?></option>
-                        <option value="participant">participant</option>
-                        <option value="admin">admin</option>
-                    </select>
-
-                    <div class="d-flex justify-content-end mt-3">
-                        <button class="btn btn-cancel me-2" type="button">
-                            Batal
-                        </button>
-                        <button class="btn btn-save" type="submit" name="type" value="edit">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-danger" type="button">
+                        Batal
+                    </button>
+                    <button class="btn btn-success" type="submit" name="type" value="create">
+                        Simpan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const boxes = document.querySelectorAll('.box');
+        let selectedBox = null;
+
+        boxes.forEach(box => {
+            box.addEventListener('click', () => {
+                if (selectedBox) {
+                    selectedBox.classList.remove('selected');
+                }
+                box.classList.add('selected');
+                selectedBox = box;
+
+                document.getElementById('selectedValue').value = box.getAttribute('data-value');
+            });
+        });
+    </script>
 </body>
 
 </html>
