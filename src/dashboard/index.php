@@ -137,7 +137,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                     <a href="courses/index.php" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
+            <li class="nav-item"><a href="reports.php" class="nav-link">Laporan</a></li>
         </ul>
     </div>
 

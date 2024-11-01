@@ -180,8 +180,8 @@ while ($row = $getUser->fetch_row()) {
             align-items: center;
         }
 
-                /* Button */
-                .add-button {
+        /* Button */
+        .add-button {
             background-color: #2f4b7c;
             color: white;
             padding: 8px 12px;
@@ -229,37 +229,37 @@ while ($row = $getUser->fetch_row()) {
 </head>
 
 <body>
-<div class="sidebar">
+    <div class="sidebar">
         <div class="text-center my-3">
             <img src="../../assets/logo.png" alt="Logo" style="max-width: 80px;">
             <h4>Dashboard Sertifikat</h4>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Beranda</a></li>
+            <li class="nav-item"><a href="index.php" class="nav-link">Beranda</a></li>
             <!-- Manajemen Sertifikat Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="certicate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="certificate" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                    <a href="../certificate" class="dropdown-item">Daftar Sertifikat</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="users" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="index.php" class="dropdown-item">Daftar Pengguna</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
-                    <a href="courses" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="../courses" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
+            <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
         </ul>
     </div>
 

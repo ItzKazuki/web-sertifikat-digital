@@ -105,26 +105,26 @@ while ($row = $getCourses->fetch_row()) {
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                         <div class="collapse" id="sertifikatMenu">
-                            <a href="sertificate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                            <a href="sertificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
+                            <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                            <a href="../certificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
                         </div>
                     </li>
                     <!-- Manajemen Pengguna Dropdown -->
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                         <div class="collapse" id="penggunaMenu">
-                            <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
-                            <a href="users/" class="dropdown-item">Daftar Pengguna</a>
+                            <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                            <a href="../users/" class="dropdown-item">Daftar Pengguna</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                         <div class="collapse" id="pelatihanMenu">
-                            <a href="#" class="dropdown-item">Tambah Pelatihan</a>
-                            <a href="#" class="dropdown-item">Daftar Pelatihan</a>
+                            <a href="create.php" class="dropdown-item">Tambah Pelatihan</a>
+                            <a href="index.php" class="dropdown-item">Daftar Pelatihan</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
+                    <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
                 </ul>
             </div>
             <!-- Main konten -->
@@ -198,6 +198,7 @@ while ($row = $getCourses->fetch_row()) {
 
         </div>
     </div>
+    <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -12,7 +12,7 @@ $getAllCertificateWithField = $conn->query("SELECT c.*, cf.field_name, cf.field_
 FROM certificates c
 JOIN certificate_fields cf ON c.id = cf.certificate_id JOIN users u ON c.user_id = u.id");
 
-while($row = $getAllCertificateWithField->fetch_array()) {
+while ($row = $getAllCertificateWithField->fetch_array()) {
     $certificates[] = $row;
 }
 
@@ -110,26 +110,26 @@ while($row = $getAllCertificateWithField->fetch_array()) {
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                         <div class="collapse" id="sertifikatMenu">
-                            <a href="sertificate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                            <a href="daftar-crtf.php" class="dropdown-item">Daftar Sertifikat</a>
+                            <a href="create.php" class="dropdown-item">Buat Sertifikat</a>
+                            <a href="index.php" class="dropdown-item">Daftar Sertifikat</a>
                         </div>
                     </li>
                     <!-- Manajemen Pengguna Dropdown -->
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                         <div class="collapse" id="penggunaMenu">
-                            <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
-                            <a href="users" class="dropdown-item">Daftar Pengguna</a>
+                            <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                            <a href="../users" class="dropdown-item">Daftar Pengguna</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                         <div class="collapse" id="pelatihanMenu">
-                            <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
-                            <a href="courses" class="dropdown-item">Daftar Pelatihan</a>
+                            <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                            <a href="../courses" class="dropdown-item">Daftar Pelatihan</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
+                    <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
                 </ul>
             </div>
             <!-- Main konten -->
@@ -174,17 +174,17 @@ while($row = $getAllCertificateWithField->fetch_array()) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($certificates as $key => $cert): ?>
-                            <tr>
-                                <th scope="row"><?= $key + 1 ?></th>
-                                <td><?= $cert['full_name']?></td>
-                                <td><?= $cert['issued_at'] ?></td>
-                                <td><?= $cert['certificate_code'] ?></td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
-                                </td>
-                            </tr>
+                            <?php foreach ($certificates as $key => $cert): ?>
+                                <tr>
+                                    <th scope="row"><?= $key + 1 ?></th>
+                                    <td><?= $cert['full_name'] ?></td>
+                                    <td><?= $cert['issued_at'] ?></td>
+                                    <td><?= $cert['certificate_code'] ?></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Hapus</button>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

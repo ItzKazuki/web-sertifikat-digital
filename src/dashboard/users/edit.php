@@ -2,22 +2,13 @@
 session_start();
 
 include '../../service/utility.php';
-include '../../service/connection.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
-$getCourses = $conn->query("SELECT * FROM courses");
-
-while ($row = $getCourses->fetch_array()) {
-    $courses[] = $row;
-}
-
-$getUsers = $conn->query("SELECT * FROM users WHERE role = 'participant'");
-
-while ($row = $getUsers->fetch_array()) {
-    $users[] = $row;
+if(!isset($_GET['id'])) {
+    return redirect("dashboard/users");
 }
 
 ?>
@@ -42,10 +33,6 @@ while ($row = $getUsers->fetch_array()) {
             height: 100vh;
             width: 250px;
             position: fixed;
-        }
-
-        .col-md-2 {
-            width: 20% !important;
         }
 
         .sidebar h4 {
@@ -86,8 +73,6 @@ while ($row = $getUsers->fetch_array()) {
             background-color: #ffffff;
             border-radius: 8px;
             border: 1px solid #ddd;
-            color: #333333;
-            cursor: pointer;
         }
 
         .btn-dark {
@@ -155,7 +140,6 @@ while ($row = $getUsers->fetch_array()) {
         }
 
         .form-container input,
-        select,
         .form-container textarea {
             background-color: #e9ecef;
             border: none;
@@ -195,10 +179,6 @@ while ($row = $getUsers->fetch_array()) {
             justify-content: space-between;
             align-items: center;
         }
-
-        .selected {
-            border: 3px solid blue;
-        }
     </style>
 </head>
 
@@ -214,16 +194,16 @@ while ($row = $getUsers->fetch_array()) {
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="create.php" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="index.php" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                    <a href="../certificate" class="dropdown-item">Daftar Sertifikat</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="../users" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="index.php" class="dropdown-item">Daftar Pengguna</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -237,128 +217,85 @@ while ($row = $getUsers->fetch_array()) {
         </ul>
     </div>
 
+    </div>
     <div class="content flex-grow-1">
         <div class="header">
-            <h5>
-                Buat Sertifikat
-            </h5>
-            <div>
+            <h1>
+                Tambah Pengguna
+            </h1>
+            <div class="user-info">
                 <span>
                     <?= $_SESSION['full_name'] ?>
                 </span>
                 <i class="fas fa-user-circle">
                 </i>
-                <i class="fas fa-cog">
+                <i class="fas fa-sign-out-alt">
                 </i>
             </div>
         </div>
-        <div class="form-container mt-4">
-            <form action="../../service/certificate.php" method="POST">
-                <div class="mb-3">
-                    <label for="judulSertifikat">
-                        Judul Sertifikat :
+        <div class="mt-4">
+            <h2>
+                Formulir Tambah Pengguna
+            </h2>
+            <div class="form-container">
+                <form method="POST" action="../../service/users.php">
+                    <label for="nik">
+                        NIK
                     </label>
-                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" />
-                </div>
-                <div class="mb-3">
-                    <label for="namaPeserta">
-                        Nama Peserta :
+                    <input id="nik" name="nik" placeholder="Ketik nik di sini" type="number" />
+
+                    <label for="username">
+                        Nama Pengguna
                     </label>
-                    <!-- <input id="namaPeserta" placeholder="Masukan Nama Peserta" name="participation_name" type="text" /> -->
-                    <select name="id_peserta" id="namaPeserta">
-                        <option selected="selected">Pilih User</option>
-                        <?php foreach ($users as $user): ?>
-                            <option value="<?= $user[0] ?>"><?= $user[2] ?></option>
-                        <?php endforeach; ?>
+                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" />
+
+                    <label for="phone_number">
+                        Nomor Telepon Pengguna
+                    </label>
+                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" />
+
+                    <label for="email">
+                        Email Pengguna
+                    </label>
+                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" />
+
+                    <label for="password">
+                        Kata Sandi
+                    </label>
+                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" />
+
+                    <label for="confirm-password">
+                        Konfirmasi Kata Sandi
+                    </label>
+                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" />
+
+                    <label for="category">
+                        Kategori Pengguna
+                    </label>
+                    <select id="category" name="role">
+                        <option>
+                            Pilih Kategori Pengguna
+                        </option>
+                        <option value="participant">participant</option>
+                        <option value="admin">admin</option>
                     </select>
-                </div>
-                <div class="mb-3">
-                    <label for="pilihPelatihan">
-                        Pelatihan :
-                    </label>
-                    <!-- <input id="pilihPelatihan" placeholder="Masukan Nama Peserta" type="text" /> -->
-                    <select name="id_courses" id="pilihPelatihan">
-                        <option selected="selected">Pilih Pelatihan</option>
-                        <?php foreach ($courses as $course): ?>
-                            <option value="<?= $course[0] ?>"><?= $course[1] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <!-- <div class="mb-3">
-                    <label for="tanggalPenerbitan">
-                        Tanggal Penerbitan :
-                    </label>
-                    <input id="tanggalPenerbitan" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
-                </div> -->
-                <div class="mb-3">
-                    <label for="deskripsiSertifikat">
-                        Deskripsi Sertifikat :
-                    </label>
-                    <textarea id="deskripsiSertifikat" name="desc" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
-                </div>
 
-                <!-- <div class="mb-3">
-                    <label for="unggahTemplate">
-                        Unggah Template Sertifikat :
-                    </label>
-                    <div class="input-group">
-                        <input aria-describedby="inputGroupFileAddon01" aria-label="Upload" class="form-control" id="unggahTemplate" type="file" />
-
+                    <div class="d-flex justify-content-end mt-3">
+                        <button class="btn btn-cancel me-2" type="button">
+                            Batal
+                        </button>
+                        <button class="btn btn-save" type="submit" name="type" value="create">
+                            Simpan
+                        </button>
                     </div>
-                </div> -->
-
-                <div class="mb-3">
-                    <label for="unggahTemplate">
-                        Pilih Template Sertifikat :
-                    </label>
-                    <input type="hidden" name="template" id="select_template">
-                    <div class="row g-3" style="display: flex; justify-content:center;">
-                        <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/Blue and Gold Classic Certificate of Participation.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
-                        </div>
-                        <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/White and Blue Geometric Modern Recognition Certificate.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
-                        </div>
-                        <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/Yellow and Cream Bordered Appreciation Document.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-danger" type="button">
-                        Batal
-                    </button>
-                    <button class="btn btn-success" name="type" value="create" type="submit">
-                        Simpan
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const boxes = document.querySelectorAll('.box');
-        let selectedBox = null;
-
-        boxes.forEach(box => {
-            box.addEventListener('click', () => {
-                if (selectedBox) {
-                    selectedBox.classList.remove('selected');
-                }
-
-                box.classList.add('selected');
-                selectedBox = box;
-                document.getElementById('select_template').value = box.getAttribute('data-value');
-
-                document.getElementById('selectedValue').value = box.getAttribute('data-value');
-            });
-        });
-    </script>
 </body>
 
 </html>
