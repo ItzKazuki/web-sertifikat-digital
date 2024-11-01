@@ -15,6 +15,9 @@ session_start();
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -83,6 +86,31 @@ session_start();
     </footer>
 
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <?php
+    if (isset($_SESSION['success'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '" . $_SESSION['success'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['success']); // Clear the session variable
+    }
+    
+    if (isset($_SESSION['error'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '" . $_SESSION['error'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['error']); // Clear the session variable
+    }
+    ?>
 </body>
 
 </html>

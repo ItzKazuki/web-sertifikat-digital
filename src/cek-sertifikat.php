@@ -11,6 +11,8 @@ session_start();
     <title>Cek E-Sertifikat Kelulusan</title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css"> -->
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -63,6 +65,31 @@ session_start();
         <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
     </footer>
 
+    <?php
+    if (isset($_SESSION['success'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '" . $_SESSION['success'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['success']); // Clear the session variable
+    }
+    
+    if (isset($_SESSION['error'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '" . $_SESSION['error'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['error']); // Clear the session variable
+    }
+    ?>
 </body>
 
 </html>

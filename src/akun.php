@@ -18,6 +18,9 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     <title>E-Sertifikat</title>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-white text-dark font-sans">
@@ -87,6 +90,32 @@ if(!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <?php
+    if (isset($_SESSION['success'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '" . $_SESSION['success'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['success']); // Clear the session variable
+    }
+    
+    if (isset($_SESSION['error'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '" . $_SESSION['error'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['error']); // Clear the session variable
+    }
+    ?>
 </body>
 
 </html>

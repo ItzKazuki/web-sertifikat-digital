@@ -156,7 +156,7 @@ function login()
     // $_SESSION['success'] = "Berhasil Login";
     // header('Location: ../dashboard.php');
     // exit();
-    return redirect("dashboard");
+    return redirect("dashboard", "BERHASIL LOGIN");
   } else {
     return redirect("auth/login.php", "email atau password tidak di temukan.", "error");
   }
