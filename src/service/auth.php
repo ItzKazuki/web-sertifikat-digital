@@ -86,13 +86,12 @@ function edit_password()
   $salt = generateSalt();
   $hashNewPassword = generateHashWithSalt($newPassword, $salt);
 
-  if($conn->query("UPDATE users SET password = '$salt;$hashNewPassword' WHERE email = '$email'")) {
-    $conn->query("DELETE FROM reset_password WHERE reset_token = '" . $res['reset_token'] ."'");
+  if ($conn->query("UPDATE users SET password = '$salt;$hashNewPassword' WHERE email = '$email'")) {
+    $conn->query("DELETE FROM reset_password WHERE reset_token = '" . $res['reset_token'] . "'");
     return redirect("auth/login.php", "Berhasil mengubah password, silahkan login!");
   }
 
   return redirect("auth/forgot.php", "Failed while reset your password.", "error");
-
 }
 
 function find_username()
@@ -142,7 +141,7 @@ function login()
 
   if ($res != null) {
     // set 1st user to admin
-    if($res['id'] == 1 && $res['role'] != 'admin') {
+    if ($res['id'] == 1 && $res['role'] != 'admin') {
       $conn->query("UPDATE users SET role = 'admin' WHERE email = '$email'");
     }
 
@@ -156,7 +155,7 @@ function login()
     // $_SESSION['success'] = "Berhasil Login";
     // header('Location: ../dashboard.php');
     // exit();
-    if($_SESSION['role'] == 'admin') {
+    if ($_SESSION['role'] == 'admin') {
       return redirect("dashboard", "Berhasil Login");
     }
 
@@ -172,7 +171,7 @@ function logout()
   session_destroy();
   session_start();
 
-  return redirect("auth/login.php", "Berhasil logout", "success");
+  return redirect("index.php", "Berhasil logout", "success");
 }
 
 function register()

@@ -177,7 +177,7 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
                     <div class="stat-box p-3 text-center">Pengguna Terdaftar <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;"><?= $countUsers[0] ?></span></div>
                 </div>
                 <div class="col-md-4">
-                    <div class="stat-box p-3 text-center">Sertifikat Diunduh <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;"><?= $countDownloadedCertificate['total_downloads']?></span></div>
+                    <div class="stat-box p-3 text-center">Sertifikat Diunduh <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;"><?= $countDownloadedCertificate['total_downloads'] ?></span></div>
                 </div>
             </div>
         </div>

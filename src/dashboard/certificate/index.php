@@ -8,7 +8,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     return redirect("index.php");
 }
 
-$getAllCertificateWithField = $conn->query("SELECT c.*, cf.field_name, cf.field_value, u.full_name
+$getAllCertificateWithField = $conn->query("SELECT c.*, cf.field_name, cf.field_value, cf.file_name, u.full_name
 FROM certificates c
 JOIN certificate_fields cf ON c.id = cf.certificate_id 
 JOIN users u ON c.user_id = u.id");
@@ -97,6 +97,12 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
     .table-responsive {
         overflow-x: auto;
     }
+
+    .center-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 </style>
 
 <body>
@@ -170,6 +176,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
+                                <th scope="col">Preview</th>
                                 <th scope="col">Nama Sertifikat</th>
                                 <th scope="col">Tanggal Diterbitkan</th>
                                 <th scope="col">Cert ID</th>
@@ -180,8 +187,9 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                             <?php foreach ($certificates as $key => $cert) : ?>
                                 <tr>
                                     <th scope="row"><?= $key + 1 ?></th>
+                                    <td><img class="center-image" src="../../assets/uploads/certificates/<?= $cert['file_name'] ?>" width="200px" alt=""></td>
                                     <td><?= $cert['full_name'] ?></td>
-                                    <td><?= $cert['issued_at'] ?></td>
+                                    <td><?= hummanDate($cert['issued_at']) ?></td>
                                     <td><?= $cert['certificate_code'] ?></td>
                                     <td>
                                         <button class="btn btn-sm btn-primary">Edit</button>

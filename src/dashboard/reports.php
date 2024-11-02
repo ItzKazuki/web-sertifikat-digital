@@ -142,37 +142,37 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     </div>
 
     <div class="content flex-grow-1">
-            <div class="header">
-                <input placeholder="Cari Laporan Di Sini" type="text"/>
-                <div class="user-info">
-                    <span>Administrator</span>
-                    <i class="fas fa-user-circle"></i>
-                    <i class="fas fa-sign-out-alt"></i>
-                </div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <h1>Laporan</h1>
-                <button class="btn btn-light">
-                    <i class="fas fa-plus"></i>
-                    Buat Laporan
-                </button>
-            </div>
-            <div class="table-container">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Laporan</th>
-                            <th>Tanggal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Rows will be added here -->
-                    </tbody>
-                </table>
+        <div class="header">
+            <input placeholder="Cari Laporan Di Sini" type="text" />
+            <div class="user-info">
+                <span>Administrator</span>
+                <i class="fas fa-user-circle"></i>
+                <i class="fas fa-sign-out-alt"></i>
             </div>
         </div>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <h1>Laporan</h1>
+            <button class="btn btn-light">
+                <i class="fas fa-plus"></i>
+                Buat Laporan
+            </button>
+        </div>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Laporan</th>
+                        <th>Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
     </div>
 
     <!-- Bootstrap JS -->

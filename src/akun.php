@@ -25,19 +25,33 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
 
 <body class="bg-white text-dark font-sans">
 
-    <header class="d-flex justify-content-between align-items-center p-4 bg-white shadow-sm">
-        <div class="d-flex align-items-center">
-            <img src="assets/logo.png" alt="Logo" class="img-fluid" style="height: 50px; width: auto; margin-right: 1rem;">
-            <h1 class="h4 text-dark font-weight-bold">E-Sertifikat</h1>
+    <header style="background-color: white; border-bottom: 1px solid #ddd; padding: 1rem;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="display: flex; align-items: center;">
+                <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
+                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
+            </div>
+            <nav style="    display: flex; align-items: center;">
+                <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
+                <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
+                <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
+                <?php if (isset($_SESSION['role'])) { ?>
+                    <?php if ($_SESSION['role'] != "admin") { ?>
+                        <a href="akun.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Akun</a>
+                    <?php } else { ?>
+                        <a href="dashboard/" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Dashboard</a>
+                    <?php } ?>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['email'])) { ?>
+                    <form style="margin-left: 1em!important;" action="service/auth.php" method="post">
+                        <button type="submit" name="type" value="logout" class="btn btn-outline-primary">Logout</button>
+                    </form>
+                <?php } else { ?>
+                    <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
+                <?php } ?>
+            </nav>
         </div>
-        <nav>
-            <ul class="nav">
-                <li class="nav-item"><a href="index.php" class="nav-link font-weight-bold text-dark">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link font-weight-bold text-dark">Tentang Kami</a></li>
-                <li class="nav-item"><a href="cekindex.php" class="nav-link font-weight-bold text-dark">Cari Sertifikat</a></li>
-                <li class="nav-item"><a href="#" class="nav-link font-weight-bold text-dark"><?= $_SESSION['full_name'] ?></a></li>
-            </ul>
-        </nav>
     </header>
 
     <main class="container text-center my-5 p-4">

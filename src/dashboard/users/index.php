@@ -278,7 +278,7 @@ while ($row = $getUser->fetch_row()) {
     <div class="content flex-grow-1">
         <h2>Daftar Pengguna</h2>
         <div class="button-container">
-            <button class="add-button">Tambah Pengguna +</button>
+            <a href="create.php" class="add-button">Tambah Pengguna +</a>
         </div>
         <div class="table-container">
             <table class="table">
@@ -295,7 +295,7 @@ while ($row = $getUser->fetch_row()) {
                         <tr>
                             <td><?= $user[2] ?></td>
                             <td><?= $user[3] ?></td>
-                            <td><?= $user[7] ?></td>
+                            <td><?= hummanDate($user[7]) ?></td>
                             <td>
                                 <a href="edit.php?id=<?= $user[0] ?>" class="btn btn-sm btn-primary">Edit</a>
                                 <a class="btn btn-sm btn-danger" onclick="editUser('<?= $user[0] ?>')" data-bs-toggle="modal" data-bs-target="#exampleModal">Hapus</a>
