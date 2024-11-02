@@ -316,13 +316,13 @@ while ($row = $getUsers->fetch_array()) {
                     <input type="hidden" name="template" id="select_template">
                     <div class="row g-3" style="display: flex; justify-content:center;">
                         <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/Blue and Gold Classic Certificate of Participation.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
+                            <img width="200px" src="../../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
                         </div>
                         <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/White and Blue Geometric Modern Recognition Certificate.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
+                            <img width="200px" src="../../assets/uploads/templates/template2.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
                         </div>
                         <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/Yellow and Cream Bordered Appreciation Document.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
+                            <img width="200px" src="../../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,8 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
 
 $getAllCertificateWithField = $conn->query("SELECT c.*, cf.field_name, cf.field_value, u.full_name
 FROM certificates c
-JOIN certificate_fields cf ON c.id = cf.certificate_id JOIN users u ON c.user_id = u.id");
+JOIN certificate_fields cf ON c.id = cf.certificate_id 
+JOIN users u ON c.user_id = u.id");
 
 while ($row = $getAllCertificateWithField->fetch_array()) {
     $certificates[] = $row;

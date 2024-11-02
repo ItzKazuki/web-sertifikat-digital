@@ -1,6 +1,11 @@
 <?php
-
 session_start();
+
+include 'service/utility.php';
+
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
 
 ?>
 
@@ -10,24 +15,68 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Sertifikat SMKN 71</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <title>E-Sertifikat</title>
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
 
+        .header-logo {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .navbar {
+            padding: 10px 20px;
+        }
+
+        .content {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .certificate-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #e0e0e0;
+            margin: 20px 0;
+        }
+
+        .info-section {
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .download-btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #3b82f6;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 
 <body>
+
     <header style="background-color: white; border-bottom: 1px solid #ddd; padding: 1rem;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div class="logo" style="display: flex; align-items: center;">
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
                 <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
             </div>
-            <nav style="    display: flex; align-items: center;">
+            <nav style="display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
                 <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
@@ -50,42 +99,33 @@ session_start();
         </div>
     </header>
 
-    <main>
-        <section class="hero-section">
-            <div class="container text-center">
-                <h1>SELAMAT DATANG DI <br> E-SERTIFIKAT SMKN 71</h1>
-                <hr>
-            </div>
-        </section>
+    <!-- Main Content -->
+    <div class="content">
+        <h1 class="display-4">SERTIF Name</h1>
+        <div class="certificate-placeholder"></div>
 
-        <section class="about-section py-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <h3>Apa Itu E-Sertifikat</h3>
-                        <p>E-sertifikat adalah sertifikat yang dikeluarkan dalam bentuk digital dan disimpan dalam format elektronik. Berbeda dengan sertifikat tradisional yang berbentuk fisik, e-sertifikat dapat diakses melalui perangkat elektronik seperti komputer, tablet, atau smartphone.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Information Section -->
+        <div class="info-section">
+            <h3>INFORMASI</h3>
+            <p>lorem : ........</p>
+            <p>lorem : ........</p>
+            <p>lorem : ........</p>
+            <p>lorem : ........</p>
+            <p>lorem : ........</p>
+        </div>
 
-        <section class="tujuan-section py-5 bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <h3>Tujuan</h3>
-                        <p>Maksud pemerintah kabupaten dalam Corporate Social Responsibility (CSR) adalah untuk menciptakan sinergi yang kuat antara pemerintah, perusahaan, dan masyarakat...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+        <!-- Download Button -->
+        <button class="download-btn mt-3" style="background-color: #294486;">UNDUH SERTIFIKAT</button>
+    </div>
 
-    <footer style="background-color: #1d3c6e; color: white; text-align: center; padding: 1rem;">
-        <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
+    <!-- Footer -->
+    <footer style="background-color: #294486;">
+        &copy; 2024 Kelompok 1. Semua hak dilindungi.
     </footer>
 
-    <script src="assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS (locally hosted) -->
+    <script src="assets/bootstrap-5.3.3-dist/js/bootstrap.js"></script> <!-- Adjust path as needed -->
+
     <?php
     if (isset($_SESSION['success'])) {
         if (strlen($_SESSION['success']) > 3) {
