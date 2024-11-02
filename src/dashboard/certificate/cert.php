@@ -9,7 +9,6 @@ include '../../service/utility.php';
 require('../../service/fpdf186/fpdf.php');
 
 // get user details
-
 $getCert = $conn->query("SELECT c.*, cf.field_name, cf.field_value, u.*, e.*
             FROM certificates c
             JOIN certificate_fields cf ON c.id = cf.certificate_id 
@@ -27,11 +26,11 @@ $height = 1414;
 
 $time = time();
 
-$img = imagecreatefrompng("../../assets/uploads/templates/".$getCert['certificate_template'].".png");
+$img = imagecreatefrompng("../../assets/uploads/templates/" . $getCert['certificate_template'] . ".png");
 $color = imagecolorallocate($img, 19, 21, 22);
 
 $firstLineText = "Untuk menyelesaikan pelatihan " . $getCert['event_name'] . " yang";
-$secondLineText = "diselenggarakan oleh Liceria & Co pada " . hummanDate($getCert['event_date']);
+$secondLineText = "diselenggarakan oleh " . $getCert['organizer'] . " pada " . hummanDate($getCert['event_date']);
 
 $certificateIdCenter = calculateTextCenter($getCert['certificate_code'], $fontBold, 25);
 $participantCenterName = calculateTextCenter($getCert['full_name'], $fontBold, 60);
@@ -45,16 +44,16 @@ imagettftext($img, 60, 0, $participantCenterName[0], $participantCenterName[1], 
 imagettftext($img, 29, 0, $firstLineTextCenter[0], $firstLineTextCenter[1] + 100, $color, $font, $firstLineText);
 imagettftext($img, 29, 0, $secondLineTextCenter[0], $secondLineTextCenter[1] + 150, $color, $font, $secondLineText);
 imagettftext($img, 30, 0, $organizationCenter[0] + 30, 1130, $color, $fontBold, $getCert['organizer']);
-imagettftext($img, 30, 0, $organizationCenter[0] * 3 + 50, 1130, $color, $fontBold, $getCert['organizer']);
+imagettftext($img, 30, 0, 327.5 * 3.5 + 60, 1130, $color, $fontBold, "Drs. Lambas Pakpahan,MM"); // dont change this!
 
 
-imagepng($img, "../../assets/uploads/$time.png");
+imagepng($img, "../../assets/uploads/certificates/certificates-$time-" . $getCert['certificate_code'] . ".png");
 imagedestroy($img);
 
 $pdf = new FPDF();
 $pdf->AddPage("L", "A5");
 
-$pdf->Image("../../assets/uploads/$time.png", 0, 0, 210, 148);
+$pdf->Image("../../assets/uploads/certificates/certificates-$time-" . $getCert['certificate_code'] . ".png", 0, 0, 210, 148);
 ob_end_clean();
 $pdf->Output();
 
@@ -97,7 +96,7 @@ function calculateHalfWidthTextCenter($text, $typeFont, $fontSize)
   $x = ($width - $textWidth) / 2;
 
   // Set the y-coordinate (you can adjust this value)
-  $y = ($height / 2) + ($fontSize / 2);
+  $y = ($height / 2) + ($fontSize / 4);
 
   return [$x, $y];
 }
