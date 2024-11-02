@@ -8,16 +8,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['cari'])) {
         $id = htmlspecialchars($_POST['id']);
 
-        $getCert = $conn->query("SELECT c.*, cf.field_name, cf.field_value, u.*
+        $getCert = $conn->query("SELECT c.*, cf.field_name, cf.field_value, u.*, e.*
             FROM certificates c
             JOIN certificate_fields cf ON c.id = cf.certificate_id 
-            JOIN users u ON c.user_id = u.id WHERE c.certificate_code = '$id'");
+            JOIN users u ON c.user_id = u.id 
+            JOIN courses e ON c.event_id = e.id 
+            WHERE c.certificate_code = '$id'");
 
         if ($getCert->num_rows < 1) {
             return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
         }
 
-        print_r($getCert->fetch_array());
+        $ceertificationDetails = $getCert->fetch_array();
+
+        print_r($ceertificationDetails);
     }
 }
 ?>

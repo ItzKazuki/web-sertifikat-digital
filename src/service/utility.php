@@ -6,15 +6,52 @@ function redirect(string $fileName, string $message = "", string $type = 'succes
   if (isset($message)) {
     $_SESSION[$type] = $message;
   }
-  
+
   header('Location: ../' . $fileName);
   exit();
 }
 
 function debug($var)
 {
-  print_r($var); die;
-} 
+  print_r($var);
+  die;
+}
+
+function hummanDate($inputDate)
+{
+  return date("j F Y", strtotime($inputDate));
+  // // Create a DateTime object from the input date
+  // $dateTime = DateTime::createFromFormat('y-m-d', $inputDate);
+  // // Check if the date was created successfully
+
+  // if ($dateTime) {
+  //   // Format the date to "d F Y"
+  //   $formattedDate = $dateTime->format('d F Y');
+
+  //   // Replace the English month with the Indonesian month
+  //   $indonesianMonths = [
+  //     'January' => 'Januari',
+  //     'February' => 'Februari',
+  //     'March' => 'Maret',
+  //     'April' => 'April',
+  //     'May' => 'Mei',
+  //     'June' => 'Juni',
+  //     'July' => 'Juli',
+  //     'August' => 'Agustus',
+  //     'September' => 'September',
+  //     'October' => 'Oktober',
+  //     'November' => 'November',
+  //     'December' => 'Desember',
+  //   ];
+
+  //   // Replace the month in the formatted date
+  //   // $formattedDate = str_replace(array_keys($indonesianMonths), array_values($indonesianMonths), $formattedDate);
+
+  //   return $formattedDate; // Output: 15 Juni 2024
+  // } else {
+  //   return false;
+  // }
+}
 
 function get_gravatar(
   $email,
@@ -55,13 +92,14 @@ function get_gravatar(
   return $url;
 }
 
-function generateRandomString($length = 10) {
+function generateRandomString($length = 10)
+{
   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   $charactersLength = strlen($characters);
   $randomString = '';
 
   for ($i = 0; $i < $length; $i++) {
-      $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    $randomString .= $characters[random_int(0, $charactersLength - 1)];
   }
 
   return $randomString;
