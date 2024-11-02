@@ -10,6 +10,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
 
 $countCertificate = $conn->query('SELECT count(*) FROM certificates')->fetch_array();
 $countUsers = $conn->query('SELECT count(*) FROM users')->fetch_array();
+$countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_downloads FROM certificates")->fetch_array();
 
 // debug($countCertificate);
 
@@ -176,7 +177,7 @@ $countUsers = $conn->query('SELECT count(*) FROM users')->fetch_array();
                     <div class="stat-box p-3 text-center">Pengguna Terdaftar <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;"><?= $countUsers[0] ?></span></div>
                 </div>
                 <div class="col-md-4">
-                    <div class="stat-box p-3 text-center">Sertifikat Diunduh <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;">3</span></div>
+                    <div class="stat-box p-3 text-center">Sertifikat Diunduh <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;"><?= $countDownloadedCertificate['total_downloads']?></span></div>
                 </div>
             </div>
         </div>

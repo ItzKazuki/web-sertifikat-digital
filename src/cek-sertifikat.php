@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h2 style="font-weight: bold;">Cek E-Sertifikat Pelatihan</h2>
             <p>Silahkan cek e-sertifikat (hanya berlaku untuk e-sertifikat yang terbit mulai tahun 2024)</p>
             <!-- Form -->
-            <form method="post">
+            <form action="sertifname.php" method="post">
                 <div class="input-group mb-3" style="width: 100%;">
                     <input type="text" class="form-control" placeholder="masukan id atau nik" aria-label="masukan id atau nik" name="id" style="border-radius: 5px; border: 2px solid #007bff; padding: 10px;">
                     <button class="btn btn-primary" type="submit" name="cari" value="cari" style="border-radius: 5px; margin-left: 10px; display: flex; align-items: center;">

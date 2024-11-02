@@ -252,7 +252,7 @@ if (!isset($_GET['id'])) {
                     <label for="course_date">
                         Tanggal Pelatihan :
                     </label>
-                    <input id="course_date" name="course_date" placeholder="Masukan Nama Peserta" type="date" />
+                    <input id="course_date" name="course_date" placeholder="Masukan Nama Peserta" type="date" min="<?php echo date("Y-m-d"); ?>" />
                 </div>
                 <div class="mb-3">
                     <label for="organization">

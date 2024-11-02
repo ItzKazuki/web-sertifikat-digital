@@ -1,10 +1,54 @@
 <?php
 session_start();
 
+include 'service/connection.php';
 include 'service/utility.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
-    return redirect("index.php");
+require('service/fpdf186/fpdf.php');
+
+// if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+//     return redirect("index.php");
+// }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['cari'])) {
+        $id = htmlspecialchars($_POST['id']);
+
+        $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
+            FROM certificates c
+            JOIN certificate_fields cf ON c.id = cf.certificate_id 
+            JOIN users u ON c.user_id = u.id 
+            JOIN courses e ON c.event_id = e.id 
+            WHERE c.certificate_code = '$id'");
+
+        if ($getCert->num_rows < 1) {
+            return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
+        }
+
+        $certDetails = $getCert->fetch_array();
+    }
+
+    if (isset($_POST['download'])) {
+        $sql = "UPDATE certificates SET download_count = download_count + 1 WHERE certificate_code = '" . $_POST['code'] . "'";
+        if ($conn->query($sql)) {
+            downloadCertificate($_POST['file_name']);
+        } else {
+            return redirect("src/index.php");
+        }
+    }
+} else {
+    return redirect("src/index.php");
+}
+
+function downloadCertificate($file_name)
+{
+    // header("content-type: application/pdf");
+    // debug("assets/uploads/certificates/" . $file_name);
+    $pdf = new FPDF();
+    $pdf->AddPage("L", "A5");
+
+    $pdf->Image("assets/uploads/certificates/" . $file_name, 0, 0, 210, 148);
+    $pdf->Output("$file_name", 'D');
 }
 
 ?>
@@ -40,7 +84,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
 
         .certificate-placeholder {
             width: 100%;
-            height: 300px;
+            height: 700px;
             background-color: #e0e0e0;
             margin: 20px 0;
         }
@@ -102,20 +146,23 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     <!-- Main Content -->
     <div class="content">
         <h1 class="display-4">SERTIF Name</h1>
-        <div class="certificate-placeholder"></div>
+        <img src="assets/uploads/certificates/<?= $certDetails['file_name'] ?>" class="certificate-placeholder">
 
         <!-- Information Section -->
         <div class="info-section">
             <h3>INFORMASI</h3>
-            <p>lorem : ........</p>
-            <p>lorem : ........</p>
-            <p>lorem : ........</p>
-            <p>lorem : ........</p>
-            <p>lorem : ........</p>
+            <p>Nama Pelatihan: <?= $certDetails['event_name'] ?></p>
+            <p>Penyelenggara: <?= $certDetails['organizer'] ?></p>
+            <p>Peserta: <?= $certDetails['full_name'] ?></p>
+            <p>Pelatihan dimulai: <?= $certDetails['event_date'] ?></p>
         </div>
 
         <!-- Download Button -->
-        <button class="download-btn mt-3" style="background-color: #294486;">UNDUH SERTIFIKAT</button>
+        <form method="post">
+            <input type="hidden" name="file_name" value="<?= $certDetails['file_name'] ?>">
+            <input type="hidden" name="code" value="<?= $certDetails['certificate_code'] ?>">
+            <button type="submit" name="download" class="download-btn mt-3" style="background-color: #294486;">UNDUH SERTIFIKAT</button>
+        </form>
     </div>
 
     <!-- Footer -->
