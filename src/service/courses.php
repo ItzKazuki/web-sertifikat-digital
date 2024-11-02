@@ -32,10 +32,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       createCourse();
       $conn->close();
       break;
+    case 'edit':
+      editCourse();
+      $conn->close();
+      break;
+    case 'delete':
+      deleteCourse();
+      $conn->close();
+      break;
     default:
       header('Location: ../index.php');
       break;
   }
+}
+
+function deleteCourse()
+{
+  global $conn;
+
+  $id = htmlspecialchars($_POST['id']);
+
+  if (!isset($id)) {
+    return redirect("dashboard/courses/", "missing id", "error");
+  }
+
+  $sql = "DELETE FROM courses WHERE id = $id";
+
+  if ($conn->query($sql) == 1) {
+    return redirect("dashboard/courses/", "Berhasil menghapus pelatihan dengan id: $id");
+  } else {
+    return redirect("dashboard/courses", "gagal menghapus pelatihan", "error");
+  }
+}
+
+function editCourse()
+{
+  global $conn;
+
+    // get all user input
+    $id = htmlspecialchars($_POST['id']);
+    $name = htmlspecialchars($_POST['course_name']);
+    $desc = htmlspecialchars($_POST['description']);
+    $course_date = htmlspecialchars($_POST['course_date']);
+    $organizer = htmlspecialchars($_POST['course_organizer']);
+
+    $sql = "UPDATE courses SET event_name = '$name', event_description = '$desc', event_date = '$course_date', organizer = '$organizer WHERE id = $id";
+    if ($conn->query($sql)) {
+      return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
+    } else {
+      return redirect("dashboard/courses", "gagal mengubah pelatihan", "error");
+      
+    }
 }
 
 function createCourse()
@@ -52,5 +99,8 @@ function createCourse()
 
   if ($conn->query($sql)) {
     return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
+  } else {
+    return redirect("dashboard/courses", "gagal mengubah pelatihan", "error");
+
   }
 }

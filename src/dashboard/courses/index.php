@@ -167,8 +167,8 @@ while ($row = $getCourses->fetch_row()) {
                                     <td><?= $course[3] ?></td>
                                     <td><?= $course[5] ?></td>
                                     <td>
-                                        <button class="btn btn-sm btn-primary">Edit</button>
-                                        <button class="btn btn-sm btn-danger">Hapus</button>
+                                        <a href="edit.php?id=<?=$course[0] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                        <a class="btn btn-sm btn-danger" onclick="deleteCourse('<?= $course[0] ?>')" data-bs-toggle="modal" data-bs-target="#exampleModal">Hapus</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -179,6 +179,29 @@ while ($row = $getCourses->fetch_row()) {
 
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Setelah di hapus, data tidak dapat dikembalikan.
+                </div>
+                <div class="modal-footer">
+                    <form action="../../service/courses.php" method="post">
+                        <input type="hidden" id="deleteCourseByID" name="id">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="type" value="delete" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
     <?php
     if (isset($_SESSION['success'])) {
@@ -209,6 +232,12 @@ while ($row = $getCourses->fetch_row()) {
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>
+
+    <script>
+        function deleteCourse(id) {
+            document.getElementById('deleteCourseByID').value = id;
+        }
+    </script>
 </body>
 
 </html>
