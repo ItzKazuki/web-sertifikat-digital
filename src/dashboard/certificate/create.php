@@ -34,6 +34,8 @@ while ($row = $getUsers->fetch_array()) {
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* Sidebar styling */
         .sidebar {
@@ -214,26 +216,26 @@ while ($row = $getUsers->fetch_array()) {
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="certficate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="certificate" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="create.php" class="dropdown-item">Buat Sertifikat</a>
+                    <a href="index.php" class="dropdown-item">Daftar Sertifikat</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="users" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="../users" class="dropdown-item">Daftar Pengguna</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
-                    <a href="courses" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="../courses" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
+            <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
         </ul>
     </div>
 
@@ -341,6 +343,33 @@ while ($row = $getUsers->fetch_array()) {
 
     <!-- Bootstrap JS -->
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <?php
+    if (isset($_SESSION['success'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '" . $_SESSION['success'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['success']); // Clear the session variable
+    }
+    
+    if (isset($_SESSION['error'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '" . $_SESSION['error'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['error']); // Clear the session variable
+    }
+    ?>
+
     <script>
         const boxes = document.querySelectorAll('.box');
         let selectedBox = null;

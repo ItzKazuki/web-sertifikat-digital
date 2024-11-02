@@ -15,6 +15,9 @@ session_start();
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -24,18 +27,22 @@ session_start();
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
                 <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
             </div>
-            <nav>
+            <nav style="    display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
                 <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
-                <?php if ($_SESSION['role'] != "admin") { ?>
-                    <a href="akun.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Akun</a>
-                <?php } else { ?>
-                    <a href="dashboard/" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Dashboard</a>
+                <?php if (isset($_SESSION['role'])) { ?>
+                    <?php if ($_SESSION['role'] != "admin") { ?>
+                        <a href="akun.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Akun</a>
+                    <?php } else { ?>
+                        <a href="dashboard/" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Dashboard</a>
+                    <?php } ?>
                 <?php } ?>
 
                 <?php if (isset($_SESSION['email'])) { ?>
-                    <a href="auth/login.php" class="btn btn-outline-primary">Logout</a>
+                    <form style="margin-left: 1em!important;" action="service/auth.php" method="post">
+                        <button type="submit" name="type" value="logout" class="btn btn-outline-primary">Logout</button>
+                    </form>
                 <?php } else { ?>
                     <a href="auth/login.php" class="btn btn-outline-primary">Login</a>
                 <?php } ?>
@@ -79,6 +86,31 @@ session_start();
     </footer>
 
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <?php
+    if (isset($_SESSION['success'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '" . $_SESSION['success'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['success']); // Clear the session variable
+    }
+
+    if (isset($_SESSION['error'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '" . $_SESSION['error'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['error']); // Clear the session variable
+    }
+    ?>
 </body>
 
 </html>

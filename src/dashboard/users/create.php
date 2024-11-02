@@ -21,6 +21,8 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* Sidebar styling */
         .sidebar {
@@ -135,7 +137,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             color: white;
         }
 
-        .form-container input,
+        .form-container input, select,
         .form-container textarea {
             background-color: #e9ecef;
             border: none;
@@ -185,31 +187,31 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             <h4>Dashboard Sertifikat</h4>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Beranda</a></li>
+            <li class="nav-item"><a href="../index.php" class="nav-link">Beranda</a></li>
             <!-- Manajemen Sertifikat Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="certiicate" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                    <a href="../certificate" class="dropdown-item">Daftar Sertifikat</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="users" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="index.php" class="dropdown-item">Daftar Pengguna</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
-                    <a href="courses" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="../courses" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
+            <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
         </ul>
     </div>
 
@@ -268,6 +270,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                     <label for="category">
                         Kategori Pengguna
                     </label>
+
                     <select id="category" name="role">
                         <option>
                             Pilih Kategori Pengguna
@@ -292,6 +295,31 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
 
     <!-- Bootstrap JS -->
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <?php
+    if (isset($_SESSION['success'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '" . $_SESSION['success'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['success']); // Clear the session variable
+    }
+    
+    if (isset($_SESSION['error'])) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '" . $_SESSION['error'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        unset($_SESSION['error']); // Clear the session variable
+    }
+    ?>
 </body>
 
 </html>
