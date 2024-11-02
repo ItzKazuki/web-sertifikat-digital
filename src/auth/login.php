@@ -21,7 +21,7 @@ if (isset($_SESSION['email'])) {
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -171,10 +171,11 @@ if (isset($_SESSION['email'])) {
     </footer>
 
     <script src="../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <?php
     if (isset($_SESSION['success'])) {
-        echo "<script>
+        if (strlen($_SESSION['success']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
@@ -182,11 +183,13 @@ if (isset($_SESSION['email'])) {
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['success']); // Clear the session variable
     }
-    
+
     if (isset($_SESSION['error'])) {
-        echo "<script>
+        if (strlen($_SESSION['error']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
@@ -194,6 +197,7 @@ if (isset($_SESSION['email'])) {
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>

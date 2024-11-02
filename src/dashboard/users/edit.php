@@ -8,11 +8,11 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     return redirect("index.php");
 }
 
-if(!isset($_GET['id'])) {
+if (!isset($_GET['id'])) {
     return redirect("/users");
 }
 
-$getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_array();
+$getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_array();
 // print_r($getUser);
 
 ?>
@@ -145,7 +145,8 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
             color: white;
         }
 
-        .form-container input, select,
+        .form-container input,
+        select,
         .form-container textarea {
             background-color: #e9ecef;
             border: none;
@@ -254,7 +255,7 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
                     <label for="username">
                         Nama Pengguna
                     </label>
-                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" value="<?= $getUser['full_name'] ?>"/>
+                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" value="<?= $getUser['full_name'] ?>" />
 
                     <label for="phone_number">
                         Nomor Telepon Pengguna
@@ -303,7 +304,8 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
     <?php
     if (isset($_SESSION['success'])) {
-        echo "<script>
+        if (strlen($_SESSION['success']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
@@ -311,11 +313,13 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['success']); // Clear the session variable
     }
-    
+
     if (isset($_SESSION['error'])) {
-        echo "<script>
+        if (strlen($_SESSION['error']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
@@ -323,6 +327,7 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =".$_GET['id'])->fetch_arr
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>

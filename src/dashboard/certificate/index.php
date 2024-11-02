@@ -176,7 +176,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($certificates as $key => $cert): ?>
+                            <?php foreach ($certificates as $key => $cert) : ?>
                                 <tr>
                                     <th scope="row"><?= $key + 1 ?></th>
                                     <td><?= $cert['full_name'] ?></td>
@@ -199,7 +199,8 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
 
     <?php
     if (isset($_SESSION['success'])) {
-        echo "<script>
+        if (strlen($_SESSION['success']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
@@ -207,11 +208,13 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['success']); // Clear the session variable
     }
-    
+
     if (isset($_SESSION['error'])) {
-        echo "<script>
+        if (strlen($_SESSION['error']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
@@ -219,6 +222,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>

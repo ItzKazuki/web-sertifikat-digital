@@ -2,10 +2,16 @@
 session_start();
 
 include '../service/utility.php';
+include '../service/connection.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
+
+$countCertificate = $conn->query('SELECT count(*) FROM certificates')->fetch_array();
+$countUsers = $conn->query('SELECT count(*) FROM users')->fetch_array();
+
+// debug($countCertificate);
 
 ?>
 
@@ -23,7 +29,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <style>
         /* Sidebar styling */
         .sidebar {
@@ -141,7 +147,9 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                 </div>
             </li>
             <li class="nav-item"><a href="reports.php" class="nav-link">Laporan</a></li>
-            <li class="nav-item"><form action="../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form></li>
+            <li class="nav-item">
+                <form action="../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
+            </li>
         </ul>
     </div>
 
@@ -162,10 +170,10 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     justify-content: center;">
             <div class="row mb-4">
                 <div class="col-md-4">
-                    <div class="stat-box p-3 text-center">Total Sertifikat <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;">3</span></div>
+                    <div class="stat-box p-3 text-center">Total Sertifikat <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;"><?= $countCertificate[0] ?></span></div>
                 </div>
                 <div class="col-md-4">
-                    <div class="stat-box p-3 text-center">Pengguna Terdaftar <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;">3</span></div>
+                    <div class="stat-box p-3 text-center">Pengguna Terdaftar <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;"><?= $countUsers[0] ?></span></div>
                 </div>
                 <div class="col-md-4">
                     <div class="stat-box p-3 text-center">Sertifikat Diunduh <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;">3</span></div>
@@ -213,7 +221,8 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
 
     <?php
     if (isset($_SESSION['success'])) {
-        echo "<script>
+        if (strlen($_SESSION['success']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
@@ -221,11 +230,13 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['success']); // Clear the session variable
     }
-    
+
     if (isset($_SESSION['error'])) {
-        echo "<script>
+        if (strlen($_SESSION['error']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
@@ -233,6 +244,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>

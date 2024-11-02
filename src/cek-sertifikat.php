@@ -3,11 +3,12 @@ session_start();
 
 include 'service/connection.php';
 
-if(isset($_POST['cari'])) {
-$id = htmlspecialchars($_POST['id']);
+if (isset($_POST['cari'])) {
+    $id = htmlspecialchars($_POST['id']);
 
-$getCert = $conn->query("SELECT * FROM users WHERE certificate_code = $id")->fetch_array();
-print_r($getCert);die;
+    $getCert = $conn->query("SELECT * FROM users WHERE certificate_code = $id")->fetch_array();
+    print_r($getCert);
+    die;
 }
 ?>
 
@@ -91,7 +92,8 @@ print_r($getCert);die;
 
     <?php
     if (isset($_SESSION['success'])) {
-        echo "<script>
+        if (strlen($_SESSION['success']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
@@ -99,11 +101,13 @@ print_r($getCert);die;
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['success']); // Clear the session variable
     }
 
     if (isset($_SESSION['error'])) {
-        echo "<script>
+        if (strlen($_SESSION['error']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
@@ -111,6 +115,7 @@ print_r($getCert);die;
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>

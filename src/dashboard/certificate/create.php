@@ -269,7 +269,7 @@ while ($row = $getUsers->fetch_array()) {
                     <!-- <input id="namaPeserta" placeholder="Masukan Nama Peserta" name="participation_name" type="text" /> -->
                     <select name="id_peserta" id="namaPeserta">
                         <option selected="selected">Pilih User</option>
-                        <?php foreach ($users as $user): ?>
+                        <?php foreach ($users as $user) : ?>
                             <option value="<?= $user[0] ?>"><?= $user[2] ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -281,7 +281,7 @@ while ($row = $getUsers->fetch_array()) {
                     <!-- <input id="pilihPelatihan" placeholder="Masukan Nama Peserta" type="text" /> -->
                     <select name="id_courses" id="pilihPelatihan">
                         <option selected="selected">Pilih Pelatihan</option>
-                        <?php foreach ($courses as $course): ?>
+                        <?php foreach ($courses as $course) : ?>
                             <option value="<?= $course[0] ?>"><?= $course[1] ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -346,7 +346,8 @@ while ($row = $getUsers->fetch_array()) {
 
     <?php
     if (isset($_SESSION['success'])) {
-        echo "<script>
+        if (strlen($_SESSION['success']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
@@ -354,11 +355,13 @@ while ($row = $getUsers->fetch_array()) {
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['success']); // Clear the session variable
     }
-    
+
     if (isset($_SESSION['error'])) {
-        echo "<script>
+        if (strlen($_SESSION['error']) > 3) {
+            echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
@@ -366,6 +369,7 @@ while ($row = $getUsers->fetch_array()) {
                 showConfirmButton: true
             });
         </script>";
+        }
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>

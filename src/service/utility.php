@@ -1,7 +1,7 @@
 <?php
 include 'connection.php';
 
-function redirect(string $fileName, string $message = "", $type = 'success'): void
+function redirect(string $fileName, string $message = "", string $type = 'success'): void
 {
   if (isset($message)) {
     $_SESSION[$type] = $message;
@@ -10,6 +10,11 @@ function redirect(string $fileName, string $message = "", $type = 'success'): vo
   header('Location: ../' . $fileName);
   exit();
 }
+
+function debug($var)
+{
+  print_r($var); die;
+} 
 
 function get_gravatar(
   $email,
