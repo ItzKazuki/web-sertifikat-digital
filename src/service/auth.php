@@ -40,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       register();
       $conn->close();
       break;
-    case 'find_username':
-      find_username();
+    case 'find_email':
+      find_email();
       $conn->close();
       break;
     case 'edit_password':
@@ -94,12 +94,12 @@ function edit_password()
   return redirect("auth/forgot.php", "Failed while reset your password.", "error");
 }
 
-function find_username()
+function find_email()
 {
   global $conn;
-  $username = htmlspecialchars($_POST['username']);
+  $email = htmlspecialchars($_POST['email']);
 
-  $sql = "SELECT * FROM users WHERE username = '$username'";
+  $sql = "SELECT * FROM users WHERE email = '$email'";
 
   $res = $conn->query($sql);
 
@@ -112,7 +112,7 @@ function find_username()
 
     $conn->query($sql);
 
-    return redirect('auth/password.php?reset=' . $reset);
+    return redirect('auth/change.php?reset=' . $reset);
   } else {
     return redirect("auth/forgot.php", "Username atau password tidak di temukan.", "error");
   }

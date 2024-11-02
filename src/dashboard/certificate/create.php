@@ -260,14 +260,13 @@ while ($row = $getUsers->fetch_array()) {
                     <label for="judulSertifikat">
                         Judul Sertifikat :
                     </label>
-                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" />
+                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" required/>
                 </div>
                 <div class="mb-3">
                     <label for="namaPeserta">
                         Nama Peserta :
                     </label>
-                    <!-- <input id="namaPeserta" placeholder="Masukan Nama Peserta" name="participation_name" type="text" /> -->
-                    <select name="id_peserta" id="namaPeserta">
+                    <select name="id_peserta" id="namaPeserta" required>
                         <option selected="selected">Pilih User</option>
                         <?php foreach ($users as $user) : ?>
                             <option value="<?= $user[0] ?>"><?= $user[2] ?></option>
@@ -278,43 +277,26 @@ while ($row = $getUsers->fetch_array()) {
                     <label for="pilihPelatihan">
                         Pelatihan :
                     </label>
-                    <!-- <input id="pilihPelatihan" placeholder="Masukan Nama Peserta" type="text" /> -->
-                    <select name="id_courses" id="pilihPelatihan">
+                    <select name="id_courses" id="pilihPelatihan" required>
                         <option selected="selected">Pilih Pelatihan</option>
                         <?php foreach ($courses as $course) : ?>
                             <option value="<?= $course[0] ?>"><?= $course[1] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <!-- <div class="mb-3">
-                    <label for="tanggalPenerbitan">
-                        Tanggal Penerbitan :
-                    </label>
-                    <input id="tanggalPenerbitan" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
-                </div> -->
                 <div class="mb-3">
                     <label for="deskripsiSertifikat">
                         Deskripsi Sertifikat :
                     </label>
-                    <textarea id="deskripsiSertifikat" name="desc" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
+                    <textarea id="deskripsiSertifikat" name="desc" placeholder="Masukan Deskripsi Sertifikat" rows="4" required></textarea>
                 </div>
-
-                <!-- <div class="mb-3">
-                    <label for="unggahTemplate">
-                        Unggah Template Sertifikat :
-                    </label>
-                    <div class="input-group">
-                        <input aria-describedby="inputGroupFileAddon01" aria-label="Upload" class="form-control" id="unggahTemplate" type="file" />
-
-                    </div>
-                </div> -->
 
                 <div class="mb-3">
                     <label for="unggahTemplate">
                         Pilih Template Sertifikat :
                     </label>
                     <input type="hidden" name="template" id="select_template">
-                    <div class="row g-3" style="display: flex; justify-content:center;">
+                    <div class="row g-3" style="display: flex; justify-content: center;">
                         <div class="col-md-2">
                             <img width="200px" src="../../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
                         </div>

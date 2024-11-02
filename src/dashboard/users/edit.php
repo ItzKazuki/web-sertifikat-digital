@@ -250,37 +250,37 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
                     <label for="nik">
                         NIK
                     </label>
-                    <input id="nik" name="nik" placeholder="Ketik nik di sini" type="number" value="<?= $getUser['nik'] ?>" />
+                    <input id="nik" name="nik" placeholder="Ketik nik di sini" type="number" value="<?= $getUser['nik'] ?>" required/>
 
                     <label for="username">
                         Nama Pengguna
                     </label>
-                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" value="<?= $getUser['full_name'] ?>" />
+                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" value="<?= $getUser['full_name'] ?>" required/>
 
                     <label for="phone_number">
                         Nomor Telepon Pengguna
                     </label>
-                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" value="<?= $getUser['phone_number'] ?>" />
+                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" value="<?= $getUser['phone_number'] ?>" required/>
 
                     <label for="email">
                         Email Pengguna
                     </label>
-                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" value="<?= $getUser['email'] ?>" />
+                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" value="<?= $getUser['email'] ?>" required/>
 
                     <label for="password">
                         Kata Sandi
                     </label>
-                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" />
+                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" required/>
 
                     <label for="confirm-password">
                         Konfirmasi Kata Sandi
                     </label>
-                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" />
+                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" required/>
 
                     <label for="category">
                         Kategori Pengguna
                     </label>
-                    <select id="category" name="role">
+                    <select id="category" name="role" required>
                         <option value="<?= $getUser["role"] ?>" selected>default: <?= $getUser["role"] ?></option>
                         <option value="participant">participant</option>
                         <option value="admin">admin</option>

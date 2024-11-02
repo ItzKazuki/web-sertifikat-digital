@@ -246,25 +246,25 @@ if (!isset($_GET['id'])) {
                     <label for="course_name">
                         Nama Pelatihan :
                     </label>
-                    <input id="course_name" name="course_name" placeholder="Ketik nama pelatihan di sini" type="text" />
+                    <input id="course_name" name="course_name" placeholder="Ketik nama pelatihan di sini" type="text" required/>
                 </div>
                 <div class="mb-3">
                     <label for="course_date">
                         Tanggal Pelatihan :
                     </label>
-                    <input id="course_date" name="course_date" placeholder="Masukan Nama Peserta" type="date" min="<?php echo date("Y-m-d"); ?>" />
+                    <input id="course_date" name="course_date" placeholder="Masukan Nama Peserta" type="date" min="<?php echo date("Y-m-d"); ?>" required />
                 </div>
                 <div class="mb-3">
                     <label for="organization">
                         Pembuat Acara/Organisasi/PT Pelatihan :
                     </label>
-                    <input id="organization" name="course_organizer" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
+                    <input id="organization" name="course_organizer" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" required/>
                 </div>
                 <div class="mb-3">
                     <label for="descrtiption">
                         Deskripsi Pelatihan :
                     </label>
-                    <textarea id="descrtiption" name="description" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
+                    <textarea id="descrtiption" name="description" placeholder="Masukan Deskripsi Sertifikat" rows="4" required></textarea>
                 </div>
 
                 <div class="d-flex justify-content-end">

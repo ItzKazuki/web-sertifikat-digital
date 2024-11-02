@@ -5,6 +5,11 @@ include '../service/utility.php';
 if (isset($_SESSION['email'])) {
     return redirect("dashboard");
 }
+
+if(!isset($_GET['reset'])) {
+    return redirect("auth/login.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +57,8 @@ if (isset($_SESSION['email'])) {
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="col-lg-4 col-md-6 col-sm-8 col-10"> <!-- Bootstrap grid -->
             <div class="login-box shadow p-4 rounded bg-white">
-                <form action="login_process.php" method="POST">
+                <form action="../service/auth.php" method="POST">
+                <input type="hidden" name="reset" value="<?= $_GET['reset']?>">
                     <div class="mb-4">
                         <h2 class="text-center">Change Password</h2>
                     </div>
@@ -62,7 +68,7 @@ if (isset($_SESSION['email'])) {
                             <span class="input-group-text">
                                 <i class="bi bi-lock"></i>
                             </span>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                            <input type="password" class="form-control" id="password" name="new_password" placeholder="Enter password" required>
                         </div>
                     </div>
 
@@ -73,13 +79,13 @@ if (isset($_SESSION['email'])) {
                             <span class="input-group-text">
                                 <i class="bi bi-lock"></i>
                             </span>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Confirm Password" required>
+                            <input type="password" class="form-control" id="password" name="confirm_new_password" placeholder="Confirm Password" required>
                         </div>
                     </div>
 
                     <!-- Tombol Sign In -->
                     <div class="d-grid mb-4">
-                        <button type="submit" class="btn btn-primary">Change</button>
+                        <button type="submit" name="type" value="edit_password" class="btn btn-primary">Change</button>
                     </div>
                 </form>
             </div>

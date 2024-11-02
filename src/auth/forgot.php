@@ -119,30 +119,32 @@ if (isset($_SESSION['email'])) {
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="col-lg-4 col-md-6 col-sm-8 col-10"> <!-- Bootstrap grid -->
             <div class="login-box shadow p-4 rounded bg-white">
+                <form action="../service/auth.php" method="post">
 
-                <div class="mb-4">
-                    <h2 class="text-center">Reset Password</h2>
-                </div>
+                    <div class="mb-4">
+                        <h2 class="text-center">Reset Password</h2>
+                    </div>
 
-                <!-- Input Email dengan Ikon -->
-                <div class="form-group mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="bi bi-envelope"></i>
-                        </span>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                    <!-- Input Email dengan Ikon -->
+                    <div class="form-group mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <a href="login.php">already have an account?</a>
-                </div>
-                <br>
-                <center>
-                    <div class="d-grid mb-4">
-                        <a href="change.php"><button type="submit" class="btn btn-primary">Reset</button></a>
+
+                    <div>
+                        <a href="login.php">already have an account?</a>
                     </div>
-                </center>
+                    <br>
+                    <center>
+                        <div class="d-grid mb-4">
+                            <button type="submit" name="type" value="find_email" class="btn btn-primary">Reset</button>
+                        </div>
+                    </center>
 
                 </form>
             </div>

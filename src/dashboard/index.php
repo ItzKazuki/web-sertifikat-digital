@@ -195,24 +195,15 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
 
         <!-- Sertifikat Cards -->
 
-        <div class="row g-3">
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm">Sertif 1</div>
+        <div class="row g-3" style="display: flex; justify-content:center;">
+            <div class="col-xl-2">
+                <img width="200px" src="../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
             </div>
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm">Sertif 1</div>
+            <div class="col-xl-2">
+                <img width="200px" src="../assets/uploads/templates/template2.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
             </div>
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm">Sertif 1</div>
-            </div>
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm">Sertif 1</div>
-            </div>
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm">Sertif 1</div>
-            </div>
-            <div class="col-md-2">
-                <div class="cert-box p-4 text-center shadow-sm">Sertif 1</div>
+            <div class="col-xl-2">
+                <img width="200px" src="../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
             </div>
         </div>
     </div>
