@@ -32,6 +32,16 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        *{
+            text-decoration: none;
+        }
+
+        button:hover{
+            color: white;
+        }
+        .dropdown-toggle::after {
+            display: none;
+        }
         /* Sidebar styling */
         .sidebar {
             background-color: #1d3c6e;
@@ -158,17 +168,30 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
     <div class="content">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Kotak Statistik</h2>
-            <div class="d-flex justify-content-end p-3">
+            <div class="d-flex justify-content-end align-items-center p-3">
                 <span><?= $_SESSION['full_name'] ?></span>
-                <a href="dashboard.php" class="bi bi-person-circle ms-2" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                <div class="dropdown">
+                    <!-- <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a> -->
+                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Landing Page</a></li>
+                        <li><a class="dropdown-item" href="#">Homepage</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form class="dropdown-item" action="../service/auth.php" method="post">
+                                <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
             </div>
-
+            </div>
         </div>
 
 
         <!-- Statistics Boxes -->
-        <div class="container" style="width: 1240px; height: 250px; background-color: gray; display:flex; align-items: center;
-    justify-content: center;">
+        <div class="container" style="width: 100vw; border-radius: 4px; height: 250px; background-color: gray; display:flex; align-items: center; justify-content: center;">
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="stat-box p-3 text-center">Total Sertifikat <span style="margin-left: 7rem;font-size: 40px;position: absolute;margin-top: 2rem;"><?= $countCertificate[0] ?></span></div>

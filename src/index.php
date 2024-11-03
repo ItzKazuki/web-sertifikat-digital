@@ -71,7 +71,7 @@ session_start();
 
         <section class="tujuan-section py-5 bg-light">
             <div class="container">
-                <div class="row">
+                <div class="row" style="justify-content: flex-end;">
                     <div class="col-lg-6">
                         <h3>Tujuan</h3>
                         <p>Maksud pemerintah kabupaten dalam Corporate Social Responsibility (CSR) adalah untuk menciptakan sinergi yang kuat antara pemerintah, perusahaan, dan masyarakat...</p>

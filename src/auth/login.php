@@ -5,6 +5,7 @@ include '../service/utility.php';
 if (isset($_SESSION['email'])) {
     return redirect("dashboard");
 }
+
 ?>
 
 <!DOCTYPE html>
