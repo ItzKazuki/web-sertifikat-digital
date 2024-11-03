@@ -273,14 +273,6 @@ while ($row = $getUser->fetch_row()) {
         </ul>
     </div>
 
-    <div class="header">
-        <div class="title">Manajemen Pengguna</div>
-        <div class="user-info">
-            <?= $_SESSION['full_name'] ?>
-            <i class="fas fa-user-circle"></i>
-            <i class="fas fa-sign-out-alt"></i> <!-- Icon logout lebih ke kiri -->
-        </div>
-    </div>
 
     <div class="content flex-grow-1">
         <h2>Daftar Pengguna</h2>

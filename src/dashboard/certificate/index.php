@@ -30,6 +30,8 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
     <title>Dashboard Sertifikat</title>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -43,6 +45,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
         width: 250px;
         position: fixed;
     }
+
 
     .sidebar h4 {
         margin-top: 20px;
@@ -150,9 +153,10 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
             </div>
             <!-- Main konten -->
             <div class="main-content">
-                <div class="col-md-12 p-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="search">
+            <h2 style="text-align: left; margin: 0;">Daftar Sertifikat</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top:20px;">
+                    
+                    <div class="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Cari Sertif Di Sini">
                                 <div class="input-group-append">
@@ -164,14 +168,6 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-end p-3">
-                            <span><?= $_SESSION['full_name'] ?></span>
-                            <a href="../index.php" class="bi bi-person-circle ms-2" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 style="text-align: left; margin: 0;">Daftar Sertifikat</h2>
                     <a href="create.php">
                         <button class="btn btn-primary">Tambah Sertifikat</button>
                     </a>

@@ -47,7 +47,6 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
             background-color: #1d3c6e;
             color: white;
             height: 100vh;
-            width: 250px;
             position: fixed;
         }
 
@@ -178,13 +177,10 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
             <div class="d-flex justify-content-end align-items-center p-3">
                 <span><?= $_SESSION['full_name'] ?></span>
                 <div class="dropdown">
-                    <!-- <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a> -->
                     <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Landing Page</a></li>
-                        <li><a class="dropdown-item" href="#">Homepage</a></li>
+                        <li><a class="dropdown-item" href="..">Landing Page</a></li>
+                        <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form class="dropdown-item" action="../service/auth.php" method="post">
@@ -192,7 +188,7 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
                             </form>
                         </li>
                     </ul>
-            </div>
+                </div>
             </div>
         </div>
 

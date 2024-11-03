@@ -231,18 +231,9 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
 
     <div class="content flex-grow-1">
         <div class="header">
-            <h5>
+            <h1>
                 Buat Pelatihan Baru
-            </h5>
-            <div>
-                <span>
-                    <?= $_SESSION['full_name'] ?>
-                </span>
-                <i class="fas fa-user-circle">
-                </i>
-                <i class="fas fa-cog">
-                </i>
-            </div>
+            </h1>
         </div>
         <div class="form-container mt-4">
             <form action="../../service/courses.php" method="post">

@@ -139,16 +139,20 @@ while ($row = $getCourses->fetch_row()) {
 
             <!-- Main konten -->
             <div class="main-content">
-                <div class="col-md-12 p-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex justify-content-end p-3">
-                            <span><?= $_SESSION['full_name'] ?></span>
-                            <a href="../index.php" class="bi bi-person-circle ms-2" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                <h1 style="text-align: left; margin: 0;">Daftar Pelatihan</h1>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top:20px;">
+                <div class="search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Cari Pelatihan">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                        <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 style="text-align: left; margin: 0;">Daftar Pelatihan</h2>
                     <a href="create.php">
                         <a href="create.php" class="btn btn-primary">Tambah Pelatihan Baru</a>
                     </a>

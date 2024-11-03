@@ -29,7 +29,6 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             background-color: #1d3c6e;
             color: white;
             height: 100vh;
-            width: 250px;
             position: fixed;
         }
 
@@ -114,7 +113,6 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             background-color: #003366;
             color: white;
             height: 100vh;
-            padding: 20px;
         }
 
         .sidebar a {
@@ -229,15 +227,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             <h1>
                 Tambah Pengguna
             </h1>
-            <div class="user-info">
-                <span>
-                    <?= $_SESSION['full_name'] ?>
-                </span>
-                <i class="fas fa-user-circle">
-                </i>
-                <i class="fas fa-sign-out-alt">
-                </i>
-            </div>
+            
         </div>
         <div class="mt-4">
             <h2>
