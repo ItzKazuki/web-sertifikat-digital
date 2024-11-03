@@ -8,7 +8,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     return redirect("index.php");
 }
 
-if(!isset($_GET['id'])) {
+if (!isset($_GET['id'])) {
     return redirect('certificate', "Sertifikat tidak ditemukan", 'error');
 }
 
@@ -20,7 +20,7 @@ JOIN certificate_fields cf ON c.id = cf.certificate_id
 WHERE c.id = '$id'");
 
 if ($getCert->num_rows < 1) {
-return redirect("certificate", "Sertifikat tidak tersedia", "error");
+    return redirect("certificate", "Sertifikat tidak tersedia", "error");
 }
 
 $certDetails = $getCert->fetch_array(MYSQLI_ASSOC);
@@ -37,6 +37,16 @@ $getUsers = $conn->query("SELECT * FROM users WHERE role = 'participant'");
 
 while ($row = $getUsers->fetch_array()) {
     $users[] = $row;
+}
+
+$getTemplates = $conn->query("SELECT * FROM certificate_templates");
+
+if ($getTemplates->num_rows < 1) {
+    return redirect("certificate-template", "Tambahkan template terlebih dahulu", "error");
+}
+
+while ($row = $getTemplates->fetch_array()) {
+    $templates[] = $row;
 }
 
 ?>
@@ -280,7 +290,7 @@ while ($row = $getUsers->fetch_array()) {
                     <label for="judulSertifikat">
                         Judul Sertifikat :
                     </label>
-                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" value="<?=$certDetails['field_name']?>" required/>
+                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" value="<?= $certDetails['field_name'] ?>" required />
                 </div>
                 <div class="mb-3">
                     <label for="namaPeserta">
@@ -308,7 +318,7 @@ while ($row = $getUsers->fetch_array()) {
                     <label for="deskripsiSertifikat">
                         Deskripsi Sertifikat :
                     </label>
-                    <textarea id="deskripsiSertifikat" name="desc" placeholder="Masukan Deskripsi Sertifikat" rows="4" required><?= $certDetails['field_value']?></textarea>
+                    <textarea id="deskripsiSertifikat" name="desc" placeholder="Masukan Deskripsi Sertifikat" rows="4" required><?= $certDetails['field_value'] ?></textarea>
                 </div>
 
                 <div class="mb-3">
@@ -317,15 +327,17 @@ while ($row = $getUsers->fetch_array()) {
                     </label>
                     <input type="hidden" name="template" id="select_template">
                     <div class="row g-3" style="display: flex; justify-content: center;">
-                        <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
-                        </div>
-                        <div class="col-md-2">
+                        <?php foreach ($templates as $template) : ?>
+                            <div class="col-md-2">
+                                <img width="200px" src="../../assets/uploads/templates/<?= $template['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="<?= $template['id'] ?>" />
+                            </div>
+                        <?php endforeach; ?>
+                        <!-- <div class="col-md-2">
                             <img width="200px" src="../../assets/uploads/templates/template2.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
                         </div>
                         <div class="col-md-2">
                             <img width="200px" src="../../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -380,8 +392,8 @@ while ($row = $getUsers->fetch_array()) {
         const boxes = document.querySelectorAll('.box');
         let selectedBox = null;
 
-        document.getElementById('namaPeserta').value = "<?= $certDetails['user_id']?>";
-        document.getElementById('pilihPelatihan').value = "<?= $certDetails['event_id']?>";
+        document.getElementById('namaPeserta').value = "<?= $certDetails['user_id'] ?>";
+        document.getElementById('pilihPelatihan').value = "<?= $certDetails['event_id'] ?>";
 
         boxes.forEach(box => {
             box.addEventListener('click', () => {
@@ -394,7 +406,7 @@ while ($row = $getUsers->fetch_array()) {
                 document.getElementById('select_template').value = box.getAttribute('data-value');
             });
 
-            if(box.getAttribute('data-value') == "<?= $certDetails['certificate_template']?>") {
+            if (box.getAttribute('data-value') == "<?= $certDetails['certificate_template'] ?>") {
                 box.classList.add('selected');
                 selectedBox = box;
                 document.getElementById('select_template').value = box.getAttribute('data-value');

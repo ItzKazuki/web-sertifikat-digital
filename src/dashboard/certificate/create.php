@@ -20,6 +20,16 @@ while ($row = $getUsers->fetch_array()) {
     $users[] = $row;
 }
 
+$getTemplates = $conn->query("SELECT * FROM certificate_templates");
+
+if($getTemplates->num_rows < 1) {
+    return redirect("certificate-template", "Tambahkan template terlebih dahulu", "error");
+}
+
+while ($row = $getTemplates->fetch_array()) {
+    $templates[] = $row;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -260,7 +270,7 @@ while ($row = $getUsers->fetch_array()) {
                     <label for="judulSertifikat">
                         Judul Sertifikat :
                     </label>
-                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" required/>
+                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" required />
                 </div>
                 <div class="mb-3">
                     <label for="namaPeserta">
@@ -297,15 +307,17 @@ while ($row = $getUsers->fetch_array()) {
                     </label>
                     <input type="hidden" name="template" id="select_template">
                     <div class="row g-3" style="display: flex; justify-content: center;">
-                        <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
-                        </div>
-                        <div class="col-md-2">
+                        <?php foreach ($templates as $template) : ?>
+                            <div class="col-md-2">
+                                <img width="200px" src="../../assets/uploads/templates/<?= $template['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="<?= $template['id'] ?>" />
+                            </div>
+                        <?php endforeach; ?>
+                        <!-- <div class="col-md-2">
                             <img width="200px" src="../../assets/uploads/templates/template2.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
                         </div>
                         <div class="col-md-2">
                             <img width="200px" src="../../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
