@@ -201,23 +201,30 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
+                    <a href="../certificate" class="dropdown-item">List Sertifikat</a>
                     <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="../certificate" class="dropdown-item">Daftar Sertifikat</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
+                <div class="collapse" id="pelatihanMenu">
+                    <a href="../courses" class="dropdown-item">List Pelatihan</a>
+                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#templateSertifikat" role="button" aria-expanded="false" aria-controls="templateSertifikat">Manajemen Template Sertifikat</a>
+                <div class="collapse" id="templateSertifikat">
+                    <a href="../certificate-template/" class="dropdown-item">List Template</a>
+                    <a href="../certificate-template/create.php" class="dropdown-item">Tambah Template</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
+                    <a href="index.php" class="dropdown-item">List Pengguna</a>
                     <a href="create.php" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="index.php" class="dropdown-item">Daftar Pengguna</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
-                <div class="collapse" id="pelatihanMenu">
-                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
-                    <a href="../courses" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
             <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
@@ -250,32 +257,32 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
                     <label for="nik">
                         NIK
                     </label>
-                    <input id="nik" name="nik" placeholder="Ketik nik di sini" type="number" value="<?= $getUser['nik'] ?>" required/>
+                    <input id="nik" name="nik" placeholder="Ketik nik di sini" type="number" value="<?= $getUser['nik'] ?>" required />
 
                     <label for="username">
                         Nama Pengguna
                     </label>
-                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" value="<?= $getUser['full_name'] ?>" required/>
+                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" value="<?= $getUser['full_name'] ?>" required />
 
                     <label for="phone_number">
                         Nomor Telepon Pengguna
                     </label>
-                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" value="<?= $getUser['phone_number'] ?>" required/>
+                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" value="<?= $getUser['phone_number'] ?>" required />
 
                     <label for="email">
                         Email Pengguna
                     </label>
-                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" value="<?= $getUser['email'] ?>" required/>
+                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" value="<?= $getUser['email'] ?>" required />
 
                     <label for="password">
                         Kata Sandi
                     </label>
-                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" required/>
+                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" required />
 
                     <label for="confirm-password">
                         Konfirmasi Kata Sandi
                     </label>
-                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" required/>
+                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" required />
 
                     <label for="category">
                         Kategori Pengguna

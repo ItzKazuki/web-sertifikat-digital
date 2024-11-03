@@ -202,7 +202,7 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
 
         <!-- Sertifikat Cards -->
 
-        <div class="row g-3" style="display: flex; justify-content:center;">
+        <!-- <div class="row g-3" style="display: flex; justify-content:center;">
             <div class="col-xl-2">
                 <img width="200px" src="../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
             </div>
@@ -212,7 +212,7 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
             <div class="col-xl-2">
                 <img width="200px" src="../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- Bootstrap JS -->
