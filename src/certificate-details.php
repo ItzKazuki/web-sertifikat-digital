@@ -31,10 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
             }
 
-            while($row = $getCert->fetch_array()) {
+            while ($row = $getCert->fetch_array()) {
                 $certificates[] = $row;
             }
-
         } else {
             $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
             FROM certificates c
@@ -65,8 +64,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function downloadCertificate($file_name)
 {
-    // header("content-type: application/pdf");
-    // debug("assets/uploads/certificates/" . $file_name);
+    if (!is_file("assets/uploads/certificates/" . $file_name)) {
+        return redirect("src/index.php", "Certificate not found, please contact Administrator", "error");
+    }
+
     $pdf = new FPDF();
     $pdf->AddPage("L", "A5");
 
@@ -191,21 +192,21 @@ function downloadCertificate($file_name)
     <?php } else { ?>
         <!-- Main Content -->
         <main class="container text-center my-5 p-4">
-        <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $certificates[0]['full_name'] ?></h1>
-        <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
+            <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $certificates[0]['full_name'] ?></h1>
+            <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
-        <div class="row">
-            <?php foreach ($certificates as $certificate) : ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card bg-light p-4 text-center shadow-sm">
-                        <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
-                        <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
-                        <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+            <div class="row">
+                <?php foreach ($certificates as $certificate) : ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-light p-4 text-center shadow-sm">
+                            <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
+                            <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
+                            <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </main>
+                <?php endforeach; ?>
+            </div>
+        </main>
     <?php } ?>
 
     <!-- Footer -->

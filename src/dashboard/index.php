@@ -14,6 +14,14 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
 
 // debug($countCertificate);]
 
+$getAllCertificates = $conn->query("SELECT c.*, cf.file_name FROM certificates c JOIN certificate_fields cf ON c.id = cf.certificate_id");
+
+while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
+    $certificates[] = $row;
+}
+
+// debug($certificates);
+
 ?>
 
 <!DOCTYPE html>
@@ -32,16 +40,18 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        *{
+        * {
             text-decoration: none;
         }
 
-        button:hover{
+        button:hover {
             color: white;
         }
+
         .dropdown-toggle::after {
             display: none;
         }
+
         /* Sidebar styling */
         .sidebar {
             background-color: #1d3c6e;
@@ -181,7 +191,9 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="..">Landing Page</a></li>
                         <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li>
                             <form class="dropdown-item" action="../service/auth.php" method="post">
                                 <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
@@ -221,17 +233,13 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
 
         <!-- Sertifikat Cards -->
 
-        <!-- <div class="row g-3" style="display: flex; justify-content:center;">
-            <div class="col-xl-2">
-                <img width="200px" src="../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
-            </div>
-            <div class="col-xl-2">
-                <img width="200px" src="../assets/uploads/templates/template2.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
-            </div>
-            <div class="col-xl-2">
-                <img width="200px" src="../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
-            </div>
-        </div> -->
+        <div class="row g-3" style="display: flex; justify-content:center;">
+            <?php foreach ($certificates as $certificate) : ?>
+                <div class="col-xl-3">
+                    <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <!-- Bootstrap JS -->

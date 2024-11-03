@@ -14,7 +14,7 @@ while ($row = $getCourses->fetch_array()) {
     $courses[] = $row;
 }
 
-$getUsers = $conn->query("SELECT * FROM users WHERE role = 'participant'");
+$getUsers = $conn->query("SELECT * FROM users WHERE role = 'participant' ORDER BY full_name ASC");
 
 while ($row = $getUsers->fetch_array()) {
     $users[] = $row;
