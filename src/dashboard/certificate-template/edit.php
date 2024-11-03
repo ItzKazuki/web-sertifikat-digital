@@ -8,14 +8,14 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     return redirect("index.php");
 }
 
-if(!isset($_GET['id'])) {
-  return redirect("dashboard/certificate-template", "Sertifikat tidak tersedia", "error");
+if (!isset($_GET['id'])) {
+    return redirect("dashboard/certificate-template", "Sertifikat tidak tersedia", "error");
 }
 
-$getTemplateData = $conn->query("SELECT * FROM certificate_templates WHERE id = '".$_GET['id']."'");
+$getTemplateData = $conn->query("SELECT * FROM certificate_templates WHERE id = '" . $_GET['id'] . "'");
 
-if($getTemplateData->num_rows < 1) {
-  return redirect("dashboard/certificate-template", "Sertifikat tidak tersedia", "error");
+if ($getTemplateData->num_rows < 1) {
+    return redirect("dashboard/certificate-template", "Sertifikat tidak tersedia", "error");
 }
 
 $getTemplateData = $getTemplateData->fetch_array();
@@ -260,12 +260,15 @@ $getTemplateData = $getTemplateData->fetch_array();
                 </i>
             </div>
         </div>
-        <div class="form-container" style="display: flex; justify-content: center; align-items: center;">
-          <img src="../../assets/uploads/templates/<?= $getTemplateData['file_name'] ?>" width="450" alt="">
+        <div class="form-container" id="preview">
+            <h4>Preview</h4>
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <img id="previewImg" width="450" alt="">
+            </div>
         </div>
         <div class="form-container mt-4">
             <form action="../../service/certificate_template.php" method="post" enctype="multipart/form-data">
-              <input type="hidden" name="id" value="<?= $getTemplateData['id'] ?>">
+                <input type="hidden" name="id" value="<?= $getTemplateData['id'] ?>">
                 <div class="mb-3">
                     <label for="course_name">
                         Nama Template :
@@ -273,10 +276,10 @@ $getTemplateData = $getTemplateData->fetch_array();
                     <input id="course_name" name="template_name" placeholder="Ketik nama template di sini" type="text" value="<?= $getTemplateData['template_name'] ?>" required />
                 </div>
                 <div class="mb-3">
-                    <label for="course_date">
+                    <label for="template_file">
                         File Template :
                     </label>
-                    <input id="course_date" name="template_file" type="file" />
+                    <input id="template_file" name="template_file" type="file" />
                 </div>
                 <div class="mb-3">
                     <label for="descrtiption">
@@ -330,6 +333,26 @@ $getTemplateData = $getTemplateData->fetch_array();
     }
     ?>
     <script>
+        const fileInput = document.getElementById('template_file');
+        const previewImg = document.getElementById('previewImg');
+
+        previewImg.src = "../../assets/uploads/templates/<?= $getTemplateData['file_name'] ?>" ;
+
+        fileInput.addEventListener('change', e => {
+            const file = e.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = e => {
+                    previewImg.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            }
+
+            // document.getElementById('preview').style.display = 'block';
+        })
     </script>
 </body>
 

@@ -211,6 +211,10 @@ function createParticipantCertificate($cert_id)
     $fileName = "certificates-$time-" . $getCert['certificate_code'] . ".png";
     $filePath = "../assets/uploads/certificates/$fileName"; // set path file
 
+    if(!is_dir("../assets/uploads/certificates")) {
+      mkdir("../assets/uploads/certificates", 0777);
+    }
+    
     // upload to path
     imagepng($img, $filePath);
     // change owner and group

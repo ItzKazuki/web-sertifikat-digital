@@ -14,7 +14,7 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-$getCert = $conn->query("SELECT c.*, cf.id AS certificate_details_id, cf.field_name, cf.field_value
+$getCert = $conn->query("SELECT c.*, cf.id AS certificate_details_id, cf.field_name, cf.field_value, cf.file_name
 FROM certificates c
 JOIN certificate_fields cf ON c.id = cf.certificate_id 
 WHERE c.id = '$id'");
@@ -22,6 +22,7 @@ WHERE c.id = '$id'");
 if ($getCert->num_rows < 1) {
     return redirect("certificate", "Sertifikat tidak tersedia", "error");
 }
+
 
 $certDetails = $getCert->fetch_array(MYSQLI_ASSOC);
 
@@ -288,6 +289,12 @@ while ($row = $getTemplates->fetch_array()) {
                 </i>
                 <i class="fas fa-cog">
                 </i>
+            </div>
+        </div>
+        <div class="form-container">
+            <h4>Preview</h4>
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <img src="../../assets/uploads/certificates/<?= $certDetails['file_name'] ?>" width="450" alt="">
             </div>
         </div>
         <div class="form-container mt-4">

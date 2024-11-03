@@ -137,21 +137,21 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="certificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="certificate/index.php" class="dropdown-item">List Sertifikat</a>
                     <a href="certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="courses/index.php" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="courses/index.php" class="dropdown-item">List Pelatihan</a>
                     <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#templateSertifikat" role="button" aria-expanded="false" aria-controls="templateSertifikat">Manajemen Template Sertifikat</a>
                 <div class="collapse" id="templateSertifikat">
-                    <a href="certificate-template/" class="dropdown-item">Daftar Template</a>
+                    <a href="certificate-template/" class="dropdown-item">List Template</a>
                     <a href="certificate-template/create.php" class="dropdown-item">Tambah Template</a>
                 </div>
             </li>
@@ -159,7 +159,7 @@ $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="users/" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="users/" class="dropdown-item">List Pengguna</a>
                     <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
                 </div>
             </li>

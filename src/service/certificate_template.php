@@ -169,7 +169,10 @@ function upload(array $file, $fileNameSlug)
     return [null, "Tipe upload file harus berupa .png"];
   }
 
-  // $fileName = date('m-d-Y', time()) . "-" . $fileName;
+  if(!is_dir("../assets/uploads/templates")) {
+    mkdir("../assets/uploads/templates", 0777);
+  }
+
   // upload gambar
   move_uploaded_file($fileTmp, "../assets/uploads/templates/" . $fileNameSlug . ".png");
   chgrp("../assets/uploads/templates/" . $fileNameSlug . ".png", 'www-data');

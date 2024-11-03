@@ -238,6 +238,12 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                 Buat Pelatihan Baru
             </h1>
         </div>
+        <div class="form-container" style="display: none;" id="preview">
+            <h4>Preview</h4>
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <img id="previewImg" width="450" alt="">
+            </div>
+        </div>
         <div class="form-container mt-4">
             <form action="../../service/certificate_template.php" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
@@ -247,10 +253,10 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                     <input id="course_name" name="template_name" placeholder="Ketik nama template di sini" type="text" required />
                 </div>
                 <div class="mb-3">
-                    <label for="course_date">
+                    <label for="template_file">
                         File Template :
                     </label>
-                    <input id="course_date" name="template_file" type="file" required />
+                    <input id="template_file" name="template_file" type="file" required />
                 </div>
                 <div class="mb-3">
                     <label for="descrtiption">
@@ -304,6 +310,24 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     }
     ?>
     <script>
+        const fileInput = document.getElementById('template_file');
+        const previewImg = document.getElementById('previewImg');
+
+        fileInput.addEventListener('change', e => {
+            const file = e.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = e => {
+                    previewImg.src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            }
+
+            document.getElementById('preview').style.display = 'block';
+        })
     </script>
 </body>
 

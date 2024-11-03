@@ -10,22 +10,45 @@ require('service/fpdf186/fpdf.php');
 //     return redirect("index.php");
 // }
 
+$type = "id";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['cari'])) {
         $id = htmlspecialchars($_POST['id']);
 
-        $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
+        if (is_numeric($id)) {
+            // skd
+            $type = "nik";
+
+            $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
+            FROM certificates c
+            JOIN certificate_fields cf ON c.id = cf.certificate_id 
+            JOIN users u ON c.user_id = u.id 
+            JOIN courses e ON c.event_id = e.id 
+            WHERE u.nik = '$id'");
+
+            if ($getCert->num_rows < 1) {
+                return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
+            }
+
+            while($row = $getCert->fetch_array()) {
+                $certificates[] = $row;
+            }
+
+        } else {
+            $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
             FROM certificates c
             JOIN certificate_fields cf ON c.id = cf.certificate_id 
             JOIN users u ON c.user_id = u.id 
             JOIN courses e ON c.event_id = e.id 
             WHERE c.certificate_code = '$id'");
 
-        if ($getCert->num_rows < 1) {
-            return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
-        }
+            if ($getCert->num_rows < 1) {
+                return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
+            }
 
-        $certDetails = $getCert->fetch_array();
+            $certDetails = $getCert->fetch_array();
+        }
     }
 
     if (isset($_POST['download'])) {
@@ -143,27 +166,47 @@ function downloadCertificate($file_name)
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="content">
-        <h1 class="display-4">SERTIF Name</h1>
-        <img src="assets/uploads/certificates/<?= $certDetails['file_name'] ?>" class="certificate-placeholder">
+    <?php if ($type == "id") { ?>
+        <!-- Main Content -->
+        <div class="content">
+            <h1 class="display-4">SERTIF Name</h1>
+            <img src="assets/uploads/certificates/<?= $certDetails['file_name'] ?>" class="certificate-placeholder">
 
-        <!-- Information Section -->
-        <div class="info-section">
-            <h3>INFORMASI</h3>
-            <p>Nama Pelatihan: <?= $certDetails['event_name'] ?></p>
-            <p>Penyelenggara: <?= $certDetails['organizer'] ?></p>
-            <p>Peserta: <?= $certDetails['full_name'] ?></p>
-            <p>Pelatihan dimulai: <?= $certDetails['event_date'] ?></p>
+            <!-- Information Section -->
+            <div class="info-section">
+                <h3>INFORMASI</h3>
+                <p>Nama Pelatihan: <?= $certDetails['event_name'] ?></p>
+                <p>Penyelenggara: <?= $certDetails['organizer'] ?></p>
+                <p>Peserta: <?= $certDetails['full_name'] ?></p>
+                <p>Pelatihan dimulai: <?= $certDetails['event_date'] ?></p>
+            </div>
+
+            <!-- Download Button -->
+            <form method="post">
+                <input type="hidden" name="file_name" value="<?= $certDetails['file_name'] ?>">
+                <input type="hidden" name="code" value="<?= $certDetails['certificate_code'] ?>">
+                <button type="submit" name="download" class="download-btn mt-3" style="background-color: #294486;">UNDUH SERTIFIKAT</button>
+            </form>
         </div>
+    <?php } else { ?>
+        <!-- Main Content -->
+        <main class="container text-center my-5 p-4">
+        <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $certificates[0]['full_name'] ?></h1>
+        <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
-        <!-- Download Button -->
-        <form method="post">
-            <input type="hidden" name="file_name" value="<?= $certDetails['file_name'] ?>">
-            <input type="hidden" name="code" value="<?= $certDetails['certificate_code'] ?>">
-            <button type="submit" name="download" class="download-btn mt-3" style="background-color: #294486;">UNDUH SERTIFIKAT</button>
-        </form>
-    </div>
+        <div class="row">
+            <?php foreach ($certificates as $certificate) : ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-light p-4 text-center shadow-sm">
+                        <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
+                        <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
+                        <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </main>
+    <?php } ?>
 
     <!-- Footer -->
     <footer style="background-color: #294486;">
