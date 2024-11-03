@@ -46,44 +46,134 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 
-function createTemplate() {
+function createTemplate()
+{
   global $conn;
+
+  $name = htmlspecialchars($_POST['template_name']);
+  $desc = htmlspecialchars($_POST['description']);
+
+  $slug_id = slugify($name);
+
+  // add data to database
+  $user = $conn->query("SELECT * FROM certificate_templates WHERE id = '$slug_id'");
+
+  if ($user->num_rows > 0) {
+    return redirect("dashboard/certificate-template/create.php", "nama file sudah digunakan", 'error');
+  } else {
+
+    $file = $_FILES['template_file'];
+    $template = upload($file, $slug_id);
+
+    if (is_null($template[0])) {
+      return redirect("dashboard/certificate-template", $template[1], "error");
+    }
+
+    $sql = "INSERT INTO certificate_templates (id, file_name, template_name, template_desc, uploader_id, created_at) VALUES ('$slug_id', '" . $template[0] . "', '$name', '$desc', '" . $_SESSION['id'] . "', current_timestamp())";
+
+    if ($conn->query($sql)) {
+      return redirect("dashboard/certificate-template", "berhasil membuat template baru");
+    }
+  }
 }
 
-function editTemplate() {
+function editTemplate()
+{
   global $conn;
+
+  $id = htmlspecialchars($_POST['id']);
+  $name = htmlspecialchars($_POST['template_name']);
+  $desc = htmlspecialchars($_POST['description']);
+
+  $slug_id = slugify($name);
+
+  // add data to database
+  $templateData = $conn->query("SELECT * FROM certificate_templates WHERE id = '$slug_id'");
+
+  if ($templateData->num_rows > 0) {
+    return redirect("dashboard/certificate-template/edit.php?id=$id", "nama file sudah digunakan", 'error');
+  } else {
+
+    $file = $_FILES['template_file'];
+
+    // hapus gambar sebelumnya
+    $filePath = "../assets/uploads/templates/" . $templateData->fetch_array()['file_name'];
+
+    if (file_exists($filePath)) {
+      if (!unlink($filePath)) {
+        return redirect("dashboard/certificate-template", "Error saat menghapus gambar, silahkan ulang lagi nanti", 'error');
+      }
+    }
+
+    $template = upload($file, $slug_id);
+
+    if (is_null($template[0])) {
+      return redirect("dashboard/certificate-template", $template[1], "error");
+    }
+
+    $sql = "UPDATE certificate_templates SET id = '$slug_id, file_name = '" . $template[0] . "', template_name = '$name', template_desc = '$desc', uploader_id = '" . $_SESSION['id'] . "' WHERE id = '$id'";
+
+    if ($conn->query($sql)) {
+      return redirect("dashboard/certificate-template", "berhasil membuat template baru");
+    }
+  }
 }
 
-function deleteTemplate() {
+function deleteTemplate()
+{
   global $conn;
+
+  $id = htmlspecialchars($_POST['id']);
+
+  if (!isset($id)) {
+    return redirect("dashboard/certificate-template/", "Sertifikat tidak ditemukan", "error");
+  }
+
+  // hapus gambar sebelumnya
+  $templateData = $conn->query("SELECT * FROM certificate_templates WHERE id = '$id'");
+  $filePath = "../assets/uploads/templates/" . $templateData->fetch_array()['file_name'];
+
+  if (file_exists($filePath)) {
+    if (!unlink($filePath)) {
+      return redirect("dashboard/certificate-template", "Error saat menghapus gambar, silahkan ulang lagi nanti", 'error');
+    }
+  }
+
+  $sql = "DELETE FROM certificate_templates WHERE id = '$id'";
+
+  if ($conn->query($sql) == 1) {
+    return redirect("dashboard/certificate-template/", "Berhasil menghapus pelatihan dengan id: $id");
+  } else {
+    return redirect("dashboard/certificate-template", "gagal menghapus pelatihan", "error");
+  }
 }
 
-function upload(string $name) {
-  $file = $_FILES[$name];
+function upload(array $file, $fileNameSlug)
+{
 
   $fileName = $file['name'];
   $fileSize = $file['size'];
   $fileErr = $file['error'];
   $fileTmp = $file['tmp_name'];
 
-  if($fileErr === 4) {
-    $_SESSION['error'] = "harus masukan gambar";
-    return false;
+  if ($fileErr === 4) {
+    return [null, "Gambar tidak ditemukan, upload gambar terlebih dahulu"];
   }
 
-  $validExstension = ['jpg', 'jpeg', 'png'];
+  $validExstension = ['png'];
   $fileExstension = explode('.', $fileName);
   $fileExstension = end($fileExstension);
   $fileExstension = strtolower($fileExstension);
 
-  if(!in_array($fileExstension, $validExstension)) {
-    $_SESSION['error'] = "gambar tidak valid";
-    return false;
+  if (!in_array($fileExstension, $validExstension)) {
+    return [null, "Tipe upload file harus berupa .png"];
   }
 
-  $fileName = date('m-d-Y', time()) . "-" . $fileName;
+  // $fileName = date('m-d-Y', time()) . "-" . $fileName;
   // upload gambar
-  move_uploaded_file($fileTmp, "../assets/uploads/templates" . $fileName);
+  move_uploaded_file($fileTmp, "../assets/uploads/templates/" . $fileNameSlug . ".png");
+  chgrp("../assets/uploads/templates/" . $fileNameSlug . ".png", 'www-data');
+  chown("../assets/uploads/templates/" . $fileNameSlug . ".png", "www-data");
 
-  return $fileName;
+  return [$fileNameSlug . ".png", null];
 }
