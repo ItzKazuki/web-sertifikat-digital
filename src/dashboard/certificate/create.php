@@ -20,6 +20,16 @@ while ($row = $getUsers->fetch_array()) {
     $users[] = $row;
 }
 
+$getTemplates = $conn->query("SELECT * FROM certificate_templates");
+
+if($getTemplates->num_rows < 1) {
+    return redirect("certificate-template", "Tambahkan template terlebih dahulu", "error");
+}
+
+while ($row = $getTemplates->fetch_array()) {
+    $templates[] = $row;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -216,23 +226,30 @@ while ($row = $getUsers->fetch_array()) {
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
+                    <a href="index.php" class="dropdown-item">List Sertifikat</a>
                     <a href="create.php" class="dropdown-item">Buat Sertifikat</a>
-                    <a href="index.php" class="dropdown-item">Daftar Sertifikat</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
+                <div class="collapse" id="pelatihanMenu">
+                    <a href="../courses" class="dropdown-item">List Pelatihan</a>
+                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#templateSertifikat" role="button" aria-expanded="false" aria-controls="templateSertifikat">Manajemen Template Sertifikat</a>
+                <div class="collapse" id="templateSertifikat">
+                    <a href="../certificate-template/" class="dropdown-item">List Template</a>
+                    <a href="../certificate-template/create.php" class="dropdown-item">Tambah Template</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
+                    <a href="../users" class="dropdown-item">List Pengguna</a>
                     <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
-                    <a href="../users" class="dropdown-item">Daftar Pengguna</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
-                <div class="collapse" id="pelatihanMenu">
-                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
-                    <a href="../courses" class="dropdown-item">Daftar Pelatihan</a>
                 </div>
             </li>
             <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
@@ -260,7 +277,7 @@ while ($row = $getUsers->fetch_array()) {
                     <label for="judulSertifikat">
                         Judul Sertifikat :
                     </label>
-                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" required/>
+                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" required />
                 </div>
                 <div class="mb-3">
                     <label for="namaPeserta">
@@ -297,15 +314,17 @@ while ($row = $getUsers->fetch_array()) {
                     </label>
                     <input type="hidden" name="template" id="select_template">
                     <div class="row g-3" style="display: flex; justify-content: center;">
-                        <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
-                        </div>
-                        <div class="col-md-2">
+                        <?php foreach ($templates as $template) : ?>
+                            <div class="col-md-2">
+                                <img width="200px" src="../../assets/uploads/templates/<?= $template['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="<?= $template['id'] ?>" />
+                            </div>
+                        <?php endforeach; ?>
+                        <!-- <div class="col-md-2">
                             <img width="200px" src="../../assets/uploads/templates/template2.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
                         </div>
                         <div class="col-md-2">
                             <img width="200px" src="../../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 

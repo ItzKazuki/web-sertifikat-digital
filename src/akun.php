@@ -1,11 +1,47 @@
 <?php
 session_start();
 
+include 'service/connection.php';
 include 'service/utility.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
+
+$getAllCertificatesByIdQuery = "SELECT 
+    c.id AS certificate_id,
+    c.user_id,
+    c.event_id,
+    c.certificate_code,
+    c.issued_at,
+    c.certificate_template,
+    cf.file_name,
+    cf.field_name,
+    cf.field_value,
+    e.event_name,
+    e.event_description,
+    e.event_date,
+    e.organizer,
+    u.full_name,
+    u.email,
+    u.phone_number
+FROM 
+    certificates AS c
+JOIN 
+    certificate_fields AS cf ON c.id = cf.certificate_id
+JOIN 
+    courses AS e ON c.event_id = e.id
+JOIN 
+    users AS u ON c.user_id = u.id
+WHERE 
+    u.id = " . $_SESSION['id'];
+
+$getAllCertificates = $conn->query($getAllCertificatesByIdQuery);
+
+while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
+    $certificates[] = $row;
+}
+
 
 ?>
 
@@ -59,42 +95,15 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
         <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
         <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card bg-light p-4 text-center shadow-sm">
-                    <h3 class="card-title h5">Kategori</h3>
-                    <div class="card-body bg-secondary text-light small">Dimiliki</div>
+            <?php foreach ($certificates as $certificate) : ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-light p-4 text-center shadow-sm">
+                        <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
+                        <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
+                        <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card bg-light p-4 text-center shadow-sm">
-                    <h3 class="card-title h5">Kategori</h3>
-                    <div class="card-body bg-secondary text-light small">Dimiliki</div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card bg-light p-4 text-center shadow-sm">
-                    <h3 class="card-title h5">Kategori</h3>
-                    <div class="card-body bg-secondary text-light small">Dimiliki</div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card bg-light p-4 text-center shadow-sm">
-                    <h3 class="card-title h5">Kategori</h3>
-                    <div class="card-body bg-secondary text-light small">Dimiliki</div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card bg-light p-4 text-center shadow-sm">
-                    <h3 class="card-title h5">Kategori</h3>
-                    <div class="card-body bg-secondary text-light small">Dimiliki</div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card bg-light p-4 text-center shadow-sm">
-                    <h3 class="card-title h5">Kategori</h3>
-                    <div class="card-body bg-secondary text-light small">Dimiliki</div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </main>
 

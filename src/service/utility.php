@@ -28,6 +28,22 @@ function base_url() {
   return rtrim($baseUrl, '/'); // Remove trailing slash if necessary
 }
 
+function slugify($string) {
+  // Convert to lowercase
+  $string = strtolower($string);
+  
+  // Remove special characters
+  $string = preg_replace('/[^a-z0-9\s-]/', '', $string);
+  
+  // Replace spaces and multiple hyphens with a single hyphen
+  $string = preg_replace('/[\s-]+/', '-', $string);
+  
+  // Trim hyphens from the beginning and end
+  $string = trim($string, '-');
+  
+  return $string;
+}
+
 function debug($var)
 {
   print_r($var);
