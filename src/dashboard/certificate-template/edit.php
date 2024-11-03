@@ -1,17 +1,24 @@
 <?php
 session_start();
 
+include '../../service/connection.php';
 include '../../service/utility.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
-if (!isset($_GET['id'])) {
-    return redirect("dashboard/courses");
+if(!isset($_GET['id'])) {
+  return redirect("dashboard/certificate-template", "Sertifikat tidak tersedia", "error");
 }
 
-$getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fetch_array();
+$getTemplateData = $conn->query("SELECT * FROM certificate_templates WHERE id = '".$_GET['id']."'");
+
+if($getTemplateData->num_rows < 1) {
+  return redirect("dashboard/certificate-template", "Sertifikat tidak tersedia", "error");
+}
+
+$getTemplateData = $getTemplateData->fetch_array();
 
 ?>
 
@@ -29,6 +36,7 @@ $getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fet
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         /* Sidebar styling */
         .sidebar {
@@ -204,33 +212,36 @@ $getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fet
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="../certificate/index.php" class="dropdown-item">List Sertifikat</a>
+                    <a href="../certificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
                     <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="index.php" class="dropdown-item">List Pelatihan</a>
-                    <a href="create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="../courses/index.php" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#templateSertifikat" role="button" aria-expanded="false" aria-controls="templateSertifikat">Manajemen Template Sertifikat</a>
                 <div class="collapse" id="templateSertifikat">
-                    <a href="../certificate-template/" class="dropdown-item">List Template</a>
-                    <a href="../certificate-template/create.php" class="dropdown-item">Tambah Template</a>
+                    <a href="index.php" class="dropdown-item">Daftar Template</a>
+                    <a href="create.php" class="dropdown-item">Tambah Template</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="../users/" class="dropdown-item">List Pengguna</a>
+                    <a href="../users/" class="dropdown-item">Daftar Pengguna</a>
                     <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
                 </div>
             </li>
             <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
+            <li class="nav-item">
+                <form action="../../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
+            </li>
         </ul>
     </div>
 
@@ -249,39 +260,36 @@ $getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fet
                 </i>
             </div>
         </div>
+        <div class="form-container" style="display: flex; justify-content: center; align-items: center;">
+          <img src="../../assets/uploads/templates/<?= $getTemplateData['file_name'] ?>" width="450" alt="">
+        </div>
         <div class="form-container mt-4">
-            <form action="../../service/courses.php" method="post">
-                <input type="hidden" name="id" value="<?= $getCourse[0] ?>">
+            <form action="../../service/certificate_template.php" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="id" value="<?= $getTemplateData['id'] ?>">
                 <div class="mb-3">
                     <label for="course_name">
-                        Nama Pelatihan :
+                        Nama Template :
                     </label>
-                    <input id="course_name" name="course_name" placeholder="Ketik nama pelatihan di sini" type="text" value="<?= $getCourse[1] ?>" required/>
+                    <input id="course_name" name="template_name" placeholder="Ketik nama template di sini" type="text" value="<?= $getTemplateData['template_name'] ?>" required />
                 </div>
                 <div class="mb-3">
                     <label for="course_date">
-                        Tanggal Pelatihan :
+                        File Template :
                     </label>
-                    <input id="course_date" name="course_date" placeholder="Masukan tanggal Pelatihan" type="date" min="<?php echo date("Y-m-d"); ?>" value="<?= $getCourse[3] ?>" required />
-                </div>
-                <div class="mb-3">
-                    <label for="organization">
-                        Pembuat Acara/Organisasi/PT Pelatihan :
-                    </label>
-                    <input id="organization" name="course_organizer" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" value="<?= $getCourse[4] ?>" required/>
+                    <input id="course_date" name="template_file" type="file" />
                 </div>
                 <div class="mb-3">
                     <label for="descrtiption">
-                        Deskripsi Pelatihan :
+                        Deskripsi Template :
                     </label>
-                    <textarea id="descrtiption" name="description" placeholder="Masukan Deskripsi Sertifikat" rows="4" required><?= $getCourse[2] ?></textarea>
+                    <textarea id="descrtiption" name="description" placeholder="Masukan Deskripsi Singkat template " rows="4" required><?= $getTemplateData['template_desc'] ?></textarea>
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-danger" type="button">
+                    <a href="index.php" class="btn btn-danger" type="button">
                         Batal
-                    </button>
-                    <button class="btn btn-success" type="submit" name="type" value="edit">
+                    </a>
+                    <button class="btn btn-success" type="submit" name="type" value="create">
                         Simpan
                     </button>
                 </div>
@@ -322,20 +330,6 @@ $getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fet
     }
     ?>
     <script>
-        const boxes = document.querySelectorAll('.box');
-        let selectedBox = null;
-
-        boxes.forEach(box => {
-            box.addEventListener('click', () => {
-                if (selectedBox) {
-                    selectedBox.classList.remove('selected');
-                }
-                box.classList.add('selected');
-                selectedBox = box;
-
-                document.getElementById('selectedValue').value = box.getAttribute('data-value');
-            });
-        });
     </script>
 </body>
 
