@@ -194,7 +194,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             <h4>Dashboard Sertifikat</h4>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Beranda</a></li>
+            <li class="nav-item"><a href="../index.php" class="nav-link">Beranda</a></li>
             <!-- Manajemen Sertifikat Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>

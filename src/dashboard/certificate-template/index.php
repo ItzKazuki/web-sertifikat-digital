@@ -8,7 +8,9 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
   return redirect("index.php");
 }
 
-$getAllCertificateWithField = $conn->query("SELECT * FROM certificate_templates");
+$getAllCertificateWithField = $conn->query("SELECT ct.*, u.full_name 
+FROM certificate_templates ct 
+JOIN users u ON ct.uploader_id = u.id;");
 
 while ($row = $getAllCertificateWithField->fetch_array()) {
   $certificates[] = $row;
@@ -111,20 +113,20 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
           <h4>Dashboard Sertifikat</h4>
         </div>
         <ul class="nav flex-column">
-          <li class="nav-item"><a href="#" class="nav-link">Beranda</a></li>
+          <li class="nav-item"><a href="../index.php" class="nav-link">Beranda</a></li>
           <!-- Manajemen Sertifikat Dropdown -->
           <li class="nav-item">
             <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
             <div class="collapse" id="sertifikatMenu">
-              <a href="certificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
-              <a href="certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
+              <a href="../certificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
+              <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
             <div class="collapse" id="pelatihanMenu">
-              <a href="courses/index.php" class="dropdown-item">Daftar Pelatihan</a>
-              <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+              <a href="../courses/index.php" class="dropdown-item">Daftar Pelatihan</a>
+              <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
             </div>
           </li>
           <li class="nav-item">
@@ -138,13 +140,13 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
           <li class="nav-item">
             <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
             <div class="collapse" id="penggunaMenu">
-              <a href="users/" class="dropdown-item">Daftar Pengguna</a>
-              <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
+              <a href="../users/" class="dropdown-item">Daftar Pengguna</a>
+              <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
             </div>
           </li>
-          <li class="nav-item"><a href="reports.php" class="nav-link">Laporan</a></li>
+          <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
           <li class="nav-item">
-            <form action="../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
+            <form action="../../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
           </li>
         </ul>
       </div>
@@ -197,7 +199,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                   <td><img class="center-image" src="../../assets/uploads/templates/<?= $cert['file_name'] ?>" width="200px" alt=""></td>
                   <td><?= $cert['template_name'] ?></td>
                   <td><?= hummanDate($cert['created_at']) ?></td>
-                  <td><?= $cert['name'] ?></td>
+                  <td><?= $cert['full_name'] ?></td>
                   <td>
                     <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
                     <button class="btn btn-sm btn-danger" onclick="deleteCertificateTemplate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateTemplateModal">Hapus</button>
