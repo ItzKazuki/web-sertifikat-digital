@@ -298,7 +298,7 @@ while ($row = $getUser->fetch_row()) {
                             <td><?= hummanDate($user[7]) ?></td>
                             <td>
                                 <a href="edit.php?id=<?= $user[0] ?>" class="btn btn-sm btn-primary">Edit</a>
-                                <a class="btn btn-sm btn-danger" onclick="editUser('<?= $user[0] ?>')" data-bs-toggle="modal" data-bs-target="#exampleModal">Hapus</a>
+                                <a class="btn btn-sm btn-danger" onclick="deleteUser('<?= $user[0] ?>')" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Hapus</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -312,11 +312,11 @@ while ($row = $getUser->fetch_row()) {
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
+                    <h5 class="modal-title" id="deleteUserModalLabel">Peringatan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -364,7 +364,7 @@ while ($row = $getUser->fetch_row()) {
     }
     ?>
     <script>
-        function editUser(id) {
+        function deleteUser(id) {
             // console.log(id);
             document.getElementById('deleteUserWithID').value = id;
         }

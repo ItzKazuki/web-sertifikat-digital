@@ -8,6 +8,25 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
     return redirect("index.php");
 }
 
+if(!isset($_GET['id'])) {
+    return redirect('certificate', "Sertifikat tidak ditemukan", 'error');
+}
+
+$id = $_GET['id'];
+
+$getCert = $conn->query("SELECT c.*, cf.id AS certificate_details_id, cf.field_name, cf.field_value
+FROM certificates c
+JOIN certificate_fields cf ON c.id = cf.certificate_id 
+WHERE c.id = '$id'");
+
+if ($getCert->num_rows < 1) {
+return redirect("certificate", "Sertifikat tidak tersedia", "error");
+}
+
+$certDetails = $getCert->fetch_array(MYSQLI_ASSOC);
+
+// debug($certDetails);
+
 $getCourses = $conn->query("SELECT * FROM courses");
 
 while ($row = $getCourses->fetch_array()) {
@@ -199,7 +218,7 @@ while ($row = $getUsers->fetch_array()) {
         }
 
         .selected {
-            border: 3px solid blue;
+            border: 3px solid red;
         }
     </style>
 </head>
@@ -256,18 +275,18 @@ while ($row = $getUsers->fetch_array()) {
         </div>
         <div class="form-container mt-4">
             <form action="../../service/certificate.php" method="POST">
+                <input type="hidden" name="id" value="<?= $certDetails['id'] ?>">
                 <div class="mb-3">
                     <label for="judulSertifikat">
                         Judul Sertifikat :
                     </label>
-                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" />
+                    <input id="judulSertifikat" placeholder="Ketik judul di sini" name="title" type="text" value="<?=$certDetails['field_name']?>" required/>
                 </div>
                 <div class="mb-3">
                     <label for="namaPeserta">
                         Nama Peserta :
                     </label>
-                    <!-- <input id="namaPeserta" placeholder="Masukan Nama Peserta" name="participation_name" type="text" /> -->
-                    <select name="id_peserta" id="namaPeserta">
+                    <select name="id_peserta" id="namaPeserta" required>
                         <option selected="selected">Pilih User</option>
                         <?php foreach ($users as $user) : ?>
                             <option value="<?= $user[0] ?>"><?= $user[2] ?></option>
@@ -278,51 +297,34 @@ while ($row = $getUsers->fetch_array()) {
                     <label for="pilihPelatihan">
                         Pelatihan :
                     </label>
-                    <!-- <input id="pilihPelatihan" placeholder="Masukan Nama Peserta" type="text" /> -->
-                    <select name="id_courses" id="pilihPelatihan">
+                    <select name="id_courses" id="pilihPelatihan" required>
                         <option selected="selected">Pilih Pelatihan</option>
                         <?php foreach ($courses as $course) : ?>
                             <option value="<?= $course[0] ?>"><?= $course[1] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <!-- <div class="mb-3">
-                    <label for="tanggalPenerbitan">
-                        Tanggal Penerbitan :
-                    </label>
-                    <input id="tanggalPenerbitan" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" />
-                </div> -->
                 <div class="mb-3">
                     <label for="deskripsiSertifikat">
                         Deskripsi Sertifikat :
                     </label>
-                    <textarea id="deskripsiSertifikat" name="desc" placeholder="Masukan Deskripsi Sertifikat" rows="4"></textarea>
+                    <textarea id="deskripsiSertifikat" name="desc" placeholder="Masukan Deskripsi Sertifikat" rows="4" required><?= $certDetails['field_value']?></textarea>
                 </div>
-
-                <!-- <div class="mb-3">
-                    <label for="unggahTemplate">
-                        Unggah Template Sertifikat :
-                    </label>
-                    <div class="input-group">
-                        <input aria-describedby="inputGroupFileAddon01" aria-label="Upload" class="form-control" id="unggahTemplate" type="file" />
-
-                    </div>
-                </div> -->
 
                 <div class="mb-3">
                     <label for="unggahTemplate">
                         Pilih Template Sertifikat :
                     </label>
                     <input type="hidden" name="template" id="select_template">
-                    <div class="row g-3" style="display: flex; justify-content:center;">
+                    <div class="row g-3" style="display: flex; justify-content: center;">
                         <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/Blue and Gold Classic Certificate of Participation.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
+                            <img width="200px" src="../../assets/uploads/templates/template1.png" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
                         </div>
                         <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/White and Blue Geometric Modern Recognition Certificate.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
+                            <img width="200px" src="../../assets/uploads/templates/template2.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
                         </div>
                         <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/certificates/Yellow and Cream Bordered Appreciation Document.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
+                            <img width="200px" src="../../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
                         </div>
                     </div>
                 </div>
@@ -332,7 +334,7 @@ while ($row = $getUsers->fetch_array()) {
                     <button class="btn btn-danger" type="button">
                         Batal
                     </button>
-                    <button class="btn btn-success" name="type" value="create" type="submit">
+                    <button class="btn btn-success" name="type" value="edit" type="submit">
                         Simpan
                     </button>
                 </div>
@@ -378,6 +380,9 @@ while ($row = $getUsers->fetch_array()) {
         const boxes = document.querySelectorAll('.box');
         let selectedBox = null;
 
+        document.getElementById('namaPeserta').value = "<?= $certDetails['user_id']?>";
+        document.getElementById('pilihPelatihan').value = "<?= $certDetails['event_id']?>";
+
         boxes.forEach(box => {
             box.addEventListener('click', () => {
                 if (selectedBox) {
@@ -387,9 +392,13 @@ while ($row = $getUsers->fetch_array()) {
                 box.classList.add('selected');
                 selectedBox = box;
                 document.getElementById('select_template').value = box.getAttribute('data-value');
-
-                document.getElementById('selectedValue').value = box.getAttribute('data-value');
             });
+
+            if(box.getAttribute('data-value') == "<?= $certDetails['certificate_template']?>") {
+                box.classList.add('selected');
+                selectedBox = box;
+                document.getElementById('select_template').value = box.getAttribute('data-value');
+            }
         });
     </script>
 </body>

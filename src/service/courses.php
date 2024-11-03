@@ -56,6 +56,8 @@ function deleteCourse()
     return redirect("dashboard/courses/", "missing id", "error");
   }
 
+  // debug($id);
+
   $sql = "DELETE FROM courses WHERE id = $id";
 
   if ($conn->query($sql) == 1) {
@@ -76,7 +78,7 @@ function editCourse()
     $course_date = htmlspecialchars($_POST['course_date']);
     $organizer = htmlspecialchars($_POST['course_organizer']);
 
-    $sql = "UPDATE courses SET event_name = '$name', event_description = '$desc', event_date = '$course_date', organizer = '$organizer WHERE id = $id";
+    $sql = "UPDATE courses SET event_name = '$name', event_description = '$desc', event_date = '$course_date', organizer = '$organizer' WHERE id = $id";
     if ($conn->query($sql)) {
       return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
     } else {

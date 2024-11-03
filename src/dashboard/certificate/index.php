@@ -192,8 +192,8 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                                     <td><?= hummanDate($cert['issued_at']) ?></td>
                                     <td><?= $cert['certificate_code'] ?></td>
                                     <td>
-                                        <button class="btn btn-sm btn-primary">Edit</button>
-                                        <button class="btn btn-sm btn-danger">Hapus</button>
+                                        <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteCertificate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateModal">Hapus</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -204,6 +204,29 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
 
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteCertificateModal" tabindex="-1" aria-labelledby="deleteCertificateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCertificateModalLabel">Peringatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Setelah di hapus, data tidak dapat dikembalikan.
+                </div>
+                <div class="modal-footer">
+                    <form action="../../service/certificate.php" method="post">
+                        <input type="hidden" id="deleteCertificateByID" name="id">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="type" value="delete" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 
     <?php
@@ -235,6 +258,12 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>
+
+    <script>
+        function deleteCertificate(id) {
+            document.getElementById('deleteCertificateByID').value = id;
+        }
+    </script>
 </body>
 
 </html>

@@ -244,6 +244,7 @@ $getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fet
         </div>
         <div class="form-container mt-4">
             <form action="../../service/courses.php" method="post">
+                <input type="hidden" name="id" value="<?= $getCourse[0] ?>">
                 <div class="mb-3">
                     <label for="course_name">
                         Nama Pelatihan :

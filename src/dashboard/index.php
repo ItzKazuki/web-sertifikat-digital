@@ -12,7 +12,7 @@ $countCertificate = $conn->query('SELECT count(*) FROM certificates')->fetch_arr
 $countUsers = $conn->query('SELECT count(*) FROM users')->fetch_array();
 $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_downloads FROM certificates")->fetch_array();
 
-// debug($countCertificate);
+// debug($countCertificate);]
 
 ?>
 
