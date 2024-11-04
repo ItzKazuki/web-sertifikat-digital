@@ -195,6 +195,7 @@ function downloadCertificate($file_name)
             <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $certificates[0]['full_name'] ?></h1>
             <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
+            <?php if(isset($certificates)) { ?>
             <div class="row">
                 <?php foreach ($certificates as $certificate) : ?>
                     <div class="col-md-4 mb-4">
@@ -206,6 +207,9 @@ function downloadCertificate($file_name)
                     </div>
                 <?php endforeach; ?>
             </div>
+            <?php } else { ?>
+                Not Found
+            <?php } ?>
         </main>
     <?php } ?>
 

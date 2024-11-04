@@ -94,6 +94,7 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
         <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $_SESSION['full_name'] ?></h1>
         <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
+        <?php if(isset($certificates))  { ?>
         <div class="row">
             <?php foreach ($certificates as $certificate) : ?>
                 <div class="col-md-4 mb-4">
@@ -105,6 +106,9 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
                 </div>
             <?php endforeach; ?>
         </div>
+        <?php } else { ?>
+            Not Found
+        <?php } ?>
     </main>
 
     <footer class="text-center p-4 bg-dark text-white mt-5">

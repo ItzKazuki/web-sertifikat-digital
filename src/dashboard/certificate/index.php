@@ -175,6 +175,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
 
 
                 <div class="table-responsive">
+                    <?php if(isset($certificates)) { ?>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -202,6 +203,9 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <?php } else { ?>
+                        NOT FOUND
+                        <?php } ?>
                 </div>
             </div>
 
