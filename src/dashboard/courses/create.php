@@ -253,7 +253,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                     <label for="organization">
                         Pembuat Acara/Organisasi/PT Pelatihan :
                     </label>
-                    <input id="organization" name="course_organizer" placeholder="Masukan Pembuat/penanggung jawab pelatihan" type="text" required/>
+                    <input id="organization" name="course_organizer" placeholder="Masukan Pembuat/penanggung jawab pelatihan" type="text" required />
                 </div>
                 <div class="mb-3">
                     <label for="descrtiption">

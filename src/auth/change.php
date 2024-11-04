@@ -6,7 +6,7 @@ if (isset($_SESSION['email'])) {
     return redirect("dashboard");
 }
 
-if(!isset($_GET['reset'])) {
+if (!isset($_GET['reset'])) {
     return redirect("auth/login.php");
 }
 
@@ -58,7 +58,7 @@ if(!isset($_GET['reset'])) {
         <div class="col-lg-4 col-md-6 col-sm-8 col-10"> <!-- Bootstrap grid -->
             <div class="login-box shadow p-4 rounded bg-white">
                 <form action="../service/auth.php" method="POST">
-                <input type="hidden" name="reset" value="<?= $_GET['reset']?>">
+                    <input type="hidden" name="reset" value="<?= $_GET['reset'] ?>">
                     <div class="mb-4">
                         <h2 class="text-center">Change Password</h2>
                     </div>

@@ -11,16 +11,17 @@ function redirect(string $fileName, string $message = "", string $type = 'succes
   exit();
 }
 
-function base_url() {
+function base_url()
+{
   // Determine the protocol
   $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443 ? "https://" : "http://";
-  
+
   // Get the host name
   $host = $_SERVER['HTTP_HOST'];
-  
+
   // Get the base directory
   $baseDir = dirname($_SERVER['SCRIPT_NAME']);
-  
+
   // Combine to form the base URL
   $baseUrl = $protocol . $host . $baseDir;
 
@@ -28,19 +29,20 @@ function base_url() {
   return rtrim($baseUrl, '/'); // Remove trailing slash if necessary
 }
 
-function slugify($string) {
+function slugify($string)
+{
   // Convert to lowercase
   $string = strtolower($string);
-  
+
   // Remove special characters
   $string = preg_replace('/[^a-z0-9\s-]/', '', $string);
-  
+
   // Replace spaces and multiple hyphens with a single hyphen
   $string = preg_replace('/[\s-]+/', '-', $string);
-  
+
   // Trim hyphens from the beginning and end
   $string = trim($string, '-');
-  
+
   return $string;
 }
 

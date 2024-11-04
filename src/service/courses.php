@@ -71,20 +71,19 @@ function editCourse()
 {
   global $conn;
 
-    // get all user input
-    $id = htmlspecialchars($_POST['id']);
-    $name = htmlspecialchars($_POST['course_name']);
-    $desc = htmlspecialchars($_POST['description']);
-    $course_date = htmlspecialchars($_POST['course_date']);
-    $organizer = htmlspecialchars($_POST['course_organizer']);
+  // get all user input
+  $id = htmlspecialchars($_POST['id']);
+  $name = htmlspecialchars($_POST['course_name']);
+  $desc = htmlspecialchars($_POST['description']);
+  $course_date = htmlspecialchars($_POST['course_date']);
+  $organizer = htmlspecialchars($_POST['course_organizer']);
 
-    $sql = "UPDATE courses SET event_name = '$name', event_description = '$desc', event_date = '$course_date', organizer = '$organizer' WHERE id = $id";
-    if ($conn->query($sql)) {
-      return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
-    } else {
-      return redirect("dashboard/courses", "gagal mengubah pelatihan", "error");
-      
-    }
+  $sql = "UPDATE courses SET event_name = '$name', event_description = '$desc', event_date = '$course_date', organizer = '$organizer' WHERE id = $id";
+  if ($conn->query($sql)) {
+    return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
+  } else {
+    return redirect("dashboard/courses", "gagal mengubah pelatihan", "error");
+  }
 }
 
 function createCourse()
@@ -103,6 +102,5 @@ function createCourse()
     return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
   } else {
     return redirect("dashboard/courses", "gagal mengubah pelatihan", "error");
-
   }
 }

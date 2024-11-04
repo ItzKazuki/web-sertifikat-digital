@@ -336,7 +336,7 @@ $getTemplateData = $getTemplateData->fetch_array();
         const fileInput = document.getElementById('template_file');
         const previewImg = document.getElementById('previewImg');
 
-        previewImg.src = "../../assets/uploads/templates/<?= $getTemplateData['file_name'] ?>" ;
+        previewImg.src = "../../assets/uploads/templates/<?= $getTemplateData['file_name'] ?>";
 
         fileInput.addEventListener('change', e => {
             const file = e.target.files[0];

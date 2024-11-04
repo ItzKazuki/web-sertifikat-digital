@@ -169,7 +169,7 @@ function upload(array $file, $fileNameSlug)
     return [null, "Tipe upload file harus berupa .png"];
   }
 
-  if(!is_dir("../assets/uploads/templates")) {
+  if (!is_dir("../assets/uploads/templates")) {
     mkdir("../assets/uploads/templates", 0777);
   }
 

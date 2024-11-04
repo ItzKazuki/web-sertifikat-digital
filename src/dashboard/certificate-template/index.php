@@ -181,37 +181,37 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
 
 
         <div class="table-responsive">
-          <?php if(isset($certificates)) { ?>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">No</th>
-                <th scope="col">Preview</th>
-                <th scope="col">Nama Template</th>
-                <th scope="col">Tanggal Dibuat</th>
-                <th scope="col">Uploader Name</th>
-                <th scope="col">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($certificates as $key => $cert) : ?>
+          <?php if (isset($certificates)) { ?>
+            <table class="table table-striped">
+              <thead>
                 <tr>
-                  <th scope="row"><?= $key + 1 ?></th>
-                  <td><img class="center-image" src="../../assets/uploads/templates/<?= $cert['file_name'] ?>" width="200px" alt=""></td>
-                  <td><?= $cert['template_name'] ?></td>
-                  <td><?= hummanDate($cert['created_at']) ?></td>
-                  <td><?= $cert['full_name'] ?></td>
-                  <td>
-                    <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
-                    <button class="btn btn-sm btn-danger" onclick="deleteCertificateTemplate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateTemplateModal">Hapus</button>
-                  </td>
+                  <th scope="col">No</th>
+                  <th scope="col">Preview</th>
+                  <th scope="col">Nama Template</th>
+                  <th scope="col">Tanggal Dibuat</th>
+                  <th scope="col">Uploader Name</th>
+                  <th scope="col">Aksi</th>
                 </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <?php foreach ($certificates as $key => $cert) : ?>
+                  <tr>
+                    <th scope="row"><?= $key + 1 ?></th>
+                    <td><img class="center-image" src="../../assets/uploads/templates/<?= $cert['file_name'] ?>" width="200px" alt=""></td>
+                    <td><?= $cert['template_name'] ?></td>
+                    <td><?= hummanDate($cert['created_at']) ?></td>
+                    <td><?= $cert['full_name'] ?></td>
+                    <td>
+                      <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                      <button class="btn btn-sm btn-danger" onclick="deleteCertificateTemplate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateTemplateModal">Hapus</button>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
           <?php } else { ?>
             NOT FOUND
-            <?php } ?>
+          <?php } ?>
         </div>
       </div>
 

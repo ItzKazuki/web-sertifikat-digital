@@ -234,12 +234,12 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
         <!-- Sertifikat Cards -->
 
         <div class="row g-3" style="display: flex; justify-content:center;">
-            <?php if(isset($certificate)) { ?>
-            <?php foreach ($certificates as $certificate) : ?>
-                <div class="col-xl-3">
-                    <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
-                </div>
-            <?php endforeach; ?>
+            <?php if (isset($certificate)) { ?>
+                <?php foreach ($certificates as $certificate) : ?>
+                    <div class="col-xl-3">
+                        <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
+                    </div>
+                <?php endforeach; ?>
             <?php } else { ?>
                 NOT FOUND
             <?php } ?>

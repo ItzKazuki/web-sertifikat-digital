@@ -94,18 +94,18 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
         <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $_SESSION['full_name'] ?></h1>
         <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
-        <?php if(isset($certificates))  { ?>
-        <div class="row">
-            <?php foreach ($certificates as $certificate) : ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card bg-light p-4 text-center shadow-sm">
-                        <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
-                        <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
-                        <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+        <?php if (isset($certificates)) { ?>
+            <div class="row">
+                <?php foreach ($certificates as $certificate) : ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-light p-4 text-center shadow-sm">
+                            <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
+                            <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
+                            <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
+                <?php endforeach; ?>
+            </div>
         <?php } else { ?>
             Not Found
         <?php } ?>

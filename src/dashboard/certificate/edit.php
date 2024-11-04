@@ -30,7 +30,7 @@ $certDetails = $getCert->fetch_array(MYSQLI_ASSOC);
 
 $getCourses = $conn->query("SELECT * FROM courses");
 
-if($getCourses->num_rows < 1) {
+if ($getCourses->num_rows < 1) {
     return redirect("courses", "Tambahkan pealatihan terlebih dahulu", "error");
 }
 
@@ -40,7 +40,7 @@ while ($row = $getCourses->fetch_array()) {
 
 $getUsers = $conn->query("SELECT * FROM users WHERE role = 'participant' ORDER BY full_name ASC");
 
-if($getUsers->num_rows < 1) {
+if ($getUsers->num_rows < 1) {
     return redirect("courses", "Tambahkan user terlebih dahulu", "error");
 }
 
