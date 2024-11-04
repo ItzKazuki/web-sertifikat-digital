@@ -68,11 +68,13 @@ function downloadCertificate($file_name)
         return redirect("src/index.php", "Certificate not found, please contact Administrator", "error");
     }
 
+  $fileName = explode('.', $file_name);
+
     $pdf = new FPDF();
     $pdf->AddPage("L", "A5");
 
     $pdf->Image("assets/uploads/certificates/" . $file_name, 0, 0, 210, 148);
-    $pdf->Output("$file_name", 'D');
+    $pdf->Output($fileName[0] . ".pdf", 'D');
 }
 
 ?>
