@@ -4,7 +4,11 @@ session_start();
 include '../../service/utility.php';
 include '../../service/connection.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -141,49 +145,49 @@ while ($row = $getCourses->fetch_row()) {
             <div class="main-content">
                 <h1 style="text-align: left; margin: 0;">Daftar Pelatihan</h1>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top:20px;">
-                <div class="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Cari Pelatihan">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
-                                        </svg>
-                                    </button>
-                                </div>
+                    <div class="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Cari Pelatihan">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
+                    </div>
                     <a href="create.php">
                         <a href="create.php" class="btn btn-primary">Tambah Pelatihan Baru</a>
                     </a>
                 </div>
                 <div class="table-responsive">
-                    <?php if(isset($courses)) { ?>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Pelatihan</th>
-                                <th scope="col">Tanggal Pelatihan</th>
-                                <th scope="col">Tanggal Dibuat</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($courses as $key => $course) : ?>
+                    <?php if (isset($courses)) { ?>
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td><?= $key + 1 ?></td>
-                                    <td><?= $course[1] ?></td>
-                                    <td><?= $course[3] ?></td>
-                                    <td><?= $course[5] ?></td>
-                                    <td>
-                                        <a href="edit.php?id=<?= $course[0] ?>" class="btn btn-sm btn-primary">Edit</a>
-                                        <a class="btn btn-sm btn-danger" onclick="deleteCourse('<?= $course[0] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCourseModal">Hapus</a>
-                                    </td>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Nama Pelatihan</th>
+                                    <th scope="col">Tanggal Pelatihan</th>
+                                    <th scope="col">Tanggal Dibuat</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($courses as $key => $course) : ?>
+                                    <tr>
+                                        <td><?= $key + 1 ?></td>
+                                        <td><?= $course[1] ?></td>
+                                        <td><?= $course[3] ?></td>
+                                        <td><?= $course[5] ?></td>
+                                        <td>
+                                            <a href="edit.php?id=<?= $course[0] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                            <a class="btn btn-sm btn-danger" onclick="deleteCourse('<?= $course[0] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCourseModal">Hapus</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     <?php } else { ?>
                         NOT FOUND
                     <?php } ?>

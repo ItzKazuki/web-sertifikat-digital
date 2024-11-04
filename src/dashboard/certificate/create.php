@@ -4,13 +4,17 @@ session_start();
 include '../../service/utility.php';
 include '../../service/connection.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
 $getCourses = $conn->query("SELECT * FROM courses");
 
-if($getCourses->num_rows < 1) {
+if ($getCourses->num_rows < 1) {
     return redirect("courses", "Tambahkan pealatihan terlebih dahulu", "error");
 }
 
@@ -20,7 +24,7 @@ while ($row = $getCourses->fetch_array()) {
 
 $getUsers = $conn->query("SELECT * FROM users WHERE role = 'participant' ORDER BY full_name ASC");
 
-if($getUsers->num_rows < 1) {
+if ($getUsers->num_rows < 1) {
     return redirect("courses", "Tambahkan user terlebih dahulu", "error");
 }
 
@@ -30,7 +34,7 @@ while ($row = $getUsers->fetch_array()) {
 
 $getTemplates = $conn->query("SELECT * FROM certificate_templates");
 
-if($getTemplates->num_rows < 1) {
+if ($getTemplates->num_rows < 1) {
     return redirect("certificate-template", "Tambahkan template terlebih dahulu", "error");
 }
 

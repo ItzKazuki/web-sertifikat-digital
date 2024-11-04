@@ -4,7 +4,11 @@ session_start();
 include '../../service/utility.php';
 include '../../service/connection.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -30,7 +34,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
     <title>Dashboard Sertifikat</title>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -153,21 +157,21 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
             </div>
             <!-- Main konten -->
             <div class="main-content">
-            <h2 style="text-align: left; margin: 0;">Daftar Sertifikat</h2>
+                <h2 style="text-align: left; margin: 0;">Daftar Sertifikat</h2>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top:20px;">
-                    
+
                     <div class="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Cari Sertif Di Sini">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
-                                        </svg>
-                                    </button>
-                                </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Cari Sertif Di Sini">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
+                    </div>
                     <a href="create.php">
                         <button class="btn btn-primary">Tambah Sertifikat</button>
                     </a>
@@ -175,37 +179,37 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
 
 
                 <div class="table-responsive">
-                    <?php if(isset($certificates)) { ?>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Preview</th>
-                                <th scope="col">Nama Sertifikat</th>
-                                <th scope="col">Tanggal Diterbitkan</th>
-                                <th scope="col">Cert ID</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($certificates as $key => $cert) : ?>
+                    <?php if (isset($certificates)) { ?>
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <th scope="row"><?= $key + 1 ?></th>
-                                    <td><img class="center-image" src="../../assets/uploads/certificates/<?= $cert['file_name'] ?>" width="200px" alt=""></td>
-                                    <td><?= $cert['full_name'] ?></td>
-                                    <td><?= hummanDate($cert['issued_at']) ?></td>
-                                    <td><?= $cert['certificate_code'] ?></td>
-                                    <td>
-                                        <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteCertificate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateModal">Hapus</button>
-                                    </td>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Preview</th>
+                                    <th scope="col">Nama Sertifikat</th>
+                                    <th scope="col">Tanggal Diterbitkan</th>
+                                    <th scope="col">Cert ID</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($certificates as $key => $cert) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $key + 1 ?></th>
+                                        <td><img class="center-image" src="../../assets/uploads/certificates/<?= $cert['file_name'] ?>" width="200px" alt=""></td>
+                                        <td><?= $cert['full_name'] ?></td>
+                                        <td><?= hummanDate($cert['issued_at']) ?></td>
+                                        <td><?= $cert['certificate_code'] ?></td>
+                                        <td>
+                                            <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteCertificate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateModal">Hapus</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     <?php } else { ?>
                         NOT FOUND
-                        <?php } ?>
+                    <?php } ?>
                 </div>
             </div>
 
