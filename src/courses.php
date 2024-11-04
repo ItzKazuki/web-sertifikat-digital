@@ -10,7 +10,7 @@
         $type = "user_login";
     }
 
-    if($type == "user") {
+    if ($type == "user") {
         $getAllCourses = $conn->query("SELECT * FROM courses");
     } else {
         $getAllCourses = $conn->query("SELECT 
@@ -25,15 +25,15 @@
             courses
         LEFT JOIN 
             certificates ON courses.id = certificates.event_id 
-                          AND certificates.user_id = " . $_SESSION['id'] ." 
+                          AND certificates.user_id = " . $_SESSION['id'] . " 
     ORDER BY 
         courses.event_date DESC");
     }
-    
+
     while ($row = $getAllCourses->fetch_array(MYSQLI_ASSOC)) {
         $courses[] = $row;
     }
-    
+
 
     ?>
 
@@ -63,6 +63,7 @@
                     <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
                     <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                     <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
+                    <a href="courses.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Pelatihan</a>
                     <?php if (isset($_SESSION['role'])) { ?>
                         <?php if ($_SESSION['role'] != "admin") { ?>
                             <a href="akun.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Akun</a>
@@ -83,32 +84,32 @@
         </header>
 
         <main class="container text-center my-5 p-4">
-    <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $type == "user_login" ? $_SESSION['full_name'] : "" ?></h1>
-    <h2 class="h5 text-dark mb-4">Lihat Pelatihan yang tersedia</h2>
+            <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $type == "user_login" ? $_SESSION['full_name'] : "" ?></h1>
+            <h2 class="h5 text-dark mb-4">Lihat Pelatihan yang tersedia</h2>
 
-    <?php if (isset($courses)) { ?>
-        <div class="row">
-            <?php foreach ($courses as $course): ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card bg-light p-4 text-center shadow-sm">
-                        <h3 class="card-title h5">Kategori</h3>
-                        <p><?= $course['event_name'] ?></p>
-                        <p><?= $course['event_date'] ?></p>
-                        <div class="card-body <?= new DateTime($course['event_date']) <= new DateTime() ? "bg-danger" : (!empty($course['certificate_code']) ? "bg-success" : "bg-secondary") ?> text-light small">
-                            <?php if (!empty($course['certificate_code'])): ?>
-                                <span>Dimiliki</span>
-                            <?php else: ?>
-                                <span><?= new DateTime($course['event_date']) <= new DateTime() ? "Tidak tersedia" : "Tersedia" ?></span>
-                            <?php endif; ?>
+            <?php if (isset($courses)) { ?>
+                <div class="row">
+                    <?php foreach ($courses as $course): ?>
+                        <div class="col-md-4 mb-4">
+                            <div class="card bg-light p-4 text-center shadow-sm">
+                                <h3 class="card-title h5">Kategori</h3>
+                                <p><?= $course['event_name'] ?></p>
+                                <p><?= $course['event_date'] ?></p>
+                                <div class="card-body <?= new DateTime($course['event_date']) <= new DateTime() ? "bg-danger" : (!empty($course['certificate_code']) ? "bg-success" : "bg-secondary") ?> text-light small">
+                                    <?php if (!empty($course['certificate_code'])): ?>
+                                        <span>Dimiliki</span>
+                                    <?php else: ?>
+                                        <span><?= new DateTime($course['event_date']) <= new DateTime() ? "Tidak tersedia" : "Tersedia" ?></span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
-        </div>
-    <?php } else { ?>
-        <p>NOT AVAILABLE</p>
-    <?php } ?>
-</main>
+            <?php } else { ?>
+                <p>NOT AVAILABLE</p>
+            <?php } ?>
+        </main>
 
 
         <footer class="text-center p-4 bg-dark text-white mt-5">

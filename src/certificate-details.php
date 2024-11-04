@@ -146,10 +146,11 @@ function downloadCertificate($file_name)
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
                 <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
             </div>
-            <nav style="display: flex; align-items: center;">
+            <nav style="    display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
                 <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
+                <a href="courses.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Pelatihan</a>
                 <?php if (isset($_SESSION['role'])) { ?>
                     <?php if ($_SESSION['role'] != "admin") { ?>
                         <a href="akun.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Akun</a>
