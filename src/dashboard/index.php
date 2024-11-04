@@ -1,10 +1,17 @@
 <?php
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include '../service/utility.php';
 include '../service/connection.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
