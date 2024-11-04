@@ -157,9 +157,8 @@ while ($row = $getCourses->fetch_row()) {
                         <a href="create.php" class="btn btn-primary">Tambah Pelatihan Baru</a>
                     </a>
                 </div>
-
-
                 <div class="table-responsive">
+                    <?php if(isset($courses)) { ?>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -185,6 +184,9 @@ while ($row = $getCourses->fetch_row()) {
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <?php } else { ?>
+                        NOT FOUND
+                    <?php } ?>
                 </div>
             </div>
         </div>

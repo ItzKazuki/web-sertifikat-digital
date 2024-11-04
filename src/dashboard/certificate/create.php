@@ -10,11 +10,19 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
 
 $getCourses = $conn->query("SELECT * FROM courses");
 
+if($getCourses->num_rows < 1) {
+    return redirect("courses", "Tambahkan pealatihan terlebih dahulu", "error");
+}
+
 while ($row = $getCourses->fetch_array()) {
     $courses[] = $row;
 }
 
 $getUsers = $conn->query("SELECT * FROM users WHERE role = 'participant' ORDER BY full_name ASC");
+
+if($getUsers->num_rows < 1) {
+    return redirect("courses", "Tambahkan user terlebih dahulu", "error");
+}
 
 while ($row = $getUsers->fetch_array()) {
     $users[] = $row;

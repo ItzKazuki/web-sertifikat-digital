@@ -280,6 +280,7 @@ while ($row = $getUser->fetch_row()) {
             <a href="create.php" class="add-button">Tambah Pengguna +</a>
         </div>
         <div class="table-container">
+            <?php if(isset($users)) { ?>
             <table class="table">
                 <thead>
                     <tr>
@@ -303,6 +304,9 @@ while ($row = $getUser->fetch_row()) {
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?php } else { ?>
+                NOT FOUND
+            <?php } ?>
         </div>
     </div>
 
