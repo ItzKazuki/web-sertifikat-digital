@@ -4,7 +4,11 @@ session_start();
 include '../../service/connection.php';
 include '../../service/utility.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -336,7 +340,7 @@ $getTemplateData = $getTemplateData->fetch_array();
         const fileInput = document.getElementById('template_file');
         const previewImg = document.getElementById('previewImg');
 
-        previewImg.src = "../../assets/uploads/templates/<?= $getTemplateData['file_name'] ?>" ;
+        previewImg.src = "../../assets/uploads/templates/<?= $getTemplateData['file_name'] ?>";
 
         fileInput.addEventListener('change', e => {
             const file = e.target.files[0];

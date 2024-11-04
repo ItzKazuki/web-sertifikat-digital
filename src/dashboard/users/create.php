@@ -3,7 +3,11 @@ session_start();
 
 include '../../service/utility.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -227,7 +231,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
             <h1>
                 Tambah Pengguna
             </h1>
-            
+
         </div>
         <div class="mt-4">
             <h2>
@@ -243,17 +247,17 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                     <label for="username">
                         Nama Pengguna
                     </label>
-                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" required/>
+                    <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" required />
 
                     <label for="phone_number">
                         Nomor Telepon Pengguna
                     </label>
-                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" required/>
+                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" required />
 
                     <label for="email">
                         Email Pengguna
                     </label>
-                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" required/>
+                    <input id="email" name="email" placeholder="Ketik email di sini" type="email" required />
 
                     <label for="password">
                         Kata Sandi
@@ -263,7 +267,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['rol
                     <label for="confirm-password">
                         Konfirmasi Kata Sandi
                     </label>
-                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" required/>
+                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" required />
 
                     <label for="category">
                         Kategori Pengguna

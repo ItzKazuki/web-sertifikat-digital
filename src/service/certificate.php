@@ -91,11 +91,11 @@ function editCertificate()
   // buat gambar baru
   $certification_image = createParticipantCertificate($getCertDetail['certificate_code']);
 
-  if(is_null($certification_image[0])) {
+  if (is_null($certification_image[0])) {
     return redirect("dashboard/certificate", $certification_image[1], "error");
   }
 
-  $updateFileNameQuery = "UPDATE certificate_fields cf JOIN certificates c ON cf.certificate_id = c.id SET cf.file_name = '".$certification_image[0]."' WHERE c.id = " . $getCertDetail['id'];
+  $updateFileNameQuery = "UPDATE certificate_fields cf JOIN certificates c ON cf.certificate_id = c.id SET cf.file_name = '" . $certification_image[0] . "' WHERE c.id = " . $getCertDetail['id'];
 
   // update file_name di certificate_field table
   if ($conn->query($updateFileNameQuery)) {
@@ -158,12 +158,12 @@ VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$templ
 
   $certification_image = createParticipantCertificate($cert_id);
 
-  if(is_null($certification_image[0])) {
+  if (is_null($certification_image[0])) {
     return redirect("dashboard/certificate", $certification_image[1], "error");
   }
 
   $createCertificateField = "INSERT INTO certificate_fields (certificate_id, field_name, field_value, file_name)
-VALUES (" . $certificate['id'] . ", '$name', '$desc', '".$certification_image[0]."')";
+VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[0] . "')";
 
   if ($conn->query($createCertificateField)) {
     return redirect("dashboard/certificate", "berhasil membuat pelatihan baru");
@@ -211,10 +211,10 @@ function createParticipantCertificate($cert_id)
     $fileName = "certificates-$time-" . $getCert['certificate_code'] . ".png";
     $filePath = "../assets/uploads/certificates/$fileName"; // set path file
 
-    if(!is_dir("../assets/uploads/certificates")) {
+    if (!is_dir("../assets/uploads/certificates")) {
       mkdir("../assets/uploads/certificates", 0777);
     }
-    
+
     // upload to path
     imagepng($img, $filePath);
     // change owner and group

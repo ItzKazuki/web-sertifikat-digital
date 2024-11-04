@@ -1,10 +1,17 @@
 <?php
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include '../service/utility.php';
 include '../service/connection.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -234,11 +241,15 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
         <!-- Sertifikat Cards -->
 
         <div class="row g-3" style="display: flex; justify-content:center;">
-            <?php foreach ($certificates as $certificate) : ?>
-                <div class="col-xl-3">
-                    <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
-                </div>
-            <?php endforeach; ?>
+            <?php if (isset($certificate)) { ?>
+                <?php foreach ($certificates as $certificate) : ?>
+                    <div class="col-xl-3">
+                        <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
+                    </div>
+                <?php endforeach; ?>
+            <?php } else { ?>
+                NOT FOUND
+            <?php } ?>
         </div>
     </div>
 

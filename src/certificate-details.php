@@ -6,9 +6,9 @@ include 'service/utility.php';
 
 require('service/fpdf186/fpdf.php');
 
-// if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
-//     return redirect("index.php");
-// }
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    return redirect("src/index.php");
+}
 
 $type = "id";
 
@@ -68,11 +68,13 @@ function downloadCertificate($file_name)
         return redirect("src/index.php", "Certificate not found, please contact Administrator", "error");
     }
 
+    $fileName = explode('.', $file_name);
+
     $pdf = new FPDF();
     $pdf->AddPage("L", "A5");
 
     $pdf->Image("assets/uploads/certificates/" . $file_name, 0, 0, 210, 148);
-    $pdf->Output("$file_name", 'D');
+    $pdf->Output($fileName[0] . ".pdf", 'D');
 }
 
 ?>
@@ -144,10 +146,11 @@ function downloadCertificate($file_name)
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
                 <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
             </div>
-            <nav style="display: flex; align-items: center;">
+            <nav style="    display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
                 <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
+                <a href="courses.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Pelatihan</a>
                 <?php if (isset($_SESSION['role'])) { ?>
                     <?php if ($_SESSION['role'] != "admin") { ?>
                         <a href="akun.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Akun</a>
@@ -195,17 +198,21 @@ function downloadCertificate($file_name)
             <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $certificates[0]['full_name'] ?></h1>
             <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
-            <div class="row">
-                <?php foreach ($certificates as $certificate) : ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card bg-light p-4 text-center shadow-sm">
-                            <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
-                            <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
-                            <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+            <?php if (isset($certificates)) { ?>
+                <div class="row">
+                    <?php foreach ($certificates as $certificate) : ?>
+                        <div class="col-md-4 mb-4">
+                            <div class="card bg-light p-4 text-center shadow-sm">
+                                <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
+                                <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
+                                <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php } else { ?>
+                Not Found
+            <?php } ?>
         </main>
     <?php } ?>
 

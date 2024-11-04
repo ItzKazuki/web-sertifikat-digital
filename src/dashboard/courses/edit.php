@@ -3,7 +3,11 @@ session_start();
 
 include '../../service/utility.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -256,7 +260,7 @@ $getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fet
                     <label for="course_name">
                         Nama Pelatihan :
                     </label>
-                    <input id="course_name" name="course_name" placeholder="Ketik nama pelatihan di sini" type="text" value="<?= $getCourse[1] ?>" required/>
+                    <input id="course_name" name="course_name" placeholder="Ketik nama pelatihan di sini" type="text" value="<?= $getCourse[1] ?>" required />
                 </div>
                 <div class="mb-3">
                     <label for="course_date">
@@ -268,7 +272,7 @@ $getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fet
                     <label for="organization">
                         Pembuat Acara/Organisasi/PT Pelatihan :
                     </label>
-                    <input id="organization" name="course_organizer" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" value="<?= $getCourse[4] ?>" required/>
+                    <input id="organization" name="course_organizer" placeholder="Masukan Tanggal Penerbitan Sertifikat" type="text" value="<?= $getCourse[4] ?>" required />
                 </div>
                 <div class="mb-3">
                     <label for="descrtiption">

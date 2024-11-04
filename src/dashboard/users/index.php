@@ -4,7 +4,11 @@ session_start();
 include '../../service/utility.php';
 include '../../service/connection.php';
 
-if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth']) && $_SESSION['role'] != "admin") {
+if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
+    return redirect("index.php");
+}
+
+if($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -280,29 +284,33 @@ while ($row = $getUser->fetch_row()) {
             <a href="create.php" class="add-button">Tambah Pengguna +</a>
         </div>
         <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nama Pengguna</th>
-                        <th>Email Pengguna</th>
-                        <th>Tanggal Daftar</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user) : ?>
+            <?php if (isset($users)) { ?>
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><?= $user[2] ?></td>
-                            <td><?= $user[3] ?></td>
-                            <td><?= hummanDate($user[7]) ?></td>
-                            <td>
-                                <a href="edit.php?id=<?= $user[0] ?>" class="btn btn-sm btn-primary">Edit</a>
-                                <a class="btn btn-sm btn-danger" onclick="deleteUser('<?= $user[0] ?>')" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Hapus</a>
-                            </td>
+                            <th>Nama Pengguna</th>
+                            <th>Email Pengguna</th>
+                            <th>Tanggal Daftar</th>
+                            <th>Aksi</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($users as $user) : ?>
+                            <tr>
+                                <td><?= $user[2] ?></td>
+                                <td><?= $user[3] ?></td>
+                                <td><?= hummanDate($user[7]) ?></td>
+                                <td>
+                                    <a href="edit.php?id=<?= $user[0] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                    <a class="btn btn-sm btn-danger" onclick="deleteUser('<?= $user[0] ?>')" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Hapus</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php } else { ?>
+                NOT FOUND
+            <?php } ?>
         </div>
     </div>
 
