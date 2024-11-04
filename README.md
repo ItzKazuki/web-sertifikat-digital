@@ -8,7 +8,7 @@ Project ini adalah tugas kedua dari MKK bu Fadilah, dimana kelompok 1 akan membu
 - [Andika](https://github.com/0rcaaa)
 - Dinda
 - Devila
-- Danish
+- [Danish](https://github.com/tyonis72)
 - Dayina
 - Yuki
 
@@ -22,3 +22,6 @@ Alur project ini dapat dilihat dari gambar berikut.
 ### day 1
 #### pembuatan desain
 membuat desain agar aplikasi yang dibuat sesuai rencana, juga memikirkan filtur yang tersedia dari website yang akan dibuat.
+
+## HOW TO USE
+-
