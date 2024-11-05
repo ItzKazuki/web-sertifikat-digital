@@ -16,7 +16,8 @@ include 'utility.php';
 
 require('fpdf186/fpdf.php');
 
-error_reporting(E_ALL);
+// error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -99,7 +100,7 @@ function editCertificate()
 
   // update file_name di certificate_field table
   if ($conn->query($updateFileNameQuery)) {
-    createActivity($conn, $_SESSION['id'], "edit", "Success edit certificate with id: $id");
+    createActivity($conn, $_SESSION['id'], "update", "Success edit certificate with id: $id");
     return redirect("dashboard/certificate", "Berhasil mengubah sertifikat");
   } else {
     return redirect("dashboard/certificate", "Gagal mengubah sertifikat", "error");
@@ -179,11 +180,13 @@ function createParticipantCertificate($cert_id)
 
   try {
     // get user details
-    $getCert = $conn->query("SELECT c.*, u.*, e.*
+    $getCert = $conn->query("SELECT c.*, u.full_name, e.event_name, e.organizer, e.event_date
   FROM certificates c
   JOIN users u ON c.user_id = u.id 
   JOIN courses e ON c.event_id = e.id 
-  WHERE c.certificate_code = '$cert_id'")->fetch_array();
+  WHERE c.certificate_code = '$cert_id'")->fetch_assoc();
+
+    // debug($getCert);
 
     $fontBold = "../assets/font/montserrat/static/Montserrat-Bold.ttf";
     $font = "../assets/font/montserrat/static/Montserrat-Light.ttf";
@@ -200,7 +203,6 @@ function createParticipantCertificate($cert_id)
     $participantCenterName = calculateTextCenter($getCert['full_name'], $fontBold, 60);
     $firstLineTextCenter = calculateTextCenter($firstLineText, $font, 29);
     $secondLineTextCenter = calculateTextCenter($secondLineText, $font, 29);
-
     $organizationCenter = calculateHalfWidthTextCenter($getCert['organizer'], $fontBold, 30);
 
     imagettftext($img, 25, 0, $certificateIdCenter[0], $certificateIdCenter[1] + 600, $color, $fontBold, $getCert['certificate_code']);

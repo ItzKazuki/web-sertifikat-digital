@@ -81,7 +81,7 @@ function editCourse()
 
   $sql = "UPDATE courses SET event_name = '$name', event_description = '$desc', event_date = '$course_date', organizer = '$organizer' WHERE id = $id";
   if ($conn->query($sql)) {
-    createActivity($conn, $_SESSION['id'], "edit", "Success edit course with id: $id");
+    createActivity($conn, $_SESSION['id'], "update", "Success edit course with id: $id");
     return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
   } else {
     return redirect("dashboard/courses", "gagal mengubah pelatihan", "error");

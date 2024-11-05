@@ -115,7 +115,7 @@ function editTemplate()
     $sql = "UPDATE certificate_templates SET id = '$slug_id, file_name = '" . $template[0] . "', template_name = '$name', template_desc = '$desc', uploader_id = '" . $_SESSION['id'] . "' WHERE id = '$id'";
 
     if ($conn->query($sql)) {
-      createActivity($conn, $_SESSION['id'], "edit", "Success edit template with id: $id");
+      createActivity($conn, $_SESSION['id'], "update", "Success edit template with id: $id");
       return redirect("dashboard/certificate-template", "berhasil membuat template baru");
     }
   }

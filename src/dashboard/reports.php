@@ -176,7 +176,8 @@ while ($row = $getAllReports->fetch_assoc()) {
             </button>
         </div>
         <div class="table-container">
-            <table class="table table-bordered">
+            <?php if(isset($reports)): ?>
+                <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -199,6 +200,9 @@ while ($row = $getAllReports->fetch_assoc()) {
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?php else: ?>
+                <bold>Not found</bold>
+            <?php endif; ?>
         </div>
     </div>
     </div>

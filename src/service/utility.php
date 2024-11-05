@@ -11,7 +11,7 @@ function redirect(string $fileName, string $message = "", string $type = 'succes
   exit();
 }
 
-function createActivity($conn, $user_id, $type, $info)
+function createActivity($conn, int $user_id, string $type, string $info)
 {
   $sql = "INSERT INTO `reports` (`user_id`, `type_activity`, `info`) VALUES ($user_id, '$type', '$info')";
   if (!$conn->query($sql)) {

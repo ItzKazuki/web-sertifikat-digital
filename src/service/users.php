@@ -103,7 +103,7 @@ WHERE id = $id;";
   // echo $sql; die;
 
   if ($conn->query($sql)) {
-    createActivity($conn, $_SESSION['id'], "edit", "Success edit user with id: $id");
+    createActivity($conn, $_SESSION['id'], "update", "Success edit user with id: $id");
     return redirect("dashboard/users", "berhasil mengubah akun dengan id: $id");
   } else {
     return redirect("dashboard/users", "gagal mengubah akun dengan id: $id", "error");
