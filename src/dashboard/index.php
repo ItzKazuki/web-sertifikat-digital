@@ -224,18 +224,18 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
 
 
         <!-- Daftar Sertifikat Header -->
-        <div class="row mt-3">
+        <div class="row mt-4">
             <div class="col-6">
-                <h5>Daftar Sertifikat</h5>
+                <h3><strong>Daftar Sertifikat</strong></h3>
             </div>
-            <div class="col-6 text-end mb-4">
+            <div class="col-6 text-end mb-2">
                 <a href="certificate/create.php" class="btn btn-dark">Buat Sertifikat</a>
             </div>
         </div>
 
         <!-- Sertifikat Cards -->
 
-        <div class="row g-3" style="display: flex; justify-content:center;">
+        <div class="row g-3 mt-2" style="display: flex; justify-content:center;">
             <?php if (isset($certificates)) { ?>
                 <?php foreach ($certificates as $certificate) : ?>
                     <div class="col-xl-3">
@@ -243,7 +243,7 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
                     </div>
                 <?php endforeach; ?>
             <?php } else { ?>
-                NOT FOUND
+                <strong>Tidak ada sertifikat yang ditemukan.</strong>
             <?php } ?>
         </div>
     </div>

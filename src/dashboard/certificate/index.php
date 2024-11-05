@@ -208,7 +208,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                             </tbody>
                         </table>
                     <?php } else { ?>
-                        NOT FOUND
+                        <strong>Tidak ada sertifikat yang tersedia.</strong>
                     <?php } ?>
                 </div>
             </div>
