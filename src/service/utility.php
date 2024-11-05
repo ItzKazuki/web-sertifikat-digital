@@ -11,6 +11,14 @@ function redirect(string $fileName, string $message = "", string $type = 'succes
   exit();
 }
 
+function createActivity($conn, $user_id, $type, $info)
+{
+  $sql = "INSERT INTO `reports` (`user_id`, `type_activity`, `info`) VALUES ($user_id, '$type', '$info')";
+  if (!$conn->query($sql)) {
+    redirect("index.php", "error", "error");
+  }
+}
+
 function base_url()
 {
   // Determine the protocol

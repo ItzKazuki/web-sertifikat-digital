@@ -59,6 +59,7 @@ function deleteUser()
   $sql = "DELETE FROM users WHERE id = $id";
 
   if ($conn->query($sql) == 1) {
+    createActivity($conn, $_SESSION['id'], "delete", "Success delete user with id: $id");
     return redirect("dashboard/users/", "Berhasil menghapus user dengan id: $id");
   } else {
     return redirect("dashboard/users", "gagal menghapus user", "error");
@@ -102,7 +103,10 @@ WHERE id = $id;";
   // echo $sql; die;
 
   if ($conn->query($sql)) {
+    createActivity($conn, $_SESSION['id'], "edit", "Success edit user with id: $id");
     return redirect("dashboard/users", "berhasil mengubah akun dengan id: $id");
+  } else {
+    return redirect("dashboard/users", "gagal mengubah akun dengan id: $id", "error");
   }
 }
 
@@ -139,6 +143,7 @@ function createUser()
     $sql = "INSERT INTO users (nik, full_name, email, phone_number, password, role, created_at) VALUES ('$nik', '$f_name', '$email', '$phone_number', '$salt;$hashPassword', '$role', current_timestamp())";
 
     if ($conn->query($sql)) {
+      createActivity($conn, $_SESSION['id'], "create", "Success create user withnik: $nik");
       return redirect("dashboard/users", "berhasil membuat akun baru");
     }
   }

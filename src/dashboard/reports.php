@@ -1,14 +1,21 @@
 <?php
 session_start();
 
+include '../service/connection.php';
 include '../service/utility.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
+}
+
+$getAllReports = $conn->query("SELECT r.*, u.full_name FROM reports r JOIN users u ON r.user_id = u.id ORDER BY created_at ASC");
+
+while ($row = $getAllReports->fetch_assoc()) {
+    $reports[] = $row;
 }
 
 ?>
@@ -173,13 +180,23 @@ if($_SESSION['role'] != "admin") {
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
-                        <th>Laporan</th>
-                        <th>Tanggal</th>
+                        <th>Nama Pengguna</th>
+                        <th>Tipe Aktifitas</th>
+                        <th>Info</th>
+                        <th>DIbuat pada</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rows will be added here -->
+                    <?php foreach ($reports as $key => $report) : ?>
+                        <!-- Rows will be added here -->
+                        <tr>
+                            <td><?= $key + 1 ?></td>
+                            <td><?= $report['full_name'] ?></td>
+                            <td><?= $report['type_activity'] ?></td>
+                            <td><?= $report['info'] ?></td>
+                            <td><?= $report['created_at'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

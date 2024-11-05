@@ -140,6 +140,7 @@ function login()
   }
 
   if ($res != null) {
+    createActivity($conn, $res['id'], 'login', "Create new session with id: {$res['id']}");
     // set 1st user to admin
     if ($res['id'] == 1 && $res['role'] != 'admin') {
       $conn->query("UPDATE users SET role = 'admin' WHERE email = '$email'");
@@ -167,7 +168,9 @@ function login()
 
 function logout()
 {
+  global $conn;
   session_start();
+  createActivity($conn, $_SESSION['id'], "logout", "Success logout with id: " . $_SESSION['id']);
   session_destroy();
   session_start();
 

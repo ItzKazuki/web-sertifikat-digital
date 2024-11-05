@@ -99,6 +99,7 @@ function editCertificate()
 
   // update file_name di certificate_field table
   if ($conn->query($updateFileNameQuery)) {
+    createActivity($conn, $_SESSION['id'], "edit", "Success edit certificate with id: $id");
     return redirect("dashboard/certificate", "Berhasil mengubah sertifikat");
   } else {
     return redirect("dashboard/certificate", "Gagal mengubah sertifikat", "error");
@@ -129,6 +130,7 @@ function deleteCertificate()
   $sql = "DELETE FROM certificates WHERE id = $id";
 
   if ($conn->query($sql) == 1) {
+    createActivity($conn, $_SESSION['id'], "delete", "Success delete certificate with id: $id");
     return redirect("dashboard/certificate/", "Berhasil menghapus pelatihan dengan id: $id");
   } else {
     return redirect("dashboard/certificate", "gagal menghapus pelatihan", "error");
@@ -166,6 +168,7 @@ VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$templ
 VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[0] . "')";
 
   if ($conn->query($createCertificateField)) {
+    createActivity($conn, $_SESSION['id'], "create", "Success create new certificate with id: $cert_id");
     return redirect("dashboard/certificate", "berhasil membuat pelatihan baru");
   }
 }

@@ -11,7 +11,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -19,15 +19,11 @@ $countCertificate = $conn->query('SELECT count(*) FROM certificates')->fetch_arr
 $countUsers = $conn->query('SELECT count(*) FROM users')->fetch_array();
 $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_downloads FROM certificates")->fetch_array();
 
-// debug($countCertificate);]
-
 $getAllCertificates = $conn->query("SELECT c.*, cf.file_name FROM certificates c JOIN certificate_fields cf ON c.id = cf.certificate_id");
 
 while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
     $certificates[] = $row;
 }
-
-// debug($certificates);
 
 ?>
 
@@ -241,7 +237,7 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
         <!-- Sertifikat Cards -->
 
         <div class="row g-3" style="display: flex; justify-content:center;">
-            <?php if (isset($certificate)) { ?>
+            <?php if (isset($certificates)) { ?>
                 <?php foreach ($certificates as $certificate) : ?>
                     <div class="col-xl-3">
                         <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
