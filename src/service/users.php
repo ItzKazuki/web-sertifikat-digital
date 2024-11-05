@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function deleteUser()
 {
-  global $conn;
+  global $conn, $db;
 
   $id = htmlspecialchars($_POST['id']);
 
@@ -59,7 +59,8 @@ function deleteUser()
   $sql = "DELETE FROM users WHERE id = $id";
 
   if ($conn->query($sql) == 1) {
-    createActivity($conn, $_SESSION['id'], "delete", "Success delete user with id: $id");
+    // createActivity($conn, );
+    $db->createActivity([$_SESSION['id'], "delete", "Success delete user with id: $id"]);
     return redirect("dashboard/users/", "Berhasil menghapus user dengan id: $id");
   } else {
     return redirect("dashboard/users", "gagal menghapus user", "error");
@@ -68,7 +69,7 @@ function deleteUser()
 
 function editUser()
 {
-  global $conn;
+  global $conn, $db;
 
   // get all user input
   $id = htmlspecialchars($_POST['id']);
@@ -103,7 +104,8 @@ WHERE id = $id;";
   // echo $sql; die;
 
   if ($conn->query($sql)) {
-    createActivity($conn, $_SESSION['id'], "update", "Success edit user with id: $id");
+    // createActivity($conn, );
+    $db->createActivity([$_SESSION['id'], "update", "Success edit user with id: $id"]);
     return redirect("dashboard/users", "berhasil mengubah akun dengan id: $id");
   } else {
     return redirect("dashboard/users", "gagal mengubah akun dengan id: $id", "error");
@@ -112,7 +114,7 @@ WHERE id = $id;";
 
 function createUser()
 {
-  global $conn;
+  global $conn, $db;
 
   // get all user input
   $nik = htmlspecialchars($_POST['nik']);
@@ -143,7 +145,8 @@ function createUser()
     $sql = "INSERT INTO users (nik, full_name, email, phone_number, password, role, created_at) VALUES ('$nik', '$f_name', '$email', '$phone_number', '$salt;$hashPassword', '$role', current_timestamp())";
 
     if ($conn->query($sql)) {
-      createActivity($conn, $_SESSION['id'], "create", "Success create user withnik: $nik");
+      // createActivity($conn, );
+      $db->createActivity([$_SESSION['id'], "create", "Success create user withnik: $nik"]);
       return redirect("dashboard/users", "berhasil membuat akun baru");
     }
   }

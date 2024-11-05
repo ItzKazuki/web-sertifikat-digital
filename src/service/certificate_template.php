@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function createTemplate()
 {
-  global $conn;
+  global $conn, $db;
 
   $name = htmlspecialchars($_POST['template_name']);
   $desc = htmlspecialchars($_POST['description']);
@@ -72,7 +72,7 @@ function createTemplate()
     $sql = "INSERT INTO certificate_templates (id, file_name, template_name, template_desc, uploader_id, created_at) VALUES ('$slug_id', '" . $template[0] . "', '$name', '$desc', '" . $_SESSION['id'] . "', current_timestamp())";
 
     if ($conn->query($sql)) {
-      createActivity($conn, $_SESSION['id'], "create", "Success create new template");
+      $db->createActivity([$_SESSION['id'], "create", "Success create new template"]);
       return redirect("dashboard/certificate-template", "berhasil membuat template baru");
     }
   }
@@ -80,7 +80,7 @@ function createTemplate()
 
 function editTemplate()
 {
-  global $conn;
+  global $conn, $db;
 
   $id = htmlspecialchars($_POST['id']);
   $name = htmlspecialchars($_POST['template_name']);
@@ -115,7 +115,8 @@ function editTemplate()
     $sql = "UPDATE certificate_templates SET id = '$slug_id, file_name = '" . $template[0] . "', template_name = '$name', template_desc = '$desc', uploader_id = '" . $_SESSION['id'] . "' WHERE id = '$id'";
 
     if ($conn->query($sql)) {
-      createActivity($conn, $_SESSION['id'], "update", "Success edit template with id: $id");
+      // createActivity($conn, );
+      $db->createActivity([$_SESSION['id'], "update", "Success edit template with id: $id"]);
       return redirect("dashboard/certificate-template", "berhasil membuat template baru");
     }
   }
@@ -123,7 +124,7 @@ function editTemplate()
 
 function deleteTemplate()
 {
-  global $conn;
+  global $conn, $db;
 
   $id = htmlspecialchars($_POST['id']);
 
@@ -144,7 +145,8 @@ function deleteTemplate()
   $sql = "DELETE FROM certificate_templates WHERE id = '$id'";
 
   if ($conn->query($sql) == 1) {
-    createActivity($conn, $_SESSION['id'], "delete", "Success delete template with id: $id");
+    // createActivity($conn, );
+    $db->createActivity([$_SESSION['id'], "delete", "Success delete template with id: $id"]);
     return redirect("dashboard/certificate-template/", "Berhasil menghapus pelatihan dengan id: $id");
   } else {
     return redirect("dashboard/certificate-template", "gagal menghapus pelatihan", "error");

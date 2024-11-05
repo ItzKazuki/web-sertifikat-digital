@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function deleteCourse()
 {
-  global $conn;
+  global $conn, $db;
 
   $id = htmlspecialchars($_POST['id']);
 
@@ -61,7 +61,7 @@ function deleteCourse()
   $sql = "DELETE FROM courses WHERE id = $id";
 
   if ($conn->query($sql) == 1) {
-    createActivity($conn, $_SESSION['id'], "delete", "Success delete course with id: $id");
+    $db->createActivity([ $_SESSION['id'], "delete", "Success delete course with id: $id"]);
     return redirect("dashboard/courses/", "Berhasil menghapus pelatihan dengan id: $id");
   } else {
     return redirect("dashboard/courses", "gagal menghapus pelatihan", "error");
@@ -70,7 +70,7 @@ function deleteCourse()
 
 function editCourse()
 {
-  global $conn;
+  global $conn, $db;
 
   // get all user input
   $id = htmlspecialchars($_POST['id']);
@@ -81,7 +81,7 @@ function editCourse()
 
   $sql = "UPDATE courses SET event_name = '$name', event_description = '$desc', event_date = '$course_date', organizer = '$organizer' WHERE id = $id";
   if ($conn->query($sql)) {
-    createActivity($conn, $_SESSION['id'], "update", "Success edit course with id: $id");
+    $db->createActivity([$_SESSION['id'], "update", "Success edit course with id: $id"]);
     return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
   } else {
     return redirect("dashboard/courses", "gagal mengubah pelatihan", "error");
@@ -90,7 +90,7 @@ function editCourse()
 
 function createCourse()
 {
-  global $conn;
+  global $conn, $db;
 
   // get all user input
   $name = htmlspecialchars($_POST['course_name']);
@@ -101,7 +101,7 @@ function createCourse()
   $sql = "INSERT INTO courses (event_name, event_description, event_date, organizer, created_at) VALUES ('$name', '$desc', '$course_date', '$organizer', current_timestamp())";
 
   if ($conn->query($sql)) {
-    createActivity($conn, $_SESSION['id'], "create", "Success create course with name: $name");
+    $db->createActivity([$_SESSION['id'], "create", "Success create course with name: $name"]);
     return redirect("dashboard/courses", "berhasil membuat pelatihan baru");
   } else {
     return redirect("dashboard/courses", "gagal mengubah pelatihan", "error");
