@@ -60,6 +60,7 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
             background-color: #1d3c6e;
             color: white;
             height: 100vh;
+            width: 250px;
             position: fixed;
         }
 
@@ -177,36 +178,34 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
                 </div>
             </li>
             <li class="nav-item"><a href="reports.php" class="nav-link">Laporan</a></li>
-            <li class="nav-item">
-                <form action="../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
-            </li>
         </ul>
     </div>
 
     <!-- Main Content -->
-    <div class="content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Kotak Statistik</h2>
-            <div class="d-flex justify-content-end align-items-center p-3">
-                <span><?= $_SESSION['full_name'] ?></span>
-                <div class="dropdown">
-                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="..">Landing Page</a></li>
-                        <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <form class="dropdown-item" action="../service/auth.php" method="post">
-                                <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
+    <div class="content flex-grow-1">
+        <div class="header">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Kotak Statistik</h2>
+                <div class="d-flex justify-content-end align-items-center p-3">
+                    <span><?= $_SESSION['full_name'] ?></span>
+                    <div class="dropdown">
+                        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="..">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                    <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-
 
         <!-- Statistics Boxes -->
         <div class="container" style="width: 100vw; border-radius: 4px; height: 250px; background-color: gray; display:flex; align-items: center; justify-content: center;">

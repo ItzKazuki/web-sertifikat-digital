@@ -33,6 +33,7 @@ if($_SESSION['role'] != "admin") {
             background-color: #1d3c6e;
             color: white;
             height: 100vh;
+            width: 250px;
             position: fixed;
         }
 
@@ -111,21 +112,6 @@ if($_SESSION['role'] != "admin") {
 
         body {
             background-color: #f8f9fa;
-        }
-
-        .sidebar {
-            background-color: #003366;
-            color: white;
-            height: 100vh;
-        }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .sidebar a:hover {
-            text-decoration: underline;
         }
 
         .content {

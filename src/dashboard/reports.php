@@ -12,10 +12,74 @@ if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
-$getAllReports = $conn->query("SELECT r.*, u.full_name FROM reports r JOIN users u ON r.user_id = u.id ORDER BY created_at ASC");
+// Initialize query and filter variables
+$whereClauses = [];
+$parameters = [];
 
-while ($row = $getAllReports->fetch_assoc()) {
+// Process filter form input if submitted
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Check if the form inputs are set and not empty
+    if (!empty($_GET['type_activity'])) {
+        $whereClauses[] = "r.type_activity = ?";
+        $parameters[] = $_GET['type_activity'];
+    }
+    if (!empty($_GET['user_name'])) {
+        $whereClauses[] = "u.full_name LIKE ?";
+        $parameters[] = "%" . $_GET['user_name'] . "%";
+    }
+    if (!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
+        $whereClauses[] = "r.created_at BETWEEN ? AND ?";
+        $parameters[] = date("Y-m-d H:i:s", strtotime($_GET['start_date']));
+        $parameters[] = date("Y-m-d 23:59:59", strtotime($_GET['end_date']));
+    }
+}
+
+
+// Build SQL query with filters
+$sql = "SELECT r.*, u.full_name 
+        FROM reports r 
+        JOIN users u ON r.user_id = u.id";
+if ($whereClauses) {
+    $sql .= " WHERE " . implode(" AND ", $whereClauses);
+}
+$sql .= " ORDER BY r.created_at ASC";
+
+// Prepare and execute the statement
+$stmt = $conn->prepare($sql);
+if ($parameters) {
+    // Dynamically bind parameters
+    $stmt->bind_param(str_repeat("s", count($parameters)), ...$parameters);
+}
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Fetch reports
+$reports = [];
+while ($row = $result->fetch_assoc()) {
     $reports[] = $row;
+}
+
+function changeBgTable(string $condition)
+{
+    switch ($condition) {
+        case 'delete':
+            return 'table-danger'; // Red background for delete
+            break;
+        case 'update':
+            return 'table-warning'; // Yellow background for update
+            break;
+        case 'create':
+            return 'table-primary'; // Blue background for create
+            break;
+        case 'login':
+            return 'table-info'; // Light blue background for login
+            break;
+        case 'logout':
+            return 'table-secondary'; // Grey background for logout
+            break;
+        default:
+            return ''; // No special background
+    }
 }
 
 ?>
@@ -34,6 +98,14 @@ while ($row = $getAllReports->fetch_assoc()) {
 
     <style>
         /* Sidebar styling */
+        * {
+            text-decoration: none;
+        }
+
+        button:hover {
+            color: white;
+        }
+        
         .sidebar {
             background-color: #1d3c6e;
             color: white;
@@ -60,6 +132,10 @@ while ($row = $getAllReports->fetch_assoc()) {
 
         .dropdown-item {
             padding-left: 30px;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
         }
 
         /* Main content styling */
@@ -161,54 +237,85 @@ while ($row = $getAllReports->fetch_assoc()) {
 
     <div class="content flex-grow-1">
         <div class="header">
-            <input placeholder="Cari Laporan Di Sini" type="text" />
-            <div class="user-info">
-                <span>Administrator</span>
-                <i class="fas fa-user-circle"></i>
-                <i class="fas fa-sign-out-alt"></i>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Laporan</h1>
+                <div class="d-flex justify-content-end align-items-center p-3">
+                    <span><?= $_SESSION['full_name'] ?></span>
+                    <div class="dropdown">
+                        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../index.php">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                    <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+            <form method="GET" class="row g-3 mt-3 mb-4">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="user_name" placeholder="Nama Pengguna" value="<?= htmlspecialchars($_GET['user_name'] ?? '') ?>">
+                </div>
+                <div class="col-md-3">
+                    <select name="type_activity" class="form-control">
+                        <option value="">Pilih Tipe Aktivitas</option>
+                        <option value="create" <?= (isset($_GET['type_activity']) && $_GET['type_activity'] === 'create') ? 'selected' : '' ?>>Create</option>
+                        <option value="update" <?= (isset($_GET['type_activity']) && $_GET['type_activity'] === 'update') ? 'selected' : '' ?>>Update</option>
+                        <option value="delete" <?= (isset($_GET['type_activity']) && $_GET['type_activity'] === 'delete') ? 'selected' : '' ?>>Delete</option>
+                        <option value="login" <?= (isset($_GET['type_activity']) && $_GET['type_activity'] === 'login') ? 'selected' : '' ?>>Login</option>
+                        <option value="logout" <?= (isset($_GET['type_activity']) && $_GET['type_activity'] === 'logout') ? 'selected' : '' ?>>Logout</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="date" class="form-control" name="start_date" value="<?= htmlspecialchars($_GET['start_date'] ?? '') ?>">
+                </div>
+                <div class="col-md-2">
+                    <input type="date" class="form-control" name="end_date" value="<?= htmlspecialchars($_GET['end_date'] ?? '') ?>">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </form>
         </div>
-        <div class="d-flex justify-content-between align-items-center mt-4">
-            <h1>Laporan</h1>
-            <button class="btn btn-light">
-                <i class="fas fa-plus"></i>
-                Buat Laporan
-            </button>
-        </div>
+
         <div class="table-container">
-            <?php if(isset($reports)): ?>
+            <?php if (!empty($reports)) : ?>
                 <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Pengguna</th>
-                        <th>Tipe Aktifitas</th>
-                        <th>Info</th>
-                        <th>DIbuat pada</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($reports as $key => $report) : ?>
-                        <!-- Rows will be added here -->
+                    <thead>
                         <tr>
-                            <td><?= $key + 1 ?></td>
-                            <td><?= $report['full_name'] ?></td>
-                            <td><?= $report['type_activity'] ?></td>
-                            <td><?= $report['info'] ?></td>
-                            <td><?= $report['created_at'] ?></td>
+                            <th>No</th>
+                            <th>Nama Pengguna</th>
+                            <th>Tipe Aktivitas</th>
+                            <th>Info</th>
+                            <th>Dibuat pada</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php else: ?>
-                <bold>Not found</bold>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($reports as $key => $report) : ?>
+                            <tr class="<?= changeBgTable(htmlspecialchars($report['type_activity'])) ?>">
+                                <td><?= $key + 1 ?></td>
+                                <td><?= htmlspecialchars($report['full_name']) ?></td>
+                                <td><?= htmlspecialchars($report['type_activity']) ?></td>
+                                <td><?= htmlspecialchars($report['info']) ?></td>
+                                <td><?= htmlspecialchars($report['created_at']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else : ?>
+                <strong>Tidak ada laporan yang ditemukan.</strong>
             <?php endif; ?>
         </div>
-    </div>
-    </div>
 
-    <!-- Bootstrap JS -->
-    <script src="../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Bootstrap JS -->
+        <script src="../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
