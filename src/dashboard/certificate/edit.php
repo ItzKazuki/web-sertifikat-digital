@@ -416,7 +416,7 @@ while ($row = $getTemplates->fetch_array()) {
                 document.getElementById('select_template').value = box.getAttribute('data-value');
             });
 
-            if (box.getAttribute('data-value') == "<?= $certDetails['certificate_template'] ?>") {
+            if (box.getAttribute('data-value') == "<?= $certDetails['certificate_template_id'] ?>") {
                 box.classList.add('selected');
                 selectedBox = box;
                 document.getElementById('select_template').value = box.getAttribute('data-value');

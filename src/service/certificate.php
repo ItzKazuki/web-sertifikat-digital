@@ -64,7 +64,7 @@ function editCertificate()
   $desc = htmlspecialchars($_POST['desc']);
   $id_participation = htmlspecialchars($_POST['id_peserta']);
   $id_courses = htmlspecialchars($_POST['id_courses']);
-  $template = htmlspecialchars($_POST['template']);
+  $id_template = htmlspecialchars($_POST['template']);
 
   // hapus gambar sebelumnya
   $getCertDetail = $conn->query("SELECT c.*, cf.file_name, cf.field_name, cf.field_value FROM certificates c JOIN certificate_fields cf ON c.id = cf.certificate_id WHERE c.id = $id")->fetch_array(MYSQLI_ASSOC);
@@ -77,7 +77,7 @@ function editCertificate()
   }
 
   // update ke database
-  $updateCertificates = "UPDATE certificates SET user_id = $id_participation, event_id = $id_courses, certificate_template = '$template' WHERE id = $id";
+  $updateCertificates = "UPDATE certificates SET user_id = $id_participation, event_id = $id_courses, certificate_template_id = '$id_template' WHERE id = $id";
 
   if (!$conn->query($updateCertificates)) {
     return redirect("dashboard/certificate", "Error saat mengubah data, silahkan update ulang", 'error');
@@ -147,13 +147,13 @@ function createCertificate()
   $desc = htmlspecialchars($_POST['desc']);
   $id_participation = htmlspecialchars($_POST['id_peserta']);
   $id_courses = htmlspecialchars($_POST['id_courses']);
-  $template = htmlspecialchars($_POST['template']);
+  $id_template = htmlspecialchars($_POST['template']);
 
   $cert_id = generateRandomString() . "-" . date("Y");
 
   // $sql = "INSERT INTO courses (event_name, event_description, event_date, organizer, created_at) VALUES ('$name', '$desc', '$course_date', '$organizer', current_timestamp())";
-  $createCertificate = "INSERT INTO certificates (user_id, event_id, certificate_code, issued_at, certificate_template)
-VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$template')";
+  $createCertificate = "INSERT INTO certificates (user_id, event_id, certificate_code, issued_at, certificate_template_id)
+VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$id_template')";
 
   if ($conn->query($createCertificate)) {
     $certificate = $conn->query("SELECT * FROM certificates WHERE certificate_code = '$cert_id' ")->fetch_array();
@@ -181,20 +181,20 @@ function createParticipantCertificate($cert_id)
 
   try {
     // get user details
-    $getCert = $conn->query("SELECT c.*, u.full_name, e.event_name, e.organizer, e.event_date
+    $getCert = $conn->query("SELECT c.*, u.full_name, e.event_name, e.organizer, e.event_date, ct.file_name AS template_file_name, ct.font_name, ct.font_file
   FROM certificates c
   JOIN users u ON c.user_id = u.id 
-  JOIN courses e ON c.event_id = e.id 
+  JOIN courses e ON c.event_id = e.id
+  JOIN certificate_templates ct ON c.certificate_template_id = ct.id
   WHERE c.certificate_code = '$cert_id'")->fetch_assoc();
 
-    // debug($getCert);
-
-    $fontBold = "../assets/font/montserrat/static/Montserrat-Bold.ttf";
-    $font = "../assets/font/montserrat/static/Montserrat-Light.ttf";
+    $fontBold = "../assets/font/{$getCert['font_name']}/bold.ttf";
+    $fontParticipant = "../assets/font/{$getCert['font_name']}/{$getCert['font_file']}";
+    $font = "../assets/font/{$getCert['font_name']}/light.ttf";
 
     $time = time();
 
-    $img = imagecreatefrompng("../assets/uploads/templates/" . $getCert['certificate_template'] . ".png");
+    $img = imagecreatefrompng("../assets/uploads/templates/" . $getCert['template_file_name']);
     $color = imagecolorallocate($img, 19, 21, 22);
 
     $firstLineText = "Untuk menyelesaikan pelatihan " . $getCert['event_name'] . " yang";
@@ -203,13 +203,13 @@ function createParticipantCertificate($cert_id)
     $participantName = ucwords($getCert['full_name']);
 
     $certificateIdCenter = calculateTextCenter($getCert['certificate_code'], $fontBold, 25);
-    $participantCenterName = calculateTextCenter($participantName, $fontBold, 60);
+    $participantCenterName = calculateTextCenter($participantName, $fontParticipant, 60);
     $firstLineTextCenter = calculateTextCenter($firstLineText, $font, 29);
     $secondLineTextCenter = calculateTextCenter($secondLineText, $font, 29);
     $organizationCenter = calculateHalfWidthTextCenter($getCert['organizer'], $fontBold, 30);
 
     imagettftext($img, 25, 0, $certificateIdCenter[0], $certificateIdCenter[1] + 600, $color, $fontBold, $getCert['certificate_code']);
-    imagettftext($img, 60, 0, $participantCenterName[0], $participantCenterName[1], $color, $fontBold, $participantName);
+    imagettftext($img, 60, 0, $participantCenterName[0], $participantCenterName[1], $color, $fontParticipant, $participantName);
     imagettftext($img, 29, 0, $firstLineTextCenter[0], $firstLineTextCenter[1] + 100, $color, $font, $firstLineText);
     imagettftext($img, 29, 0, $secondLineTextCenter[0], $secondLineTextCenter[1] + 150, $color, $font, $secondLineText);
     imagettftext($img, 30, 0, $organizationCenter[0] + 30, 1130, $color, $fontBold, $getCert['organizer']);

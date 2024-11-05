@@ -1,15 +1,35 @@
 <?php
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include '../../service/utility.php';
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
+
+// Get all font folders
+$fontFolders = scandir('../../assets/font');
+$fontFolders = array_diff($fontFolders, array('.', '..'));
+
+// Function to get files in a specific font folder
+function getFontFiles($fontFolder)
+{
+    $fontFiles = scandir('../../assets/font/' . $fontFolder);
+    $fontFiles = array_diff($fontFiles, array('.', '..'));
+    return $fontFiles;
+}
+
+// Initial font folder (e.g., 'calibri')
+$selectedFont = $_GET['font'] ?? 'calibri';
+$fontFiles = getFontFiles($selectedFont);
+
 
 ?>
 
@@ -129,6 +149,7 @@ if($_SESSION['role'] != "admin") {
         }
 
         .form-container input,
+        select,
         .form-container textarea {
             background-color: #e9ecef;
             border: none;
@@ -241,6 +262,28 @@ if($_SESSION['role'] != "admin") {
                     <input id="course_name" name="template_name" placeholder="Ketik nama template di sini" type="text" required />
                 </div>
                 <div class="mb-3">
+                    <label for="font_name">
+                        Pilih Font :
+                    </label>
+                    <select name="font_name" id="font_name" onchange="updateFontFiles(this.value)">
+                        <option value="" selected>Masukan Jenis Font untuk nama participant</option>
+                        <?php foreach ($fontFolders as $fontFolder) : ?>
+                            <option value="<?php echo $fontFolder; ?>" <?php if ($fontFolder === $selectedFont) echo 'selected'; ?>><?php echo $fontFolder; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="type_font">
+                        Pilih Tipe Font :
+                    </label>
+                    <select name="font_file" id="type_font">
+                        <option value="" selected>Masukan Tipe Font untuk nama participant</option>
+                        <?php foreach ($fontFiles as $fontFile) : ?>
+                            <option value="<?= $fontFile; ?>"><?= $fontFile; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label for="template_file">
                         File Template :
                     </label>
@@ -316,6 +359,13 @@ if($_SESSION['role'] != "admin") {
 
             document.getElementById('preview').style.display = 'block';
         })
+
+        function updateFontFiles(selectedFont) {
+            // You would use AJAX to fetch the files for the selected font asynchronously
+            // Here, we'll simulate it by reloading the page with the new font
+            window.location.href = "?font=" + selectedFont;
+        }
+    </script
     </script>
 </body>
 
