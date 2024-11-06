@@ -17,8 +17,13 @@ include 'utility.php';
 require('fpdf186/fpdf.php');
 
 // error_reporting(E_ALL);
-error_reporting(E_ALL & ~E_DEPRECATED);
+// error_reporting(E_ALL & ~E_DEPRECATED);
+// ini_set('display_errors', 1);
+
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
   header('Location: ../index.php');
@@ -26,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 include 'connection.php';
 
-// print_r($_POST); die;
+print_r($_POST); die;
 
 $width = 2000;
 $height = 1414;
@@ -132,9 +137,9 @@ function deleteCertificate()
 
   if ($conn->query($sql) == 1) {
     $db->createActivity([$_SESSION['id'], "delete", "Success delete certificate with id: $id"]);
-    return redirect("dashboard/certificate/", "Berhasil menghapus pelatihan dengan id: $id");
+    return redirect("dashboard/certificate/", "Berhasil menghapus sertifikat dengan id: $id");
   } else {
-    return redirect("dashboard/certificate", "gagal menghapus pelatihan", "error");
+    return redirect("dashboard/certificate", "gagal menghapus sertifikat", "error");
   }
 }
 
@@ -171,7 +176,7 @@ VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[
   if ($conn->query($createCertificateField)) {
     // createActivity($conn, );
     $db->createActivity([$_SESSION['id'], "create", "Success create new certificate with id: $cert_id"]);
-    return redirect("dashboard/certificate", "berhasil membuat pelatihan baru");
+    return redirect("dashboard/certificate", "berhasil membuat sertifikat baru");
   }
 }
 
@@ -188,9 +193,9 @@ function createParticipantCertificate($cert_id)
   JOIN certificate_templates ct ON c.certificate_template_id = ct.id
   WHERE c.certificate_code = '$cert_id'")->fetch_assoc();
 
-    $fontBold = "../assets/font/{$getCert['font_name']}/bold.ttf";
-    $fontParticipant = "../assets/font/{$getCert['font_name']}/{$getCert['font_file']}";
-    $font = "../assets/font/{$getCert['font_name']}/light.ttf";
+    $fontBold = "../assets/font/".$getCert['font_name']."/bold.ttf";
+    $fontParticipant = "../assets/font/".$getCert['font_name']."/". $getCert['font_file'];
+    $font = "../assets/font/".$getCert['font_name']."/light.ttf";
 
     $time = time();
 

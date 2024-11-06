@@ -105,7 +105,7 @@ function changeBgTable(string $condition)
         button:hover {
             color: white;
         }
-        
+
         .sidebar {
             background-color: #1d3c6e;
             color: white;
@@ -156,6 +156,10 @@ function changeBgTable(string $condition)
             background-color: #ffffff;
             border-radius: 8px;
             border: 1px solid #ddd;
+        }
+
+        .ml-auto{
+            margin-left: auto;
         }
 
         .btn-dark {
@@ -308,6 +312,11 @@ function changeBgTable(string $condition)
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <form method="GET" class="row g-3 mt-3 mb-4 ">
+                    <div class="col-md-2 ml-auto">
+                        <button type="submit" class="btn btn-primary">Download Laporan</button>
+                    </div>
+                </form>
             <?php else : ?>
                 <strong>Tidak ada laporan yang ditemukan.</strong>
             <?php endif; ?>

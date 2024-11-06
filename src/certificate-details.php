@@ -4,8 +4,6 @@ session_start();
 include 'service/connection.php';
 include 'service/utility.php';
 
-require('service/fpdf186/fpdf.php');
-
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     return redirect("src/index.php");
 }
@@ -60,21 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     return redirect("src/index.php");
-}
-
-function downloadCertificate($file_name)
-{
-    if (!is_file("assets/uploads/certificates/" . $file_name)) {
-        return redirect("src/index.php", "Certificate not found, please contact Administrator", "error");
-    }
-
-    $fileName = explode('.', $file_name);
-
-    $pdf = new FPDF();
-    $pdf->AddPage("L", "A5");
-
-    $pdf->Image("assets/uploads/certificates/" . $file_name, 0, 0, 210, 148);
-    $pdf->Output($fileName[0] . ".pdf", 'D');
 }
 
 ?>

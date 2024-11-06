@@ -92,10 +92,9 @@
                     <?php foreach ($courses as $course): ?>
                         <div class="col-md-4 mb-4">
                             <div class="card bg-light p-4 text-center shadow-sm">
-                                <h3 class="card-title h5">Kategori</h3>
-                                <p><?= $course['event_name'] ?></p>
+                                <h3 class="card-title h5"><?= $course['event_name'] ?></h3>
                                 <p><?= $course['event_date'] ?></p>
-                                <div class="card-body <?= new DateTime($course['event_date']) <= new DateTime() ? "bg-danger" : (!empty($course['certificate_code']) ? "bg-success" : "bg-secondary") ?> text-light small">
+                                <div class="card-body <?= !empty($course['certificate_code']) ? "bg-success" : (new DateTime($course['event_date']) <= new DateTime() ? "bg-danger" : "bg-secondary") ?> text-light small">
                                     <?php if (!empty($course['certificate_code'])): ?>
                                         <span>Dimiliki</span>
                                     <?php else: ?>

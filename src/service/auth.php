@@ -169,7 +169,7 @@ function login()
 function logout()
 {
   global $conn, $db;
-  session_start();
+  // session_start();
   $db->createActivity([$_SESSION['id'], "logout", "Success logout with id: " . $_SESSION['id']]);
   session_destroy();
   session_start();
