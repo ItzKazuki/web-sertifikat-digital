@@ -365,7 +365,6 @@ $fontFiles = getFontFiles($selectedFont);
             // Here, we'll simulate it by reloading the page with the new font
             window.location.href = "?font=" + selectedFont;
         }
-    </script
     </script>
 </body>
 

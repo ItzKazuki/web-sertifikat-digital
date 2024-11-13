@@ -158,7 +158,8 @@ $fontFiles = getFontFiles($selectedFont);
             color: white;
         }
 
-        .form-container input, select,
+        .form-container input,
+        select,
         .form-container textarea {
             background-color: #e9ecef;
             border: none;

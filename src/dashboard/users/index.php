@@ -226,35 +226,35 @@ while ($row = $getUser->fetch_row()) {
             <h4>Dashboard Sertifikat</h4>
         </div>
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Beranda</a></li>
+            <li class="nav-item"><a href="../index.php" class="nav-link">Beranda</a></li>
             <!-- Manajemen Sertifikat Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="certificate/index.php" class="dropdown-item">List Sertifikat</a>
-                    <a href="certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                    <a href="../certificate/index.php" class="dropdown-item">List Sertifikat</a>
+                    <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="courses/index.php" class="dropdown-item">List Pelatihan</a>
-                    <a href="courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                    <a href="../courses/index.php" class="dropdown-item">List Pelatihan</a>
+                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#templateSertifikat" role="button" aria-expanded="false" aria-controls="templateSertifikat">Manajemen Template Sertifikat</a>
                 <div class="collapse" id="templateSertifikat">
-                    <a href="certificate-template/" class="dropdown-item">List Template</a>
-                    <a href="certificate-template/create.php" class="dropdown-item">Tambah Template</a>
+                    <a href="../certificate-template/" class="dropdown-item">List Template</a>
+                    <a href="../certificate-template/create.php" class="dropdown-item">Tambah Template</a>
                 </div>
             </li>
             <!-- Manajemen Pengguna Dropdown -->
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
                 <div class="collapse" id="penggunaMenu">
-                    <a href="users/" class="dropdown-item">List Pengguna</a>
-                    <a href="users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                    <a href="index.php" class="dropdown-item">List Pengguna</a>
+                    <a href="create.php" class="dropdown-item">Tambah Pengguna</a>
                 </div>
             </li>
             <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
@@ -272,18 +272,22 @@ while ($row = $getUser->fetch_row()) {
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama Pengguna</th>
                             <th>Email Pengguna</th>
                             <th>Tanggal Daftar</th>
+                            <th>Role</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($users as $user) : ?>
+                        <?php foreach ($users as $key => $user) : ?>
                             <tr>
+                                <td><?= $key + 1 ?></td>
                                 <td><?= $user[2] ?></td>
                                 <td><?= $user[3] ?></td>
                                 <td><?= hummanDate($user[7]) ?></td>
+                                <td><span class="badge <?= $user[6] == 'admin' ? 'bg-danger' : 'bg-success' ?>"><?= $user[6] ?></span></td>
                                 <td>
                                     <a href="edit.php?id=<?= $user[0] ?>" class="btn btn-sm btn-primary">Edit</a>
                                     <a class="btn btn-sm btn-danger" onclick="deleteUser('<?= $user[0] ?>')" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Hapus</a>

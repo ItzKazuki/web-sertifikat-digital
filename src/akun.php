@@ -63,6 +63,7 @@ if (isset($_POST['download'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Sertifikat</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -104,9 +105,9 @@ if (isset($_POST['download'])) {
         <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $_SESSION['full_name'] ?></h1>
         <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
-        <div class="container mt-5">
-            <div class="row">
-                <?php if (isset($certificates)) { ?>
+        <?php if (isset($certificates)) { ?>
+            <div class="container mt-5">
+                <div class="row">
                     <div class="col-md-4">
                         <?php foreach ($certificates as $certificate) : ?>
                             <div class="card">
@@ -125,14 +126,14 @@ if (isset($_POST['download'])) {
                             </div>
                         <?php endforeach; ?>
                     </div>
-                <?php } else { ?>
-                    Not Found
-                <?php } ?>
+                </div>
             </div>
-        </div>
+        <?php } else { ?>
+            <img src="assets/404.png" width="350" alt="">
+        <?php } ?>
     </main>
 
-    <footer class="text-center p-4 bg-dark text-white mt-5">
+    <footer style="background-color: #1d3c6e; color: white; text-align: center;">
         <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
     </footer>
 

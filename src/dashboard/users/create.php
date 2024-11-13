@@ -7,7 +7,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 

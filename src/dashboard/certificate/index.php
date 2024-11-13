@@ -200,6 +200,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                                         <td><?= hummanDate($cert['issued_at']) ?></td>
                                         <td><?= $cert['certificate_code'] ?></td>
                                         <td>
+                                            <button class="btn btn-sm btn-success" onclick="downloadCertificate('<?= $cert['file_name'] ?>', '<?= $cert['certificate_code'] ?>')" data-bs-toggle="modal" data-bs-target="#viewCertificateModal">View</button>
                                             <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
                                             <button class="btn btn-sm btn-danger" onclick="deleteCertificate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateModal">Hapus</button>
                                         </td>
@@ -232,6 +233,29 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                         <input type="hidden" id="deleteCertificateByID" name="id">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" name="type" value="delete" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewCertificateModal" tabindex="-1" aria-labelledby="viewCertificateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewCertificateModalLabel">Peringatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../../assets/uploads/certificates/" width="400px" class="center-image" id="imgCertificate" alt="">
+                </div>
+                <div class="modal-footer">
+                    <form action="../../service/certificate.php" method="post">
+                        <input type="hidden" id="setFileName" name="file_name">
+                        <input type="hidden" id="setCodeCertificate" name="code">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="type" value="download" class="btn btn-success">Download</button>
                     </form>
                 </div>
             </div>
@@ -273,6 +297,12 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
     <script>
         function deleteCertificate(id) {
             document.getElementById('deleteCertificateByID').value = id;
+        }
+
+        function downloadCertificate(fileName, code) {
+            document.getElementById('setFileName').value = fileName;
+            document.getElementById('setCodeCertificate').value = code;
+            document.getElementById('imgCertificate').src = "../../assets/uploads/certificates/" + fileName;
         }
     </script>
 </body>

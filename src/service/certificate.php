@@ -14,24 +14,15 @@ session_start();
 
 include 'utility.php';
 
-require('fpdf186/fpdf.php');
-
 // error_reporting(E_ALL);
-// error_reporting(E_ALL & ~E_DEPRECATED);
-// ini_set('display_errors', 1);
-
+error_reporting(E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
   header('Location: ../index.php');
 }
 
 include 'connection.php';
-
-print_r($_POST); die;
 
 $width = 2000;
 $height = 1414;
@@ -53,9 +44,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       deleteCertificate();
       $conn->close();
       break;
+    case 'download':
+      downloadCertificate();
+      $conn->close();
+      break;
     default:
       header('Location: ../index.php');
       break;
+  }
+}
+
+function downloadCertificate()
+{
+  global $conn, $db;
+
+  $sql = "UPDATE certificates SET download_count = download_count + 1 WHERE certificate_code = '" . $_POST['code'] . "'";
+
+  // cek apakah ud login
+  if ($_SESSION['id']) {
+    $db->createActivity([
+      $_SESSION['id'],
+      "download",
+      "Success download certificate with code: " . $_POST['code'] . " with user id: " . $_SESSION['id']
+    ]);
+  }
+
+  if ($conn->query($sql)) {
+    downloadCertificateAction($_POST['file_name']);
+  } else {
+    return redirect("src/index.php");
   }
 }
 
@@ -193,9 +210,9 @@ function createParticipantCertificate($cert_id)
   JOIN certificate_templates ct ON c.certificate_template_id = ct.id
   WHERE c.certificate_code = '$cert_id'")->fetch_assoc();
 
-    $fontBold = "../assets/font/".$getCert['font_name']."/bold.ttf";
-    $fontParticipant = "../assets/font/".$getCert['font_name']."/". $getCert['font_file'];
-    $font = "../assets/font/".$getCert['font_name']."/light.ttf";
+    $fontBold = "../assets/font/" . $getCert['font_name'] . "/bold.ttf";
+    $fontParticipant = "../assets/font/" . $getCert['font_name'] . "/" . $getCert['font_file'];
+    $font = "../assets/font/" . $getCert['font_name'] . "/light.ttf";
 
     $time = time();
 

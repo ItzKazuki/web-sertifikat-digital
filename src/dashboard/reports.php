@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 
 // Build SQL query with filters
-$sql = "SELECT r.*, u.full_name 
+$sql = "SELECT r.*, u.full_name, u.role
         FROM reports r 
         JOIN users u ON r.user_id = u.id";
 if ($whereClauses) {
@@ -76,6 +76,9 @@ function changeBgTable(string $condition)
             break;
         case 'logout':
             return 'table-secondary'; // Grey background for logout
+            break;
+        case 'download':
+            return 'table-success'; // Green background for download
             break;
         default:
             return ''; // No special background
@@ -295,6 +298,7 @@ function changeBgTable(string $condition)
                         <tr>
                             <th>No</th>
                             <th>Nama Pengguna</th>
+                            <th>Role</th>
                             <th>Tipe Aktivitas</th>
                             <th>Info</th>
                             <th>Dibuat pada</th>
@@ -305,6 +309,7 @@ function changeBgTable(string $condition)
                             <tr class="<?= changeBgTable(htmlspecialchars($report['type_activity'])) ?>">
                                 <td><?= $key + 1 ?></td>
                                 <td><?= htmlspecialchars($report['full_name']) ?></td>
+                                <td><span class="badge <?= $report['role'] == 'admin' ? 'bg-danger' : 'bg-success' ?>"><?= $report['role'] ?></span></td>
                                 <td><?= htmlspecialchars($report['type_activity']) ?></td>
                                 <td><?= htmlspecialchars($report['info']) ?></td>
                                 <td><?= htmlspecialchars($report['created_at']) ?></td>

@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 ?>
@@ -80,7 +79,7 @@ session_start();
         </section>
     </main>
 
-    <footer style="background-color: #1d3c6e; color: white; text-align: center; padding: 1rem;">
+    <footer style="background-color: #1d3c6e; color: white; text-align: center;">
         <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
     </footer>
 

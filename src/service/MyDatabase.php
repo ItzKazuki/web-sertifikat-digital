@@ -42,4 +42,22 @@ class MyConnection
       die("Error preparing statement: " . $this->conn->error);
     }
   }
+
+  // check $authorization to databases users table password
+  public function checkUser($authorization, $type = 'user')
+  {
+    $sql = "SELECT * FROM users WHERE password = '$authorization'";
+    $res = $this->conn->query($sql);
+
+    if ($res->num_rows < 1) {
+      return false;
+    }
+
+    $role = $res->fetch_assoc()['role'];
+    if ($type == $role) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
