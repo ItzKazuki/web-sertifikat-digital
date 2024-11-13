@@ -1,6 +1,30 @@
 <?php
 include 'connection.php';
 
+require('fpdf186/fpdf.php');
+
+// Fungsi untuk menghasilkan response JSON
+function apiResponse(string $status, string $message, array $data = [], $code = 200)
+{
+  $res = [
+    'status' => $status,
+    'code' => $code,
+    'message' => $message,
+    // 'data' => $data
+  ];
+
+  if ($status == "error") {
+    $res['code'] = 400;
+  }
+
+  if (!empty($data)) {
+    $res['data'] = $data;
+  }
+
+  echo json_encode($res);
+  exit();
+}
+
 function redirect(string $fileName, string $message = "", string $type = 'success'): void
 {
   if (isset($message)) {
@@ -9,6 +33,21 @@ function redirect(string $fileName, string $message = "", string $type = 'succes
 
   header('Location: ../' . $fileName);
   exit();
+}
+
+function downloadCertificateAction($file_name)
+{
+  if (!is_file("../assets/uploads/certificates/" . $file_name)) {
+    return redirect("src/index.php", "Certificate not found, please contact Administrator", "error");
+  }
+
+  $fileName = explode('.', $file_name);
+
+  $pdf = new FPDF();
+  $pdf->AddPage("L", "A5");
+
+  $pdf->Image("../assets/uploads/certificates/" . $file_name, 0, 0, 210, 148);
+  $pdf->Output($fileName[0] . ".pdf", 'D');
 }
 
 function base_url()

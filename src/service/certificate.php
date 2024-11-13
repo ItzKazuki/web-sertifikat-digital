@@ -14,9 +14,8 @@ session_start();
 
 include 'utility.php';
 
-require('fpdf186/fpdf.php');
-
-error_reporting(E_ALL);
+// error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -24,8 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 
 include 'connection.php';
-
-// print_r($_POST); die;
 
 $width = 2000;
 $height = 1414;
@@ -47,15 +44,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       deleteCertificate();
       $conn->close();
       break;
+    case 'download':
+      downloadCertificate();
+      $conn->close();
+      break;
     default:
       header('Location: ../index.php');
       break;
   }
 }
 
+function downloadCertificate()
+{
+  global $conn, $db;
+
+  $sql = "UPDATE certificates SET download_count = download_count + 1 WHERE certificate_code = '" . $_POST['code'] . "'";
+
+  // cek apakah ud login
+  if ($_SESSION['id']) {
+    $db->createActivity([
+      $_SESSION['id'],
+      "download",
+      "Success download certificate with code: " . $_POST['code'] . " with user id: " . $_SESSION['id']
+    ]);
+  }
+
+  if ($conn->query($sql)) {
+    downloadCertificateAction($_POST['file_name']);
+  } else {
+    return redirect("src/index.php");
+  }
+}
+
 function editCertificate()
 {
-  global $conn;
+  global $conn, $db;
 
   // get all user input
   $id = htmlspecialchars($_POST['id']);
@@ -63,7 +86,7 @@ function editCertificate()
   $desc = htmlspecialchars($_POST['desc']);
   $id_participation = htmlspecialchars($_POST['id_peserta']);
   $id_courses = htmlspecialchars($_POST['id_courses']);
-  $template = htmlspecialchars($_POST['template']);
+  $id_template = htmlspecialchars($_POST['template']);
 
   // hapus gambar sebelumnya
   $getCertDetail = $conn->query("SELECT c.*, cf.file_name, cf.field_name, cf.field_value FROM certificates c JOIN certificate_fields cf ON c.id = cf.certificate_id WHERE c.id = $id")->fetch_array(MYSQLI_ASSOC);
@@ -76,7 +99,7 @@ function editCertificate()
   }
 
   // update ke database
-  $updateCertificates = "UPDATE certificates SET user_id = $id_participation, event_id = $id_courses, certificate_template = '$template' WHERE id = $id";
+  $updateCertificates = "UPDATE certificates SET user_id = $id_participation, event_id = $id_courses, certificate_template_id = '$id_template' WHERE id = $id";
 
   if (!$conn->query($updateCertificates)) {
     return redirect("dashboard/certificate", "Error saat mengubah data, silahkan update ulang", 'error');
@@ -99,6 +122,7 @@ function editCertificate()
 
   // update file_name di certificate_field table
   if ($conn->query($updateFileNameQuery)) {
+    $db->createActivity([$_SESSION['id'], "update", "Success edit certificate with id: $id"]);
     return redirect("dashboard/certificate", "Berhasil mengubah sertifikat");
   } else {
     return redirect("dashboard/certificate", "Gagal mengubah sertifikat", "error");
@@ -108,7 +132,7 @@ function editCertificate()
 
 function deleteCertificate()
 {
-  global $conn;
+  global $conn, $db;
 
   $id = htmlspecialchars($_POST['id']);
 
@@ -129,28 +153,29 @@ function deleteCertificate()
   $sql = "DELETE FROM certificates WHERE id = $id";
 
   if ($conn->query($sql) == 1) {
-    return redirect("dashboard/certificate/", "Berhasil menghapus pelatihan dengan id: $id");
+    $db->createActivity([$_SESSION['id'], "delete", "Success delete certificate with id: $id"]);
+    return redirect("dashboard/certificate/", "Berhasil menghapus sertifikat dengan id: $id");
   } else {
-    return redirect("dashboard/certificate", "gagal menghapus pelatihan", "error");
+    return redirect("dashboard/certificate", "gagal menghapus sertifikat", "error");
   }
 }
 
 function createCertificate()
 {
-  global $conn;
+  global $conn, $db;
 
   // get all user input
   $name = htmlspecialchars($_POST['title']);
   $desc = htmlspecialchars($_POST['desc']);
   $id_participation = htmlspecialchars($_POST['id_peserta']);
   $id_courses = htmlspecialchars($_POST['id_courses']);
-  $template = htmlspecialchars($_POST['template']);
+  $id_template = htmlspecialchars($_POST['template']);
 
   $cert_id = generateRandomString() . "-" . date("Y");
 
   // $sql = "INSERT INTO courses (event_name, event_description, event_date, organizer, created_at) VALUES ('$name', '$desc', '$course_date', '$organizer', current_timestamp())";
-  $createCertificate = "INSERT INTO certificates (user_id, event_id, certificate_code, issued_at, certificate_template)
-VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$template')";
+  $createCertificate = "INSERT INTO certificates (user_id, event_id, certificate_code, issued_at, certificate_template_id)
+VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$id_template')";
 
   if ($conn->query($createCertificate)) {
     $certificate = $conn->query("SELECT * FROM certificates WHERE certificate_code = '$cert_id' ")->fetch_array();
@@ -166,42 +191,47 @@ VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$templ
 VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[0] . "')";
 
   if ($conn->query($createCertificateField)) {
-    return redirect("dashboard/certificate", "berhasil membuat pelatihan baru");
+    // createActivity($conn, );
+    $db->createActivity([$_SESSION['id'], "create", "Success create new certificate with id: $cert_id"]);
+    return redirect("dashboard/certificate", "berhasil membuat sertifikat baru");
   }
 }
 
 function createParticipantCertificate($cert_id)
 {
-  global $conn;
+  global $conn, $db;
 
   try {
     // get user details
-    $getCert = $conn->query("SELECT c.*, u.*, e.*
+    $getCert = $conn->query("SELECT c.*, u.full_name, e.event_name, e.organizer, e.event_date, ct.file_name AS template_file_name, ct.font_name, ct.font_file
   FROM certificates c
   JOIN users u ON c.user_id = u.id 
-  JOIN courses e ON c.event_id = e.id 
-  WHERE c.certificate_code = '$cert_id'")->fetch_array();
+  JOIN courses e ON c.event_id = e.id
+  JOIN certificate_templates ct ON c.certificate_template_id = ct.id
+  WHERE c.certificate_code = '$cert_id'")->fetch_assoc();
 
-    $fontBold = "../assets/font/montserrat/static/Montserrat-Bold.ttf";
-    $font = "../assets/font/montserrat/static/Montserrat-Light.ttf";
+    $fontBold = "../assets/font/" . $getCert['font_name'] . "/bold.ttf";
+    $fontParticipant = "../assets/font/" . $getCert['font_name'] . "/" . $getCert['font_file'];
+    $font = "../assets/font/" . $getCert['font_name'] . "/light.ttf";
 
     $time = time();
 
-    $img = imagecreatefrompng("../assets/uploads/templates/" . $getCert['certificate_template'] . ".png");
+    $img = imagecreatefrompng("../assets/uploads/templates/" . $getCert['template_file_name']);
     $color = imagecolorallocate($img, 19, 21, 22);
 
     $firstLineText = "Untuk menyelesaikan pelatihan " . $getCert['event_name'] . " yang";
     $secondLineText = "diselenggarakan oleh " . $getCert['organizer'] . " pada " . hummanDate($getCert['event_date']);
 
+    $participantName = ucwords($getCert['full_name']);
+
     $certificateIdCenter = calculateTextCenter($getCert['certificate_code'], $fontBold, 25);
-    $participantCenterName = calculateTextCenter($getCert['full_name'], $fontBold, 60);
+    $participantCenterName = calculateTextCenter($participantName, $fontParticipant, 60);
     $firstLineTextCenter = calculateTextCenter($firstLineText, $font, 29);
     $secondLineTextCenter = calculateTextCenter($secondLineText, $font, 29);
-
     $organizationCenter = calculateHalfWidthTextCenter($getCert['organizer'], $fontBold, 30);
 
     imagettftext($img, 25, 0, $certificateIdCenter[0], $certificateIdCenter[1] + 600, $color, $fontBold, $getCert['certificate_code']);
-    imagettftext($img, 60, 0, $participantCenterName[0], $participantCenterName[1], $color, $fontBold, $getCert['full_name']);
+    imagettftext($img, 60, 0, $participantCenterName[0], $participantCenterName[1], $color, $fontParticipant, $participantName);
     imagettftext($img, 29, 0, $firstLineTextCenter[0], $firstLineTextCenter[1] + 100, $color, $font, $firstLineText);
     imagettftext($img, 29, 0, $secondLineTextCenter[0], $secondLineTextCenter[1] + 150, $color, $font, $secondLineText);
     imagettftext($img, 30, 0, $organizationCenter[0] + 30, 1130, $color, $fontBold, $getCert['organizer']);

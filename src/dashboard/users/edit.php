@@ -8,7 +8,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -120,22 +120,6 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
 
         body {
             background-color: #f8f9fa;
-        }
-
-        .sidebar {
-            background-color: #003366;
-            color: white;
-            height: 100vh;
-            padding: 20px;
-        }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .sidebar a:hover {
-            text-decoration: underline;
         }
 
         .content {

@@ -4,8 +4,6 @@ session_start();
 include 'service/connection.php';
 include 'service/utility.php';
 
-require('service/fpdf186/fpdf.php');
-
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     return redirect("src/index.php");
 }
@@ -49,32 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $certDetails = $getCert->fetch_array();
         }
     }
-
-    if (isset($_POST['download'])) {
-        $sql = "UPDATE certificates SET download_count = download_count + 1 WHERE certificate_code = '" . $_POST['code'] . "'";
-        if ($conn->query($sql)) {
-            downloadCertificate($_POST['file_name']);
-        } else {
-            return redirect("src/index.php");
-        }
-    }
 } else {
     return redirect("src/index.php");
-}
-
-function downloadCertificate($file_name)
-{
-    if (!is_file("assets/uploads/certificates/" . $file_name)) {
-        return redirect("src/index.php", "Certificate not found, please contact Administrator", "error");
-    }
-
-    $fileName = explode('.', $file_name);
-
-    $pdf = new FPDF();
-    $pdf->AddPage("L", "A5");
-
-    $pdf->Image("assets/uploads/certificates/" . $file_name, 0, 0, 210, 148);
-    $pdf->Output($fileName[0] . ".pdf", 'D');
 }
 
 ?>
@@ -86,6 +60,7 @@ function downloadCertificate($file_name)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Sertifikat</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -127,14 +102,6 @@ function downloadCertificate($file_name)
             padding: 10px 20px;
             border-radius: 5px;
         }
-
-        footer {
-            background-color: #3b82f6;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            margin-top: 30px;
-        }
     </style>
 </head>
 
@@ -172,7 +139,7 @@ function downloadCertificate($file_name)
 
     <?php if ($type == "id") { ?>
         <!-- Main Content -->
-        <div class="content">
+        <div class="content mb-5">
             <h1 class="display-4">SERTIF Name</h1>
             <img src="assets/uploads/certificates/<?= $certDetails['file_name'] ?>" class="certificate-placeholder">
 
@@ -186,10 +153,10 @@ function downloadCertificate($file_name)
             </div>
 
             <!-- Download Button -->
-            <form method="post">
+            <form action="service/certificate.php" method="post">
                 <input type="hidden" name="file_name" value="<?= $certDetails['file_name'] ?>">
                 <input type="hidden" name="code" value="<?= $certDetails['certificate_code'] ?>">
-                <button type="submit" name="download" class="download-btn mt-3" style="background-color: #294486;">UNDUH SERTIFIKAT</button>
+                <button type="submit" name="type" value="download" class="download-btn mt-3" style="background-color: #294486;">UNDUH SERTIFIKAT</button>
             </form>
         </div>
     <?php } else { ?>
@@ -217,8 +184,8 @@ function downloadCertificate($file_name)
     <?php } ?>
 
     <!-- Footer -->
-    <footer style="background-color: #294486;">
-        &copy; 2024 Kelompok 1. Semua hak dilindungi.
+    <footer style="background-color: #1d3c6e; color: white; text-align: center;">
+        <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
     </footer>
 
     <!-- Bootstrap JS (locally hosted) -->

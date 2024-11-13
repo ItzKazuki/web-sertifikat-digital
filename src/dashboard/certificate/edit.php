@@ -8,7 +8,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -169,22 +169,6 @@ while ($row = $getTemplates->fetch_array()) {
 
         body {
             background-color: #f8f9fa;
-        }
-
-        .sidebar {
-            background-color: #003366;
-            color: white;
-            height: 100vh;
-            padding: 20px;
-        }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .sidebar a:hover {
-            text-decoration: underline;
         }
 
         .content {
@@ -432,7 +416,7 @@ while ($row = $getTemplates->fetch_array()) {
                 document.getElementById('select_template').value = box.getAttribute('data-value');
             });
 
-            if (box.getAttribute('data-value') == "<?= $certDetails['certificate_template'] ?>") {
+            if (box.getAttribute('data-value') == "<?= $certDetails['certificate_template_id'] ?>") {
                 box.classList.add('selected');
                 selectedBox = box;
                 document.getElementById('select_template').value = box.getAttribute('data-value');

@@ -105,51 +105,51 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
 </style>
 
 <body>
+    <div class="sidebar">
+        <div class="text-center my-3">
+            <img src="../../assets/logo.png" alt="Logo" style="max-width: 80px;">
+            <h4>Dashboard Sertifikat</h4>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="../index.php" class="nav-link">Beranda</a></li>
+            <!-- Manajemen Sertifikat Dropdown -->
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
+                <div class="collapse" id="sertifikatMenu">
+                    <a href="../certificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
+                    <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
+                <div class="collapse" id="pelatihanMenu">
+                    <a href="../courses/index.php" class="dropdown-item">Daftar Pelatihan</a>
+                    <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#templateSertifikat" role="button" aria-expanded="false" aria-controls="templateSertifikat">Manajemen Template Sertifikat</a>
+                <div class="collapse" id="templateSertifikat">
+                    <a href="index.php" class="dropdown-item">Daftar Template</a>
+                    <a href="create.php" class="dropdown-item">Tambah Template</a>
+                </div>
+            </li>
+            <!-- Manajemen Pengguna Dropdown -->
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
+                <div class="collapse" id="penggunaMenu">
+                    <a href="../users/" class="dropdown-item">Daftar Pengguna</a>
+                    <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
+            <li class="nav-item">
+                <form action="../../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
+            </li>
+        </ul>
+    </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="sidebar">
-                <div class="text-center my-3">
-                    <img src="../../assets/logo.png" alt="Logo" style="max-width: 80px;">
-                    <h4>Dashboard Sertifikat</h4>
-                </div>
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a href="../index.php" class="nav-link">Beranda</a></li>
-                    <!-- Manajemen Sertifikat Dropdown -->
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
-                        <div class="collapse" id="sertifikatMenu">
-                            <a href="../certificate/index.php" class="dropdown-item">Daftar Sertifikat</a>
-                            <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
-                        <div class="collapse" id="pelatihanMenu">
-                            <a href="../courses/index.php" class="dropdown-item">Daftar Pelatihan</a>
-                            <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#templateSertifikat" role="button" aria-expanded="false" aria-controls="templateSertifikat">Manajemen Template Sertifikat</a>
-                        <div class="collapse" id="templateSertifikat">
-                            <a href="index.php" class="dropdown-item">Daftar Template</a>
-                            <a href="create.php" class="dropdown-item">Tambah Template</a>
-                        </div>
-                    </li>
-                    <!-- Manajemen Pengguna Dropdown -->
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#penggunaMenu" role="button" aria-expanded="false" aria-controls="penggunaMenu">Manajemen Pengguna</a>
-                        <div class="collapse" id="penggunaMenu">
-                            <a href="../users/" class="dropdown-item">Daftar Pengguna</a>
-                            <a href="../users/create.php" class="dropdown-item">Tambah Pengguna</a>
-                        </div>
-                    </li>
-                    <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
-                    <li class="nav-item">
-                        <form action="../../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
-                    </li>
-                </ul>
-            </div>
             <!-- Main konten -->
             <div class="main-content">
                 <div class="col-md-12 p-3">
@@ -214,7 +214,6 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                     <?php } ?>
                 </div>
             </div>
-
         </div>
     </div>
 

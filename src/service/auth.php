@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function edit_password()
 {
-  global $conn;
+  global $conn, $db;
 
   $reset = htmlspecialchars($_POST['reset']);
 
@@ -96,7 +96,7 @@ function edit_password()
 
 function find_email()
 {
-  global $conn;
+  global $conn, $db;
   $email = htmlspecialchars($_POST['email']);
 
   $sql = "SELECT * FROM users WHERE email = '$email'";
@@ -120,7 +120,7 @@ function find_email()
 
 function login()
 {
-  global $conn;
+  global $conn, $db;
   // get email and password
   $email = htmlspecialchars($_POST['email']);
   $password = htmlspecialchars($_POST['password']);
@@ -140,6 +140,7 @@ function login()
   }
 
   if ($res != null) {
+    $db->createActivity([$res['id'], 'login', "Create new session with id: {$res['id']}"]);
     // set 1st user to admin
     if ($res['id'] == 1 && $res['role'] != 'admin') {
       $conn->query("UPDATE users SET role = 'admin' WHERE email = '$email'");
@@ -167,7 +168,9 @@ function login()
 
 function logout()
 {
-  session_start();
+  global $conn, $db;
+  // session_start();
+  $db->createActivity([$_SESSION['id'], "logout", "Success logout with id: " . $_SESSION['id']]);
   session_destroy();
   session_start();
 
@@ -176,7 +179,7 @@ function logout()
 
 function register()
 {
-  global $conn;
+  global $conn, $db;
 
   // get all user input
   $nik = htmlspecialchars($_POST['nik']);

@@ -8,7 +8,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -149,22 +149,6 @@ while ($row = $getTemplates->fetch_array()) {
 
         body {
             background-color: #f8f9fa;
-        }
-
-        .sidebar {
-            background-color: #003366;
-            color: white;
-            height: 100vh;
-            padding: 20px;
-        }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .sidebar a:hover {
-            text-decoration: underline;
         }
 
         .content {
@@ -331,15 +315,8 @@ while ($row = $getTemplates->fetch_array()) {
                                 <img width="200px" src="../../assets/uploads/templates/<?= $template['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="<?= $template['id'] ?>" />
                             </div>
                         <?php endforeach; ?>
-                        <!-- <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/templates/template2.png" class="cert-box p-2 text-center shadow-sm box" data-value="template2" />
-                        </div>
-                        <div class="col-md-2">
-                            <img width="200px" src="../../assets/uploads/templates/template3.png" class="cert-box p-2 text-center shadow-sm box" data-value="template3" />
-                        </div> -->
                     </div>
                 </div>
-
 
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-danger" type="button">

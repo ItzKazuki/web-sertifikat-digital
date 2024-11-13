@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Cek E-Sertifikat Kelulusan</title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css"> -->
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </main>
 
     <!-- Footer -->
-    <footer style="background-color: #1d3c6e; color: white; text-align: center; padding: 1rem;">
+    <footer style="background-color: #1d3c6e; color: white; text-align: center;">
         <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
     </footer>
 

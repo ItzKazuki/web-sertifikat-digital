@@ -11,7 +11,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -19,15 +19,11 @@ $countCertificate = $conn->query('SELECT count(*) FROM certificates')->fetch_arr
 $countUsers = $conn->query('SELECT count(*) FROM users')->fetch_array();
 $countDownloadedCertificate = $conn->query("SELECT SUM(download_count) AS total_downloads FROM certificates")->fetch_array();
 
-// debug($countCertificate);]
-
 $getAllCertificates = $conn->query("SELECT c.*, cf.file_name FROM certificates c JOIN certificate_fields cf ON c.id = cf.certificate_id");
 
 while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
     $certificates[] = $row;
 }
-
-// debug($certificates);
 
 ?>
 
@@ -64,6 +60,7 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
             background-color: #1d3c6e;
             color: white;
             height: 100vh;
+            width: 250px;
             position: fixed;
         }
 
@@ -181,36 +178,34 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
                 </div>
             </li>
             <li class="nav-item"><a href="reports.php" class="nav-link">Laporan</a></li>
-            <li class="nav-item">
-                <form action="../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
-            </li>
         </ul>
     </div>
 
     <!-- Main Content -->
-    <div class="content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Kotak Statistik</h2>
-            <div class="d-flex justify-content-end align-items-center p-3">
-                <span><?= $_SESSION['full_name'] ?></span>
-                <div class="dropdown">
-                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="..">Landing Page</a></li>
-                        <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <form class="dropdown-item" action="../service/auth.php" method="post">
-                                <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
+    <div class="content flex-grow-1">
+        <div class="header">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Kotak Statistik</h2>
+                <div class="d-flex justify-content-end align-items-center p-3">
+                    <span><?= $_SESSION['full_name'] ?></span>
+                    <div class="dropdown">
+                        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="..">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                    <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-
 
         <!-- Statistics Boxes -->
         <div class="container" style="width: 100vw; border-radius: 4px; height: 250px; background-color: gray; display:flex; align-items: center; justify-content: center;">
@@ -229,26 +224,26 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
 
 
         <!-- Daftar Sertifikat Header -->
-        <div class="row mt-3">
+        <div class="row mt-4">
             <div class="col-6">
-                <h5>Daftar Sertifikat</h5>
+                <h3><strong>Daftar Sertifikat</strong></h3>
             </div>
-            <div class="col-6 text-end mb-4">
+            <div class="col-6 text-end mb-2">
                 <a href="certificate/create.php" class="btn btn-dark">Buat Sertifikat</a>
             </div>
         </div>
 
         <!-- Sertifikat Cards -->
 
-        <div class="row g-3" style="display: flex; justify-content:center;">
-            <?php if (isset($certificate)) { ?>
+        <div class="row g-3 mt-2" style="display: flex; justify-content:center;">
+            <?php if (isset($certificates)) { ?>
                 <?php foreach ($certificates as $certificate) : ?>
                     <div class="col-xl-3">
                         <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
                     </div>
                 <?php endforeach; ?>
             <?php } else { ?>
-                NOT FOUND
+                <strong>Tidak ada sertifikat yang ditemukan.</strong>
             <?php } ?>
         </div>
     </div>

@@ -8,7 +8,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }
 
-if($_SESSION['role'] != "admin") {
+if ($_SESSION['role'] != "admin") {
     return redirect("index.php");
 }
 
@@ -117,22 +117,6 @@ while ($row = $getUser->fetch_row()) {
 
         body {
             background-color: #f8f9fa;
-        }
-
-        .sidebar {
-            background-color: #003366;
-            color: white;
-            height: 100vh;
-            padding: 20px;
-        }
-
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .sidebar a:hover {
-            text-decoration: underline;
         }
 
         .content {
@@ -247,14 +231,14 @@ while ($row = $getUser->fetch_row()) {
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#sertifikatMenu" role="button" aria-expanded="false" aria-controls="sertifikatMenu">Manajemen Sertifikat</a>
                 <div class="collapse" id="sertifikatMenu">
-                    <a href="../certificate" class="dropdown-item">List Sertifikat</a>
+                    <a href="../certificate/index.php" class="dropdown-item">List Sertifikat</a>
                     <a href="../certificate/create.php" class="dropdown-item">Buat Sertifikat</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#pelatihanMenu" role="button" aria-expanded="false" aria-controls="pelatihanMenu">Manajemen Pelatihan</a>
                 <div class="collapse" id="pelatihanMenu">
-                    <a href="../courses" class="dropdown-item">List Pelatihan</a>
+                    <a href="../courses/index.php" class="dropdown-item">List Pelatihan</a>
                     <a href="../courses/create.php" class="dropdown-item">Tambah Pelatihan</a>
                 </div>
             </li>
@@ -288,18 +272,22 @@ while ($row = $getUser->fetch_row()) {
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama Pengguna</th>
                             <th>Email Pengguna</th>
                             <th>Tanggal Daftar</th>
+                            <th>Role</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($users as $user) : ?>
+                        <?php foreach ($users as $key => $user) : ?>
                             <tr>
+                                <td><?= $key + 1 ?></td>
                                 <td><?= $user[2] ?></td>
                                 <td><?= $user[3] ?></td>
                                 <td><?= hummanDate($user[7]) ?></td>
+                                <td><span class="badge <?= $user[6] == 'admin' ? 'bg-danger' : 'bg-success' ?>"><?= $user[6] ?></span></td>
                                 <td>
                                     <a href="edit.php?id=<?= $user[0] ?>" class="btn btn-sm btn-primary">Edit</a>
                                     <a class="btn btn-sm btn-danger" onclick="deleteUser('<?= $user[0] ?>')" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Hapus</a>

@@ -48,10 +48,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 function createTemplate()
 {
-  global $conn;
+  global $conn, $db;
 
   $name = htmlspecialchars($_POST['template_name']);
   $desc = htmlspecialchars($_POST['description']);
+  $font_name = htmlspecialchars($_POST['font_name']);
+  $font_file = htmlspecialchars($_POST['font_file']);
 
   $slug_id = slugify($name);
 
@@ -69,9 +71,10 @@ function createTemplate()
       return redirect("dashboard/certificate-template", $template[1], "error");
     }
 
-    $sql = "INSERT INTO certificate_templates (id, file_name, template_name, template_desc, uploader_id, created_at) VALUES ('$slug_id', '" . $template[0] . "', '$name', '$desc', '" . $_SESSION['id'] . "', current_timestamp())";
+    $sql = "INSERT INTO certificate_templates (id, file_name, font_name, font_file, template_name, template_desc, uploader_id, created_at) VALUES ('$slug_id', '" . $template[0] . "', '$font_name', '$font_file', '$name', '$desc', '" . $_SESSION['id'] . "', current_timestamp())";
 
     if ($conn->query($sql)) {
+      $db->createActivity([$_SESSION['id'], "create", "Success create new template"]);
       return redirect("dashboard/certificate-template", "berhasil membuat template baru");
     }
   }
@@ -79,23 +82,22 @@ function createTemplate()
 
 function editTemplate()
 {
-  global $conn;
+  global $conn, $db;
 
   $id = htmlspecialchars($_POST['id']);
   $name = htmlspecialchars($_POST['template_name']);
   $desc = htmlspecialchars($_POST['description']);
+  $font_name = htmlspecialchars($_POST['font_name']);
+  $font_file = htmlspecialchars($_POST['font_file']);
 
   $slug_id = slugify($name);
 
   // add data to database
   $templateData = $conn->query("SELECT * FROM certificate_templates WHERE id = '$slug_id'");
 
-  if ($templateData->num_rows > 0) {
-    return redirect("dashboard/certificate-template/edit.php?id=$id", "nama file sudah digunakan", 'error');
-  } else {
+  $file = $_FILES['template_file'];
 
-    $file = $_FILES['template_file'];
-
+  if ($file['error'] != 4) {
     // hapus gambar sebelumnya
     $filePath = "../assets/uploads/templates/" . $templateData->fetch_array()['file_name'];
 
@@ -104,24 +106,44 @@ function editTemplate()
         return redirect("dashboard/certificate-template", "Error saat menghapus gambar, silahkan ulang lagi nanti", 'error');
       }
     }
+  }
 
-    $template = upload($file, $slug_id);
+  $template = upload($file, $slug_id);
 
-    if (is_null($template[0])) {
-      return redirect("dashboard/certificate-template", $template[1], "error");
-    }
+  $sql = "UPDATE certificate_templates 
+SET 
+    id = '$slug_id', 
+    file_name = '" . $template[0] . "', 
+    font_name = '$font_name', 
+    font_file = '$font_file', 
+    template_name = '$name', 
+    template_desc = '$desc', 
+    uploader_id = '" . $_SESSION['id'] . "' 
+WHERE id = '$id'
+";
 
-    $sql = "UPDATE certificate_templates SET id = '$slug_id, file_name = '" . $template[0] . "', template_name = '$name', template_desc = '$desc', uploader_id = '" . $_SESSION['id'] . "' WHERE id = '$id'";
+  if (is_null($template[0])) {
+    $sql = "UPDATE certificate_templates 
+SET 
+    id = '$slug_id', 
+    font_name = '$font_name', 
+    font_file = '$font_file', 
+    template_name = '$name', 
+    template_desc = '$desc', 
+    uploader_id = '" . $_SESSION['id'] . "' 
+WHERE id = '$id'
+";
+  }
 
-    if ($conn->query($sql)) {
-      return redirect("dashboard/certificate-template", "berhasil membuat template baru");
-    }
+  if ($conn->query($sql)) {
+    $db->createActivity([$_SESSION['id'], "update", "Success edit template with id: $id"]);
+    return redirect("dashboard/certificate-template", "berhasil membuat template baru");
   }
 }
 
 function deleteTemplate()
 {
-  global $conn;
+  global $conn, $db;
 
   $id = htmlspecialchars($_POST['id']);
 
@@ -142,6 +164,7 @@ function deleteTemplate()
   $sql = "DELETE FROM certificate_templates WHERE id = '$id'";
 
   if ($conn->query($sql) == 1) {
+    $db->createActivity([$_SESSION['id'], "delete", "Success delete template with id: $id"]);
     return redirect("dashboard/certificate-template/", "Berhasil menghapus pelatihan dengan id: $id");
   } else {
     return redirect("dashboard/certificate-template", "gagal menghapus pelatihan", "error");
