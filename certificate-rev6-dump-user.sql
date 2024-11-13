@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 06, 2024 at 12:23 PM
+-- Generation Time: Nov 13, 2024 at 05:16 PM
 -- Server version: 11.1.2-MariaDB-1:11.1.2+maria~ubu2204
 -- PHP Version: 8.3.6
 
@@ -95,10 +95,7 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `event_name`, `event_description`, `event_date`, `organizer`, `created_at`) VALUES
-(4, 'Belajar Javascript dasar', 'Sesi belajar javascript dasar bersama ....', '2024-11-05', 'PT. Transpac', '2024-11-02 17:13:24'),
-(6, 'Belajar Membuat Ayam Enak', 'anjay', '2024-11-05', 'PT. Ayam Goreng Enak', '2024-11-02 17:15:41'),
-(7, 'Turnamen Mobile Legends', 'Anjay latihan mobile lengends', '2024-11-06', 'OSIS MPK', '2024-11-03 16:57:28'),
-(8, 'make up dasar', 'make up dasar pemula', '2024-11-04', 'make up beauty', '2024-11-04 00:43:10');
+(10, 'Belajar Golang Dasar anjay', 'cascadc', '2024-11-22', 'w23x', '2024-11-13 17:13:01');
 
 -- --------------------------------------------------------
 
@@ -109,7 +106,7 @@ INSERT INTO `courses` (`id`, `event_name`, `event_description`, `event_date`, `o
 CREATE TABLE `reports` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `type_activity` enum('create','delete','update','login','logout') NOT NULL,
+  `type_activity` enum('create','delete','update','login','logout','download') NOT NULL,
   `info` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -166,7 +163,24 @@ INSERT INTO `reports` (`id`, `user_id`, `type_activity`, `info`, `created_at`) V
 (47, 1, 'login', 'Create new session with id: 1', '2024-11-06 08:21:26'),
 (48, 1, 'delete', 'Success delete template with id: damda', '2024-11-06 08:34:50'),
 (49, 1, 'delete', 'Success delete course with id: 9', '2024-11-06 08:35:01'),
-(50, 1, 'create', 'Success create new template', '2024-11-06 08:35:49');
+(50, 1, 'create', 'Success create new template', '2024-11-06 08:35:49'),
+(51, 1, 'login', 'Create new session with id: 1', '2024-11-06 14:55:57'),
+(52, 1, 'create', 'Success create new certificate with id: 4orHC2rwi6-2024', '2024-11-06 15:46:01'),
+(53, 1, 'download', 'Success download certificate with code: 4orHC2rwi6-2024 with user id: 1', '2024-11-06 16:41:50'),
+(54, 1, 'login', 'Create new session with id: 1', '2024-11-13 16:38:11'),
+(55, 1, 'logout', 'Success logout with id: 1', '2024-11-13 16:46:05'),
+(56, 5, 'login', 'Create new session with id: 5', '2024-11-13 16:46:12'),
+(57, 5, 'logout', 'Success logout with id: 5', '2024-11-13 17:07:17'),
+(58, 5, 'login', 'Create new session with id: 5', '2024-11-13 17:07:24'),
+(59, 5, 'logout', 'Success logout with id: 5', '2024-11-13 17:10:51'),
+(60, 1, 'login', 'Create new session with id: 1', '2024-11-13 17:10:59'),
+(61, 1, 'delete', 'Success delete course with id: 4', '2024-11-13 17:11:06'),
+(62, 1, 'delete', 'Success delete course with id: 6', '2024-11-13 17:11:10'),
+(63, 1, 'delete', 'Success delete course with id: 7', '2024-11-13 17:11:13'),
+(64, 1, 'delete', 'Success delete course with id: 8', '2024-11-13 17:11:18'),
+(65, 1, 'logout', 'Success logout with id: 1', '2024-11-13 17:11:26'),
+(66, 1, 'login', 'Create new session with id: 1', '2024-11-13 17:12:42'),
+(67, 1, 'create', 'Success create course with name: Belajar Golang Dasar anjay', '2024-11-13 17:13:01');
 
 -- --------------------------------------------------------
 
@@ -216,7 +230,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nik`, `full_name`, `email`, `phone_number`, `password`, `role`, `created_at`) VALUES
-(1, '3175062406070009', 'Chaeza Ibnu Akbar', 'ibnu235729@gmail.com', '0859102628529', '5b196d3ffc913f29ece597fc1489c078;7862c1ff931b93bac74a6ebb7a61b5270082c1bb6eff23ad5d3e72c15e10d72f', 'admin', '2024-10-30 15:23:06'),
+(1, '3175062406070009', 'Chaeza Ibnu Akbar', 'ibnu235729@gmail.com', '0859102628529', '6b8c7e9305699d0837f82c27711625c1;f8b418755f1d6e9061a6ecf15c5f462eb0720ba1040ec37e3268c103d044bed6', 'admin', '2024-10-30 15:23:06'),
 (4, '3198472355328', 'Rennard Adityatama', 'rennard@gmail.com', '08123556789', '291ddc90c349b060b5b08c6436a6e1a8;e6b24da9856458ee2f9014b8173fd96155e765395117bddc18a780e58ba240fc', 'participant', '2024-11-02 17:06:59'),
 (5, '2192734124439', 'Danish Sulistyo', 'danish123@gmail.com', '086789283424', '88fac62a5fabf0a52618f681121308a7;73af6d1e34023a923cb8f9dc069924332a48564ab0058c9359be1556f4d70208', 'participant', '2024-11-02 17:07:51'),
 (6, '2178461948713', 'Ayu Syafira', 'ayu@smkn71jakarta.sch.id', '082163731343', 'f3f99a207ac209fad93556adab125a91;9b8fba96617acd5efaaba7dd06af46d4b0a7522e40fd9389dbc0650c5695b2e7', 'participant', '2024-11-02 17:08:22'),
@@ -286,31 +300,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `certificates`
 --
 ALTER TABLE `certificates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `certificate_fields`
 --
 ALTER TABLE `certificate_fields`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `reset_password`
 --
 ALTER TABLE `reset_password`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
