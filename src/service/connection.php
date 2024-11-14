@@ -1,18 +1,10 @@
 <?php
 
 include_once 'MyDatabase.php';
+include_once 'DotEnv.php';
 
-$server_name = 'localhost';
-$username = 'root';
-$password = '';
-$database = "certificate";
-
-// $conn = new mysqli($server_name, $username, $password, $database);
-
-// if ($conn->connect_errno) {
-//   die("Failed Connect to database: " . $conn->connect_error);
-// }
+(new DotEnvEnvironment)->load(__DIR__ . '/../../');
 
 // Example usage:
-$db = new MyConnection($server_name, $username, $password, $database);
+$db = new MyConnection($_ENV['MYSQL_HOST'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD'], $_ENV['MYSQL_DB']);
 $conn = $db->getConnection();

@@ -94,37 +94,6 @@ function debug($var)
 function hummanDate($inputDate)
 {
   return date("j F Y", strtotime($inputDate));
-  // // Create a DateTime object from the input date
-  // $dateTime = DateTime::createFromFormat('y-m-d', $inputDate);
-  // // Check if the date was created successfully
-
-  // if ($dateTime) {
-  //   // Format the date to "d F Y"
-  //   $formattedDate = $dateTime->format('d F Y');
-
-  //   // Replace the English month with the Indonesian month
-  //   $indonesianMonths = [
-  //     'January' => 'Januari',
-  //     'February' => 'Februari',
-  //     'March' => 'Maret',
-  //     'April' => 'April',
-  //     'May' => 'Mei',
-  //     'June' => 'Juni',
-  //     'July' => 'Juli',
-  //     'August' => 'Agustus',
-  //     'September' => 'September',
-  //     'October' => 'Oktober',
-  //     'November' => 'November',
-  //     'December' => 'Desember',
-  //   ];
-
-  //   // Replace the month in the formatted date
-  //   // $formattedDate = str_replace(array_keys($indonesianMonths), array_values($indonesianMonths), $formattedDate);
-
-  //   return $formattedDate; // Output: 15 Juni 2024
-  // } else {
-  //   return false;
-  // }
 }
 
 function get_gravatar(
