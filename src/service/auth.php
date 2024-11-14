@@ -15,6 +15,7 @@ session_start();
 include 'utility.php';
 
 include 'send.php';
+(new DotEnvEnvironment)->load(__DIR__ . '/../../');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -113,10 +114,12 @@ function find_email()
     $full_name = $res->fetch_array()['full_name']; // get the email
     $sql = "INSERT INTO reset_password (`reset_token`, `email`) VALUES('$reset', '$email')";
 
-    $conn->query($sql);
+    if($conn->query($sql)) {
+      sendMail($email, $full_name, 'Reset Password', "you can access reset password in here! ".$_ENV['APP_URL']."/auth/change.php?reset=".$reset);
+    }
 
     // return redirect('auth/change.php?reset=' . $reset);
-    sendMail($email, $full_name, 'Reset Password', 'you can access reset password in here!');
+    return redirect('auth/login.php', "Silahkan lihat email anda");
   } else {
     return redirect("auth/forgot.php", "Username atau password tidak di temukan.", "error");
   }
