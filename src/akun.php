@@ -117,10 +117,10 @@ if (isset($_POST['download'])) {
                                     <h6 class="card-text"><?= $certificate['event_name'] ?></h6>
                                     <p class="card-text">Issued by: <?= $certificate['organizer']  ?></p>
                                     <p class="card-text">Date: <?= hummanDate($certificate['issued_at']) ?></p>
-                                    <form method="post">
+                                    <form action="service/certificate.php" method="post">
                                         <input type="hidden" name="file_name" value="<?= $certificate['file_name'] ?>">
                                         <input type="hidden" name="code" value="<?= $certificate['certificate_code'] ?>">
-                                        <button type="submit" name="download" href="#" class="btn btn-primary"><i class="fas fa-download"></i> Download</button>
+                                        <button type="submit" name="type" value="download" href="#" class="btn btn-primary"><i class="fas fa-download"></i> Download</button>
                                     </form>
                                 </div>
                             </div>
