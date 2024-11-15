@@ -113,7 +113,7 @@ function changeBgTable(string $condition)
             background-color: #1d3c6e;
             color: white;
             height: 100vh;
-            width: 250px;
+            width: 17%;
             position: fixed;
         }
 
@@ -161,7 +161,7 @@ function changeBgTable(string $condition)
             border: 1px solid #ddd;
         }
 
-        .ml-auto{
+        .ml-auto {
             margin-left: auto;
         }
 

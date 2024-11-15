@@ -60,7 +60,7 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
             background-color: #1d3c6e;
             color: white;
             height: 100vh;
-            width: 250px;
+            width: 17%;
             position: fixed;
         }
 
@@ -78,6 +78,7 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
         .dropdown-item:hover {
             background-color: #2a4b8e;
             color: #ffffff !important;
+            width: full;
         }
 
         .dropdown-item {

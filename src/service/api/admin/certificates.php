@@ -24,7 +24,7 @@ $height = 1414;
 //}
 
 if ($method !== "POST") {
-  $res = $conn->query("SELECT c.*, u.full_name AS participant_name, e.event_name, e.event_date FROM certificates c JOIN users u ON c.user_id = u.id JOIN courses e ON c.event_id = e.id")->fetch_assoc();
+  $res = $conn->query("SELECT c.*, u.full_name AS participant_name, e.event_name, e.event_date FROM certificates c JOIN users u ON c.user_id = u.id JOIN courses e ON c.event_id = e.id")->fetch_array(MYSQLI_ASSOC);
 
   return apiResponse("success", "Show all certificates", [
     'certificates' => $res
