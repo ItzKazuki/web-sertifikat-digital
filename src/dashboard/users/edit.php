@@ -38,10 +38,10 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
     <style>
         /* Sidebar styling */
         .sidebar {
-            background-color: #1d3c6e;
+            background-color: #191970;
             color: white;
             height: 100vh;
-            width: 250px;
+            width: 255px;
             position: fixed;
         }
 
@@ -59,6 +59,7 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
         .dropdown-item:hover {
             background-color: #2a4b8e;
             color: #ffffff !important;
+            width: 255px;
         }
 
         .dropdown-item {

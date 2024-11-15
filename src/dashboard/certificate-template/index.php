@@ -32,77 +32,78 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Sidebar styling */
+        .sidebar {
+            background-color: #191970;
+            color: white;
+            height: 100vh;
+            width: 255px;
+            position: fixed;
+        }
+    
+        .sidebar h4 {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    
+        .nav-link {
+            color: white;
+            padding-left: 20px;
+        }
+    
+        .nav-link:hover,
+        .dropdown-item:hover {
+            background-color: #2a4b8e;
+            color: #ffffff !important;
+            width: 255px;
+        }
+    
+        .dropdown-item {
+            padding-left: 30px;
+        }
+    
+        /* Main konten styling */
+        .main-content {
+            margin-left: 250px;
+            /* Sesuaikan dengan lebar sidebar */
+            padding: 20px;
+            width: calc(100% - 250px);
+            /* Mengambil sisa lebar di samping sidebar */
+        }
+    
+        .search {
+            width: 50%;
+        }
+    
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+    
+        .table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+        }
+    
+        .table-responsive {
+            overflow-x: auto;
+        }
+    
+        .center-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
-<style>
-    /* Sidebar styling */
-    .sidebar {
-        background-color: #1d3c6e;
-        color: white;
-        height: 100vh;
-        width: 250px;
-        position: fixed;
-    }
-
-    .sidebar h4 {
-        margin-top: 20px;
-        font-size: 18px;
-    }
-
-    .nav-link {
-        color: white;
-        padding-left: 20px;
-    }
-
-    .nav-link:hover,
-    .dropdown-item:hover {
-        background-color: #2a4b8e;
-        color: #ffffff !important;
-    }
-
-    .dropdown-item {
-        padding-left: 30px;
-    }
-
-    /* Main konten styling */
-    .main-content {
-        margin-left: 250px;
-        /* Sesuaikan dengan lebar sidebar */
-        padding: 20px;
-        width: calc(100% - 250px);
-        /* Mengambil sisa lebar di samping sidebar */
-    }
-
-    .search {
-        width: 50%;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table th,
-    .table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-
-    .table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-        text-align: left;
-    }
-
-    .table-responsive {
-        overflow-x: auto;
-    }
-
-    .center-image {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
 
 <body>
     <div class="sidebar">

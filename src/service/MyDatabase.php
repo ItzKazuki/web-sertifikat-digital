@@ -4,7 +4,7 @@ class MyConnection
 {
   private $conn;
 
-  public function __construct(string $host, string $username = "root", string $password, string $database, int $port = 3306)
+  public function __construct(string $host, string $username, string $password, string $database, int $port = 3306)
   {
     $this->conn = new mysqli($host, $username, $password, $database, $port);
 

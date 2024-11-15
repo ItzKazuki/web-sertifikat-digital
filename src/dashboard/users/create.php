@@ -30,10 +30,10 @@ if ($_SESSION['role'] != "admin") {
     <style>
         /* Sidebar styling */
         .sidebar {
-            background-color: #1d3c6e;
+            background-color: #191970;
             color: white;
             height: 100vh;
-            width: 250px;
+            width: 255px;
             position: fixed;
         }
 
@@ -51,6 +51,7 @@ if ($_SESSION['role'] != "admin") {
         .dropdown-item:hover {
             background-color: #2a4b8e;
             color: #ffffff !important;
+            width: 255px;
         }
 
         .dropdown-item {

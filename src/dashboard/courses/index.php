@@ -31,14 +31,13 @@ while ($row = $getCourses->fetch_row()) {
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<style>
+    <style>
     /* Sidebar styling */
     .sidebar {
-        background-color: #1d3c6e;
+        background-color: #191970;
         color: white;
         height: 100vh;
-        width: 250px;
+        width: 255px;
         position: fixed;
     }
 
@@ -56,6 +55,7 @@ while ($row = $getCourses->fetch_row()) {
     .dropdown-item:hover {
         background-color: #2a4b8e;
         color: #ffffff !important;
+        width: 255px;
     }
 
     .dropdown-item {
@@ -96,6 +96,7 @@ while ($row = $getCourses->fetch_row()) {
         overflow-x: auto;
     }
 </style>
+</head>
 
 <body>
     <div class="sidebar">
