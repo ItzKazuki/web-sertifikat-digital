@@ -24,10 +24,14 @@ $height = 1414;
 //}
 
 if ($method !== "POST") {
-  $res = $conn->query("SELECT c.*, u.full_name AS participant_name, e.event_name, e.event_date FROM certificates c JOIN users u ON c.user_id = u.id JOIN courses e ON c.event_id = e.id")->fetch_array(MYSQLI_ASSOC);
+  $res = $conn->query("SELECT c.*, u.full_name AS participant_name, e.event_name, e.event_date FROM certificates c JOIN users u ON c.user_id = u.id JOIN courses e ON c.event_id = e.id");
+  
+  while($row = $res->fetch_array(MYSQLI_ASSOC)) {
+      $certs[] = $row;
+  }
 
   return apiResponse("success", "Show all certificates", [
-    'certificates' => $res
+    'certificates' => $certs
   ]);
 }
 
