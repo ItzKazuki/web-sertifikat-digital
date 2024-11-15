@@ -70,9 +70,20 @@ session_start();
         <section class="tujuan-section py-5 bg-light">
             <div class="container">
                 <div class="row" style="justify-content: flex-end;">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" id="tujuan">
                         <h3>Tujuan</h3>
                         <p>Maksud pemerintah kabupaten dalam Corporate Social Responsibility (CSR) adalah untuk menciptakan sinergi yang kuat antara pemerintah, perusahaan, dan masyarakat...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section py-5">
+            <div class="container">
+                <div class="row" id="tentang-kami">
+                    <div class="col-lg-6">
+                        <h3>Tentang Kami</h3>
+                        <p>Di SMKN 71, kami menjadi solusi terdepan dalam penerbitan e-sertifikat. Dengan teknologi yang canggih dan proses yang mudah, kami memastikan setiap sertifikat yang diterbitkan memiliki keamanan tinggi dan keaslian terjamin. Dari pengakuan prestasi akademik hingga penghargaan profesional, layanan e-sertifikat kami dirancang untuk memenuhi kebutuhan Anda dengan efisiensi dan keandalan</p>
                     </div>
                 </div>
             </div>

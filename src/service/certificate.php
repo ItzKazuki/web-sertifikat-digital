@@ -13,6 +13,7 @@
 session_start();
 
 include 'utility.php';
+include 'send.php';
 
 // error_reporting(E_ALL);
 error_reporting(E_ALL & ~E_DEPRECATED);
@@ -178,7 +179,7 @@ function createCertificate()
 VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$id_template')";
 
   if ($conn->query($createCertificate)) {
-    $certificate = $conn->query("SELECT * FROM certificates WHERE certificate_code = '$cert_id' ")->fetch_array();
+    $certificate = $conn->query("SELECT c.id, u.email, u.full_name FROM certificates c JOIN users u ON c.user_id = u.id WHERE certificate_code = '$cert_id' ")->fetch_array();
   }
 
   $certification_image = createParticipantCertificate($cert_id);
@@ -193,8 +194,10 @@ VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[
   if ($conn->query($createCertificateField)) {
     // createActivity($conn, );
     $db->createActivity([$_SESSION['id'], "create", "Success create new certificate with id: $cert_id"]);
-    return redirect("dashboard/certificate", "berhasil membuat sertifikat baru");
+    sendMail($certificate['email'], $certificate['full_name'], 'Your New Certificate', "you get new certificate with id: $cert_id");
   }
+
+  return redirect("dashboard/certificate", "berhasil membuat sertifikat baru");
 }
 
 function createParticipantCertificate($cert_id)

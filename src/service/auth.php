@@ -89,8 +89,7 @@ function edit_password()
   $salt = generateSalt();
   $hashNewPassword = generateHashWithSalt($newPassword, $salt);
 
-  if ($conn->query("UPDATE users SET password = '$salt;$hashNewPassword' WHERE email = '$email'")) {
-    $conn->query("DELETE FROM reset_password WHERE reset_token = '" . $res['reset_token'] . "'");
+  if ($conn->query("UPDATE users SET password = '$salt;$hashNewPassword' WHERE email = '$email'") && $conn->query("DELETE FROM reset_password WHERE reset_token = '" . $res['reset_token'] . "'")) {
     return redirect("auth/login.php", "Berhasil mengubah password, silahkan login!");
   }
 
@@ -216,8 +215,9 @@ function register()
     $sql = "INSERT INTO users (nik, full_name, email, phone_number, password, role, created_at) VALUES ('$nik', '$f_name', '$email', '$phone_number', '$salt;$hashPassword', 'participant', current_timestamp())";
 
     if ($conn->query($sql)) {
-      return redirect("auth/login.php", "berhasil membuat akun baru");
+      sendMail($email, $f_name, 'Welcome To Digicert', "Welcome To Digicert, you ccan access account now, please contact administrator when something wrong!");
     }
+    return redirect("auth/login.php", "berhasil membuat akun baru");
   }
 }
 

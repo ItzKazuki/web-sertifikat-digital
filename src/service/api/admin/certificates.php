@@ -15,13 +15,13 @@ $authorization = getallheaders()['Authorization'] ?? null;
 $width = 2000;
 $height = 1414;
 
-if (!isset($authorization)) {
-  return apiResponse("error", "Unauthenticated.", code: 404);
-}
+//if (!isset($authorization)) {
+//  return apiResponse("error", "Unauthenticated.", code: 404);
+//}
 
-if ($db->checkUser($authorization, 'admin')) {
-  return apiResponse("error", "Unauthorizated.", code: 404);
-}
+//if ($db->checkUser($authorization, 'admin')) {
+//  return apiResponse("error", "Unauthorizated.", code: 404);
+//}
 
 if ($method !== "POST") {
   $res = $conn->query("SELECT c.*, u.full_name AS participant_name, e.event_name, e.event_date FROM certificates c JOIN users u ON c.user_id = u.id JOIN courses e ON c.event_id = e.id")->fetch_assoc();
