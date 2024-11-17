@@ -28,6 +28,8 @@ include 'connection.php';
 $width = 2000;
 $height = 1414;
 
+$mail = new MailSender();
+
 // now you can access $conn from connection.php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $type = $_POST['type'];
@@ -128,7 +130,6 @@ function editCertificate()
   } else {
     return redirect("dashboard/certificate", "Gagal mengubah sertifikat", "error");
   }
-  // selesai.
 }
 
 function deleteCertificate()
@@ -163,7 +164,7 @@ function deleteCertificate()
 
 function createCertificate()
 {
-  global $conn, $db;
+  global $conn, $db, $mail;
 
   // get all user input
   $name = htmlspecialchars($_POST['title']);
@@ -185,6 +186,7 @@ VALUES ($id_participation, $id_courses, '$cert_id', current_timestamp(), '$id_te
   $certification_image = createParticipantCertificate($cert_id);
 
   if (is_null($certification_image[0])) {
+    $conn->query("DELETE FROM certificates WHERE certificate_code = '$cert_id'"); // delete field while failed upload/create certificate.
     return redirect("dashboard/certificate", $certification_image[1], "error");
   }
 
@@ -194,7 +196,36 @@ VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[
   if ($conn->query($createCertificateField)) {
     // createActivity($conn, );
     $db->createActivity([$_SESSION['id'], "create", "Success create new certificate with id: $cert_id"]);
-    sendMail($certificate['email'], $certificate['full_name'], 'Your New Certificate', "you get new certificate with id: $cert_id");
+
+    $certDetail = $conn->query("SELECT u.full_name, e.event_name, e.organizer FROM certificates c JOIN users u ON c.user_id = u.id JOIN courses e ON c.event_id = e.id WHERE certificate_code = '$cert_id'")->fetch_assoc();
+
+    $temp = tmpfile();
+    if (!is_file("../assets/uploads/certificates/" . $certification_image[0] )) {
+      return redirect("src/index.php", "Certificate not found, please contact Administrator", "error");
+    }
+
+    $fileName = explode('.', $certification_image[0] );
+
+    $pdf = new FPDF();
+    $pdf->AddPage("L", "A5");
+    $meta = stream_get_meta_data($temp);
+    $pdf->Image("../assets/uploads/certificates/" . $certification_image[0] , 0, 0, 210, 148);
+    $pdf->Output($meta['uri'], 'F');
+    // fclose($temp);
+
+    $files = [
+      "file_name" => $fileName[0] . ".pdf",
+      "file_url" => $meta['uri']
+    ];
+
+    $content = [
+      "user_name" => $certDetail['full_name'],
+      "cert_id" => $cert_id,
+      "course_name" => $certDetail['event_name'],
+      'event_organizer' => $certDetail['organizer'],
+      "app_url" => $_ENV['APP_URL']
+    ];
+    $mail->sendMail($certificate['email'], $certificate['full_name'], 'New Certificate: ' . $name, $content, MailSender::$createNewCertificate, $files);
   }
 
   return redirect("dashboard/certificate", "berhasil membuat sertifikat baru");

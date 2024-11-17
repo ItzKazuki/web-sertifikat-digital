@@ -13,8 +13,8 @@
 session_start();
 
 include 'utility.php';
-
 include 'send.php';
+
 (new DotEnvEnvironment)->load(__DIR__ . '/../../');
 
 error_reporting(E_ALL);
@@ -23,6 +23,8 @@ ini_set('display_errors', 1);
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
   header('Location: ../index.php');
 }
+
+$mail = new MailSender();
 
 include 'connection.php';
 
@@ -98,7 +100,7 @@ function edit_password()
 
 function find_email()
 {
-  global $conn, $db;
+  global $conn, $mail;
   $email = htmlspecialchars($_POST['email']);
 
   $sql = "SELECT * FROM users WHERE email = '$email'";
@@ -109,16 +111,26 @@ function find_email()
     // add record reset_password
 
     $reset = bin2hex(random_bytes(40));
-    $email = $res->fetch_array()['email']; // get the email
-    $full_name = $res->fetch_array()['full_name']; // get the email
+    $userDetail = $res->fetch_array();
+    $email = $userDetail['email']; // get the email
+    $full_name = $userDetail['full_name']; // get the email
+
+    // create new reset token
     $sql = "INSERT INTO reset_password (`reset_token`, `email`) VALUES('$reset', '$email')";
 
     if($conn->query($sql)) {
-      sendMail($email, $full_name, 'Reset Password', "you can access reset password in here! ".$_ENV['APP_URL']."/auth/change.php?reset=".$reset);
+      // send email here
+      $content = array();
+      $content['user_name'] = $full_name;
+      $content['reset_url'] = $_ENV['APP_URL']."/auth/change.php?reset=".$reset;
+
+      if(!$mail->sendMail($email, $full_name, 'Reset Your Password', $content, MailSender::$resetPassword)) {
+        return redirect('auth/login.php', "Failed to send reset email token. please try again later.");
+      }
     }
 
-    // return redirect('auth/change.php?reset=' . $reset);
     return redirect('auth/login.php', "Silahkan lihat email anda");
+
   } else {
     return redirect("auth/forgot.php", "Username atau password tidak di temukan.", "error");
   }
@@ -185,7 +197,7 @@ function logout()
 
 function register()
 {
-  global $conn, $db;
+  global $conn, $mail;
 
   // get all user input
   $nik = htmlspecialchars($_POST['nik']);
@@ -215,7 +227,15 @@ function register()
     $sql = "INSERT INTO users (nik, full_name, email, phone_number, password, role, created_at) VALUES ('$nik', '$f_name', '$email', '$phone_number', '$salt;$hashPassword', 'participant', current_timestamp())";
 
     if ($conn->query($sql)) {
-      sendMail($email, $f_name, 'Welcome To Digicert', "Welcome To Digicert, you ccan access account now, please contact administrator when something wrong!");
+      // send email here
+      $content = array();
+      $content['user_name'] = $f_name;
+      $content['login_url'] = $_ENV['APP_URL'];
+
+      if(!$mail->sendMail($email, $f_name, 'Welcome To Digicert', $content, MailSender::$successRegister)) {
+        return redirect('auth/login.php', "Failed to send reset email token. please try again later.");
+      }
+      // sendMail($email, $f_name, , "Welcome To Digicert, you ccan access account now, please contact administrator when something wrong!");
     }
     return redirect("auth/login.php", "berhasil membuat akun baru");
   }
