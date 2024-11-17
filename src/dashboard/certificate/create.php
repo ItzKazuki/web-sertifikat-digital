@@ -64,7 +64,7 @@ while ($row = $getTemplates->fetch_array()) {
             background-color: #1d3c6e;
             color: white;
             height: 100vh;
-            width: 250px;
+            width: 17%;
             position: fixed;
         }
 

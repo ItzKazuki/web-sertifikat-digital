@@ -170,7 +170,6 @@ function login()
     $_SESSION['email'] = $res['email'];
     $_SESSION['full_name'] = $res['full_name'];
     $_SESSION['role'] = $res['role'];
-    $_SESSION['avatar'] = $res['avatar'];
     $_SESSION['is_auth'] = true;
     $_SESSION['id'] = $res['id'];
 
