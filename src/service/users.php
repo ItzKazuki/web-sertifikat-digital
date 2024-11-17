@@ -13,6 +13,7 @@
 session_start();
 
 include 'utility.php';
+include 'send.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -22,6 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 
 include 'connection.php';
+
+$mail = new MailSender();
 
 // now you can access $conn from connection.php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -114,41 +117,44 @@ WHERE id = $id;";
 
 function createUser()
 {
-  global $conn, $db;
+  global $conn, $db, $mail;
 
   // get all user input
   $nik = htmlspecialchars($_POST['nik']);
   $f_name = htmlspecialchars($_POST['full_name']);
-  $phone_number = htmlspecialchars($_POST['phone_number']);
+  // $phone_number = htmlspecialchars($_POST['phone_number']);
   $email = htmlspecialchars($_POST['email']);
-  $password = htmlspecialchars($_POST['password']);
-  $c_password = htmlspecialchars($_POST['c_password']);
-  $role = htmlspecialchars($_POST['role']);
-
-  if ($password !== $c_password) {
-    return redirect("dashboard/users/create.php", "Password yang dimasukan harus sama", 'error');
-  }
 
   // insert hash password like this
   // "salt;hash" ex: eb74a563c05dcb66b3f54e26fdfc39dd;197f1c1a6124171a77e28c7e2539c06c6c4c6852e63181030516495e2f049d99
   $salt = generateSalt();
-  $hashPassword = generateHashWithSalt($password, $salt);
-
-  $avatar = get_gravatar($email);
+  $hashPassword = generateHashWithSalt("mytestpassword", $salt);
 
   // add data to database
   $user = $conn->query("SELECT * FROM users WHERE nik = '$nik' OR email = '$email'");
 
   if ($user->num_rows > 0) {
-    return redirect("dashboard/users/create.php", "email sudah digunakan", 'error');
+    return redirect("auth/register.php", "email sudah digunakan", 'error');
   } else {
-    $sql = "INSERT INTO users (nik, full_name, email, phone_number, password, role, created_at) VALUES ('$nik', '$f_name', '$email', '$phone_number', '$salt;$hashPassword', '$role', current_timestamp())";
+    $sql = "INSERT INTO users (nik, full_name, email, password, role, created_at) VALUES ('$nik', '$f_name', '$email', '$salt;$hashPassword', 'participant', current_timestamp())";
 
     if ($conn->query($sql)) {
-      // createActivity($conn, );
-      $db->createActivity([$_SESSION['id'], "create", "Success create user withnik: $nik"]);
-      return redirect("dashboard/users", "berhasil membuat akun baru");
+      $reset = bin2hex(random_bytes(40));
+      if ($conn->query("INSERT INTO reset_password (`reset_token`, `email`) VALUES('$reset', '$email')")) {
+        // send email here
+
+        $content = [
+          "email" => $email,
+          "setup_url" => $_ENV['APP_URL'] . "/auth/setup.php?token=" . $reset
+        ];
+
+        if (!$mail->sendMail($email, $f_name, 'Welcome To Digicert', $content, MailSender::$createNewAccount)) {
+          return redirect('dashboard/users', "Failed to send reset email token. please try again later.");
+        }
+      }
+      // sendMail($email, $f_name, , "Welcome To Digicert, you ccan access account now, please contact administrator when something wrong!");
     }
+    return redirect("dashboard/users", "berhasil membuat akun baru");
   }
 }
 

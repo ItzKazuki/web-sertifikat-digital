@@ -20,6 +20,7 @@ class MailSender
     public static $resetPassword = 'reset_password.html';
     public static $successRegister = 'success_register.html';
     public static $createNewCertificate = 'get_new_certificate.html';
+    public static $createNewAccount = 'success_create_account.html';
 
     public function __construct()
     {

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset Confirmation</title>
+    <style>
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #2754C5;
+            /* Bootstrap primary color */
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #eee;">
+    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+        style="padding: 20px; margin: 0 auto; background-color: #eee;">
+        <tbody>
+            <tr>
+                <td>
+                    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                        style="background-color: #fff;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                                        style="background-color: #252f3d; padding: 20px 0; text-align: center;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-weight: bold; color: white; font-size: x-large;">
+                                                        Digicert</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0"
+                                        style="padding: 25px 35px;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <h1
+                                                        style="color: #333; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-size: 20px; font-weight: bold; margin-bottom: 15px;">
+                                                        Hello {{ $email }}</h1>
+                                                    <p
+                                                        style="font-size: 14px; line-height: 24px; margin: 24px 0; color: #333; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; margin-bottom: 14px;">
+                                                        Welcome to Digicert, your email is register to our database, you can setup your account with this button.</p>
+                                                    <p style="text-align: center;">
+                                                        <a href="{{ $setup_url }}" class="button">Setup Now</a>
+                                                    </p>
+                                                    <p
+                                                        style="font-size: 14px; line-height: 24px; margin: 0; color: #333; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;">
+                                                        or <a href="{{ $setup_url }}">{{ $setup_url }}</a>.</p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p
+                        style="font-size: 12px; line-height: 24px; margin: 24px 0; color: #333; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; padding: 0 20px;">
+                        This message was produced and distributed by Digicert. © 2024, Digicert. All rights reserved.
+                        View our <a href="https://amazon.com"
+                            style="color: #2754C5; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-size: 14px; text-decoration: underline;"
+                            target="_blank">privacy policy</a>. Don't reply this email, contact us at <a
+                            href="mailto:contact@digicert.beomzuki.my.id"
+                            style="color: #2754C5; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-size: 14px; text-decoration: underline;">contact@digicert.beomzuki.my.id</a>
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

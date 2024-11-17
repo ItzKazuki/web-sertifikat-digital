@@ -235,17 +235,17 @@ if ($_SESSION['role'] != "admin") {
                     </label>
                     <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" required />
 
-                    <label for="phone_number">
+                    <!-- <label for="phone_number">
                         Nomor Telepon Pengguna
                     </label>
-                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" required />
+                    <input id="phone_number" name="phone_number" placeholder="Ketik nomor telepon di sini" type="number" required /> -->
 
                     <label for="email">
                         Email Pengguna
                     </label>
                     <input id="email" name="email" placeholder="Ketik email di sini" type="email" required />
 
-                    <label for="password">
+                    <!-- <label for="password">
                         Kata Sandi
                     </label>
                     <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" required />
@@ -253,7 +253,7 @@ if ($_SESSION['role'] != "admin") {
                     <label for="confirm-password">
                         Konfirmasi Kata Sandi
                     </label>
-                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" required />
+                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" required /> -->
 
                     <label for="category">
                         Kategori Pengguna
@@ -268,10 +268,10 @@ if ($_SESSION['role'] != "admin") {
                     </select>
 
                     <div class="d-flex justify-content-end mt-3">
-                        <button class="btn btn-cancel me-2" type="button">
+                        <button class="btn btn-danger me-2" type="button">
                             Batal
                         </button>
-                        <button class="btn btn-save" type="submit" name="type" value="create">
+                        <button class="btn btn-success" type="submit" name="type" value="create">
                             Simpan
                         </button>
                     </div>

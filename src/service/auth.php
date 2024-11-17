@@ -53,6 +53,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       edit_password();
       $conn->close();
       break;
+    case 'setup_account':
+      setupAccount();
+      $conn->close();
+      break;
     default:
       header('Location: ../index.php');
       break;
@@ -118,19 +122,18 @@ function find_email()
     // create new reset token
     $sql = "INSERT INTO reset_password (`reset_token`, `email`) VALUES('$reset', '$email')";
 
-    if($conn->query($sql)) {
+    if ($conn->query($sql)) {
       // send email here
       $content = array();
       $content['user_name'] = $full_name;
-      $content['reset_url'] = $_ENV['APP_URL']."/auth/change.php?reset=".$reset;
+      $content['reset_url'] = $_ENV['APP_URL'] . "/auth/change.php?reset=" . $reset;
 
-      if(!$mail->sendMail($email, $full_name, 'Reset Your Password', $content, MailSender::$resetPassword)) {
+      if (!$mail->sendMail($email, $full_name, 'Reset Your Password', $content, MailSender::$resetPassword)) {
         return redirect('auth/login.php', "Failed to send reset email token. please try again later.");
       }
     }
 
     return redirect('auth/login.php', "Silahkan lihat email anda");
-
   } else {
     return redirect("auth/forgot.php", "Username atau password tidak di temukan.", "error");
   }
@@ -232,13 +235,54 @@ function register()
       $content['user_name'] = $f_name;
       $content['login_url'] = $_ENV['APP_URL'];
 
-      if(!$mail->sendMail($email, $f_name, 'Welcome To Digicert', $content, MailSender::$successRegister)) {
+      if (!$mail->sendMail($email, $f_name, 'Welcome To Digicert', $content, MailSender::$successRegister)) {
         return redirect('auth/login.php', "Failed to send reset email token. please try again later.");
       }
       // sendMail($email, $f_name, , "Welcome To Digicert, you ccan access account now, please contact administrator when something wrong!");
     }
     return redirect("auth/login.php", "berhasil membuat akun baru");
   }
+}
+
+function setupAccount()
+{
+  global $conn, $db, $mail;
+
+  $token = htmlspecialchars($_POST['token']);
+
+  if (!isset($token)) {
+    return redirect("auth/forgot.php", "Something error, please try again from start.", "error");
+  }
+
+  $sql = "SELECT * FROM reset_password WHERE reset_token = '$token'";
+
+  $res = $conn->query($sql)->fetch_array();
+
+  $email = $res['email'];
+
+  if (!isset($res)) {
+    return redirect("auth/forgot.php", "Don't do that bro!", "error");
+  }
+
+  // $oldPassword = htmlspecialchars($_POST['old_password']);
+  $newPassword = htmlspecialchars($_POST['new_password']);
+  $confirmNewPassword = htmlspecialchars($_POST['confirm_new_password']);
+  $f_name = htmlspecialchars($_POST['f_name']);
+  $phone_number = htmlspecialchars($_POST['phone_number']);
+
+  if ($newPassword !== $confirmNewPassword) {
+    return redirect('auth/forgot.php?email=' . $res['email'], "error", "error");
+  }
+
+  //hash new password
+  $salt = generateSalt();
+  $hashNewPassword = generateHashWithSalt($newPassword, $salt);
+
+  if ($conn->query("UPDATE users SET full_name = '$f_name', phone_number = '$phone_number', password = '$salt;$hashNewPassword' WHERE email = '$email'") && $conn->query("DELETE FROM reset_password WHERE reset_token = '" . $res['reset_token'] . "'")) {
+    return redirect("auth/login.php", "Berhasil mengubah data, silahkan login!");
+  }
+
+  return redirect("auth/forgot.php", "Failed while reset your password.", "error");
 }
 
 function generateSalt($length = 16)
