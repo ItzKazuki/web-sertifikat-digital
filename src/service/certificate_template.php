@@ -14,6 +14,10 @@ session_start();
 
 include 'utility.php';
 
+include 'DotEnv.php';
+
+(new DotEnvEnvironment)->load(__DIR__ . '/../../');
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -198,8 +202,8 @@ function upload(array $file, $fileNameSlug)
 
   // upload gambar
   move_uploaded_file($fileTmp, "../assets/uploads/templates/" . $fileNameSlug . ".png");
-  chgrp("../assets/uploads/templates/" . $fileNameSlug . ".png", 'www-data');
-  chown("../assets/uploads/templates/" . $fileNameSlug . ".png", "www-data");
+  chgrp("../assets/uploads/templates/" . $fileNameSlug . ".png", $_ENV['FILE_GROUP']);
+  chown("../assets/uploads/templates/" . $fileNameSlug . ".png", $_ENV['FILE_OWNER']);
 
   return [$fileNameSlug . ".png", null];
 }

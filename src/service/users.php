@@ -151,6 +151,7 @@ function createUser()
         if (!$mail->sendMail($email, $f_name, 'Welcome To Digicert', $content, MailSender::$createNewAccount)) {
           return redirect('dashboard/users', "Failed to send reset email token. please try again later.");
         }
+        $db->createActivity([$_SESSION['id'], "create", "Success create new user"]);
       }
       // sendMail($email, $f_name, , "Welcome To Digicert, you ccan access account now, please contact administrator when something wrong!");
     }

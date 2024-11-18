@@ -282,8 +282,8 @@ function createParticipantCertificate($cert_id)
     // upload to path
     imagepng($img, $filePath);
     // change owner and group
-    chown($filePath, 'www-data');
-    chgrp($filePath, 'www-data');
+    chown($filePath, $_ENV['FILE_OWNER']);
+    chgrp($filePath, $_ENV['FILE_GROUP']);
 
     // remove 
     imagedestroy($img);
