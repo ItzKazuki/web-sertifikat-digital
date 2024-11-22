@@ -77,9 +77,6 @@ html, body {
 
 /* Statistic boxes */
 .stat-box {
-    border-radius: 8px;
-    font-size: 20px;
-}
 
 /* Certificate boxes */
 .cert-box {

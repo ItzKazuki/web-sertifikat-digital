@@ -18,7 +18,7 @@ session_start();
 </head>
 
 <body>
-    <header style="background-color: white; border-bottom: 1px solid #ddd; padding: 1rem;">
+    <nav style="background-color: white; border-bottom: 1px solid #ddd; padding: 1rem;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div class="logo" style="display: flex; align-items: center;">
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
@@ -26,7 +26,7 @@ session_start();
             </div>
             <nav style="    display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
-                <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
+                <a href="tentangkami.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
                 <a href="courses.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Pelatihan</a>
                 <?php if (isset($_SESSION['role'])) { ?>
@@ -46,7 +46,7 @@ session_start();
                 <?php } ?>
             </nav>
         </div>
-    </header>
+    </nav>
 
     <main>
         <section class="hero-section">

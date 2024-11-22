@@ -62,7 +62,7 @@ while ($row = $getAllCourses->fetch_array(MYSQLI_ASSOC)) {
             </div>
             <nav style="    display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
-                <a href="#" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
+                <a href="tentangkami.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Tentang Kami</a>
                 <a href="cek-sertifikat.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Cek Sertifikat</a>
                 <a href="courses.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Pelatihan</a>
                 <?php if (isset($_SESSION['role'])) { ?>
