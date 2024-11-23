@@ -164,7 +164,7 @@ function createCertificate()
 
   //validate input here!
 
-  if($id_template == "  ") {
+  if($id_template == "") {
     return redirect("dashboard/certificate/create.php", "Pilih Template terlebih dahulu", "error");
   }
 
@@ -220,6 +220,7 @@ VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[
       'event_organizer' => $certDetail['organizer'],
       "app_url" => $_ENV['APP_URL']
     ];
+    
     $mail->sendMail($certificate['email'], $certificate['full_name'], 'New Certificate: ' . $name, $content, MailSender::$createNewCertificate, $files);
   }
 
