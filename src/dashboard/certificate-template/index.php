@@ -143,9 +143,6 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                 </div>
             </li>
             <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
-            <li class="nav-item">
-                <form action="../../service/auth.php" method="post"><button type="submit" name="type" value="logout" class="nav-link">Log out</button></form>
-            </li>
         </ul>
     </div>
     <div class="container-fluid">

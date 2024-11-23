@@ -43,7 +43,7 @@ class MailSender
 
         // Load the template file
         $templatePath = __DIR__ . "/template/$type";
-        if(!is_null($attachment)) {
+        if (!is_null($attachment)) {
             $this->mail->addAttachment($attachment['file_url'], $attachment['file_name']);
         }
         if (file_exists($templatePath)) {

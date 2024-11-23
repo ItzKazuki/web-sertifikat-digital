@@ -1,15 +1,4 @@
 <?php
-
-// how this code work?
-
-/**
- * See how this code work
- * 
- * 1. add this file to your form in action, don'y forget to set method to post
- * 2. set submit button with name="type" and value="purpose" ex: value="login"
- * 3. 
- */
-
 session_start();
 
 include 'utility.php';
@@ -61,7 +50,7 @@ function deleteCourse()
   $sql = "DELETE FROM courses WHERE id = $id";
 
   if ($conn->query($sql) == 1) {
-    $db->createActivity([ $_SESSION['id'], "delete", "Success delete course with id: $id"]);
+    $db->createActivity([$_SESSION['id'], "delete", "Success delete course with id: $id"]);
     return redirect("dashboard/courses/", "Berhasil menghapus pelatihan dengan id: $id");
   } else {
     return redirect("dashboard/courses", "gagal menghapus pelatihan", "error");

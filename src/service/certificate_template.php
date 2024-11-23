@@ -1,15 +1,4 @@
 <?php
-
-// how this code work?
-
-/**
- * See how this code work
- * 
- * 1. add this file to your form in action, don'y forget to set method to post
- * 2. set submit button with name="type" and value="purpose" ex: value="login"
- * 3. 
- */
-
 session_start();
 
 include 'utility.php';

@@ -1,15 +1,4 @@
 <?php
-
-// how this code work?
-
-/**
- * See how this code work
- * 
- * 1. add this file to your form in action, don'y forget to set method to post
- * 2. set submit button with name="type" and value="purpose" ex: value="login"
- * 3. 
- */
-
 session_start();
 
 include 'utility.php';
@@ -200,16 +189,16 @@ VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[
     $certDetail = $conn->query("SELECT u.full_name, e.event_name, e.organizer FROM certificates c JOIN users u ON c.user_id = u.id JOIN courses e ON c.event_id = e.id WHERE certificate_code = '$cert_id'")->fetch_assoc();
 
     $temp = tmpfile();
-    if (!is_file("../assets/uploads/certificates/" . $certification_image[0] )) {
+    if (!is_file("../assets/uploads/certificates/" . $certification_image[0])) {
       return redirect("src/index.php", "Certificate not found, please contact Administrator", "error");
     }
 
-    $fileName = explode('.', $certification_image[0] );
+    $fileName = explode('.', $certification_image[0]);
 
     $pdf = new FPDF();
     $pdf->AddPage("L", "A5");
     $meta = stream_get_meta_data($temp);
-    $pdf->Image("../assets/uploads/certificates/" . $certification_image[0] , 0, 0, 210, 148);
+    $pdf->Image("../assets/uploads/certificates/" . $certification_image[0], 0, 0, 210, 148);
     $pdf->Output($meta['uri'], 'F');
     // fclose($temp);
 

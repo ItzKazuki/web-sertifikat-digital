@@ -1,9 +1,8 @@
 <?php
-include 'connection.php';
 
+include 'connection.php';
 require('fpdf186/fpdf.php');
 
-// Fungsi untuk menghasilkan response JSON
 function apiResponse(string $status, string $message, array $data = [], $code = 200)
 {
   $res = [

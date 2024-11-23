@@ -109,7 +109,7 @@ if (isset($_POST['download'])) {
             <div class="container mt-5">
                 <div class="row">
                     <?php foreach ($certificates as $certificate) : ?>
-                    <div class="col-md-4">
+                        <div class="col-md-4">
                             <div class="card">
                                 <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="card-img-top" alt="Certificate thumbnail image with a ribbon and a seal">
                                 <div class="card-body">
@@ -125,7 +125,7 @@ if (isset($_POST['download'])) {
                                 </div>
                             </div>
                         </div>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         <?php } else { ?>

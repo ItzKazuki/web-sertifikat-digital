@@ -63,25 +63,25 @@ function changeBgTable(string $condition)
 {
     switch ($condition) {
         case 'delete':
-            return 'table-danger'; // Red background for delete
+            return 'table-danger';
             break;
         case 'update':
-            return 'table-warning'; // Yellow background for update
+            return 'table-warning';
             break;
         case 'create':
-            return 'table-primary'; // Blue background for create
+            return 'table-primary';
             break;
         case 'login':
-            return 'table-info'; // Light blue background for login
+            return 'table-info';
             break;
         case 'logout':
-            return 'table-secondary'; // Grey background for logout
+            return 'table-secondary';
             break;
         case 'download':
-            return 'table-success'; // Green background for download
+            return 'table-success';
             break;
         default:
-            return ''; // No special background
+            return '';
     }
 }
 
