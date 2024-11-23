@@ -37,107 +37,11 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
     <!-- Bootstrap CSS -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <style>
-        * {
-            text-decoration: none;
-        }
-
-        button:hover {
-            color: white;
-        }
-
-        .dropdown-toggle::after {
-            display: none;
-        }
-
-        /* Sidebar styling */
-        .sidebar {
-            background-color: #1d3c6e;
-            color: white;
-            height: 100vh;
-            width: 17%;
-            position: fixed;
-        }
-
-        .sidebar h4 {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-
-        .nav-link {
-            color: white;
-            padding-left: 20px;
-        }
-
-        .nav-link:hover,
-        .dropdown-item:hover {
-            background-color: #2a4b8e;
-            color: #ffffff !important;
-            width: full;
-        }
-
-        .dropdown-item {
-            padding-left: 30px;
-        }
-
-        /* Main content styling */
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            background-color: #f1f1f1;
-            min-height: 100vh;
-        }
-
-        .stat-box {
-            background-color: #1d3c6e;
-            color: white;
-            border-radius: 8px;
-        }
-
-        .cert-box {
-            background-color: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .btn-dark {
-            background-color: #4c4c4c;
-            color: white;
-            border: none;
-        }
-
-        .btn-dark:hover {
-            background-color: #333333;
-        }
-
-        .container {
-            width: 1201px;
-            height: 200px;
-            background-color: gray;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .stat-box {
-            width: 300px;
-            height: 150px;
-            background-color: #0A3067;
-            /* Navy blue color */
-            color: white;
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin: 0 10px;
-            border-radius: 10px;
-            font-size: 1.2em;
-        }
-    </style>
 </head>
 
 <body>
@@ -186,7 +90,7 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
     <div class="content flex-grow-1">
         <div class="header">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Kotak Statistik</h2>
+                <h2>Statistik Sertifikat</h2>
                 <div class="d-flex justify-content-end align-items-center p-3">
                     <span><?= $_SESSION['full_name'] ?></span>
                     <div class="dropdown">
@@ -230,22 +134,22 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
                 <h3><strong>Daftar Sertifikat</strong></h3>
             </div>
             <div class="col-6 text-end mb-2">
-                <a href="certificate/create.php" class="btn btn-dark">Buat Sertifikat</a>
+                <a href="certificate/create.php" class="btn btn-primary">Buat Sertifikat</a>
             </div>
         </div>
 
         <!-- Sertifikat Cards -->
 
-        <div class="row g-3 mt-2" style="display: flex; justify-content:center;">
-            <?php if (isset($certificates)) { ?>
+        <div class="row g-2 mt-2" style="display: flex;">
+            <?php if (isset($certificates)): ?>
                 <?php foreach ($certificates as $certificate) : ?>
                     <div class="col-xl-3">
                         <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
                     </div>
                 <?php endforeach; ?>
-            <?php } else { ?>
+            <?php else: ?>
                 <strong>Tidak ada sertifikat yang ditemukan.</strong>
-            <?php } ?>
+            <?php endif; ?>
         </div>
     </div>
 

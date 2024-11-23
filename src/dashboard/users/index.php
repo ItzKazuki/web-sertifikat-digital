@@ -27,196 +27,10 @@ while ($row = $getUser->fetch_row()) {
     <meta charset="UTF-8">
     <title>Manajemen Pengguna</title>
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        /* Sidebar styling */
-        .sidebar {
-            background-color: #1d3c6e;
-            color: white;
-            height: 100vh;
-            width: 17%;
-            position: fixed;
-        }
-
-        .sidebar h4 {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-
-        .nav-link {
-            color: white;
-            padding-left: 20px;
-        }
-
-        .nav-link:hover,
-        .dropdown-item:hover {
-            background-color: #2a4b8e;
-            color: #ffffff !important;
-        }
-
-        .dropdown-item {
-            padding-left: 30px;
-        }
-
-        /* Main content styling */
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            background-color: #f1f1f1;
-            min-height: 100vh;
-        }
-
-        .stat-box {
-            background-color: #1d3c6e;
-            color: white;
-            border-radius: 8px;
-        }
-
-        .cert-box {
-            background-color: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .btn-dark {
-            background-color: #4c4c4c;
-            color: white;
-            border: none;
-        }
-
-        .btn-dark:hover {
-            background-color: #333333;
-        }
-
-        .container {
-            width: 1201px;
-            height: 200px;
-            background-color: gray;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .stat-box {
-            width: 300px;
-            height: 150px;
-            background-color: #0A3067;
-            /* Navy blue color */
-            color: white;
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin: 0 10px;
-            border-radius: 10px;
-            font-size: 1.2em;
-        }
-
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .form-container {
-            background-color: #003366;
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-        }
-
-        .form-container input,
-        .form-container textarea {
-            background-color: #e9ecef;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .form-container input[type="file"] {
-            padding: 3px;
-        }
-
-        .form-container label {
-            margin-bottom: 5px;
-        }
-
-        .form-container .btn {
-            width: 100px;
-            margin: 5px;
-        }
-
-        .footer {
-            background-color: #003366;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .header {
-            background-color: #e9ecef;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Button */
-        .add-button {
-            background-color: #2f4b7c;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
-
-        .add-button i {
-            margin-left: 8px;
-        }
-
-        /* Table */
-        .table-container {
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #ffffff;
-            margin-top: 10px;
-        }
-
-        .table th,
-        .table td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        .table th {
-            background-color: #2f4b7c;
-            color: white;
-        }
-
-        .table td {
-            color: #333;
-        }
-    </style>
 </head>
 
 <body>
@@ -261,11 +75,29 @@ while ($row = $getUser->fetch_row()) {
         </ul>
     </div>
 
-
     <div class="content flex-grow-1">
-        <h2>Daftar Pengguna</h2>
-        <div class="button-container">
-            <a href="create.php" class="add-button">Tambah Pengguna +</a>
+        <div class="header">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Daftar Pelatihan</h2>
+                <div class="d-flex justify-content-end align-items-center p-3">
+                    <span><?= $_SESSION['full_name'] ?></span>
+                    <div class="dropdown">
+                        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="..">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                    <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="table-container">
             <?php if (isset($users)) { ?>

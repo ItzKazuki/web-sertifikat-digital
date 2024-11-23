@@ -20,153 +20,11 @@ if ($_SESSION['role'] != "admin") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Sertifikat</title>
-    <!-- Bootstrap CSS -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        /* Sidebar styling */
-        .sidebar {
-            background-color: #1d3c6e;
-            color: white;
-            height: 100vh;
-            width: 17%;
-            position: fixed;
-        }
-
-        .sidebar h4 {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-
-        .nav-link {
-            color: white;
-            padding-left: 20px;
-        }
-
-        .nav-link:hover,
-        .dropdown-item:hover {
-            background-color: #2a4b8e;
-            color: #ffffff !important;
-        }
-
-        .dropdown-item {
-            padding-left: 30px;
-        }
-
-        /* Main content styling */
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            background-color: #f1f1f1;
-            min-height: 100vh;
-        }
-
-        .stat-box {
-            background-color: #1d3c6e;
-            color: white;
-            border-radius: 8px;
-        }
-
-        .cert-box {
-            background-color: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .btn-dark {
-            background-color: #4c4c4c;
-            color: white;
-            border: none;
-        }
-
-        .btn-dark:hover {
-            background-color: #333333;
-        }
-
-        .container {
-            width: 1201px;
-            height: 200px;
-            background-color: gray;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .stat-box {
-            width: 300px;
-            height: 150px;
-            background-color: #0A3067;
-            /* Navy blue color */
-            color: white;
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin: 0 10px;
-            border-radius: 10px;
-            font-size: 1.2em;
-        }
-
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .form-container {
-            background-color: #003366;
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-        }
-
-        .form-container input,
-        select,
-        .form-container textarea {
-            background-color: #e9ecef;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .form-container input[type="file"] {
-            padding: 3px;
-        }
-
-        .form-container label {
-            margin-bottom: 5px;
-        }
-
-        .form-container .btn {
-            width: 100px;
-            margin: 5px;
-        }
-
-        .footer {
-            background-color: #003366;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .header {
-            background-color: #e9ecef;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-    </style>
 </head>
 
 <body>
@@ -214,46 +72,60 @@ if ($_SESSION['role'] != "admin") {
     </div>
     <div class="content flex-grow-1">
         <div class="header">
-            <h1>
-                Tambah Pengguna
-            </h1>
-
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Tambah Pengguna</h2>
+                <div class="d-flex justify-content-end align-items-center p-3">
+                    <span><?= $_SESSION['full_name'] ?></span>
+                    <div class="dropdown">
+                        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="..">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                    <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="mt-4">
-            <h2>
-                Formulir Tambah Pengguna
-            </h2>
             <div class="form-container">
                 <form method="POST" action="../../service/users.php">
                     <label for="nik">
-                        NIK
+                        NIK:
                     </label>
                     <input id="nik" name="nik" placeholder="Ketik nik di sini" type="number" required />
 
                     <label for="username">
-                        Nama Pengguna
+                        Nama Pengguna:
                     </label>
                     <input id="username" name="full_name" placeholder="Ketik nama di sini" type="text" required />
                     <label for="email">
-                        Email Pengguna
+                        Email Pengguna:
                     </label>
                     <input id="email" name="email" placeholder="Ketik email di sini" type="email" required />
                     <label for="category">
-                        Kategori Pengguna
+                        Kategori Pengguna:
                     </label>
 
                     <select id="category" name="role" required>
                         <option>
-                            Pilih Kategori Pengguna
+                            Pilih Kategori Pengguna:
                         </option>
                         <option value="participant">participant</option>
                         <option value="admin">admin</option>
                     </select>
 
                     <div class="d-flex justify-content-end mt-3">
-                        <button class="btn btn-danger me-2" type="button">
+                        <a href="index.php" class="btn btn-danger me-2" type="button">
                             Batal
-                        </button>
+                        </a>
                         <button class="btn btn-success" type="submit" name="type" value="create">
                             Simpan
                         </button>

@@ -1,0 +1,174 @@
+* {
+  text-decoration: none;
+}
+
+button:hover {
+  color: white;
+}
+
+body {
+  background-color: #eaeaea;
+
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+/* Sidebar styling */
+.sidebar {
+  background-color: #1d3c6e;
+  color: white;
+  height: 100vh;
+  width: 18%;
+  position: fixed;
+}
+
+.sidebar h4 {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.nav-link {
+  color: white;
+  padding-left: 20px;
+}
+
+.nav-link:hover,
+.dropdown-item:hover {
+  background-color: #2a4b8e;
+  color: #ffffff !important;
+  width: full;
+}
+
+.dropdown-item {
+  padding-left: 30px;
+}
+
+/* Main content styling */
+.content {
+  margin-left: 18%;
+  padding: 20px;
+  width: calc(100% - 18%);
+}
+
+.stat-box {
+  background-color: #1d3c6e;
+  color: white;
+  border-radius: 8px;
+}
+
+.cert-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.btn-dark {
+  background-color: #4c4c4c;
+  color: white;
+  border: none;
+}
+
+.btn-dark:hover {
+  background-color: #333333;
+}
+
+.container {
+  width: 1201px;
+  height: 200px;
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-box {
+  width: 300px;
+  height: 150px;
+  background-color: #0a3067;
+  /* Navy blue color */
+  color: white;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0 10px;
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: left;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.center-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search {
+  width: 50%;
+}
+
+.form-container {
+  background-color: #003366;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+.form-container input,
+select,
+.form-container textarea {
+  background-color: #e9ecef;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.form-container input[type="file"] {
+  padding: 3px;
+}
+
+.form-container label {
+  margin-bottom: 5px;
+}
+
+.form-container .btn {
+  width: 100px;
+  margin: 5px;
+}
+
+.selected {
+  border: 3px solid red;
+}
+
+.footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

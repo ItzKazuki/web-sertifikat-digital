@@ -16,8 +16,6 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
     $certificates[] = $row;
 }
 
-// print_r($certificates); die;
-
 ?>
 
 <!DOCTYPE html>
@@ -27,82 +25,12 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Sertifikat</title>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<style>
-    /* Sidebar styling */
-    .sidebar {
-        background-color: #1d3c6e;
-        color: white;
-        height: 100vh;
-        width: 17%;
-        position: fixed;
-    }
-
-    .sidebar h4 {
-        margin-top: 20px;
-        font-size: 18px;
-    }
-
-    .nav-link {
-        color: white;
-        padding-left: 20px;
-    }
-
-    .nav-link:hover,
-    .dropdown-item:hover {
-        background-color: #2a4b8e;
-        color: #ffffff !important;
-    }
-
-    .dropdown-item {
-        padding-left: 30px;
-    }
-
-    /* Main konten styling */
-    .main-content {
-        margin-left: 250px;
-        /* Sesuaikan dengan lebar sidebar */
-        padding: 20px;
-        width: calc(100% - 250px);
-        /* Mengambil sisa lebar di samping sidebar */
-    }
-
-    .search {
-        width: 50%;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table th,
-    .table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-
-    .table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-        text-align: left;
-    }
-
-    .table-responsive {
-        overflow-x: auto;
-    }
-
-    .center-image {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
 
 <body>
     <div class="sidebar">
@@ -145,72 +73,79 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
             <li class="nav-item"><a href="../reports.php" class="nav-link">Laporan</a></li>
         </ul>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Main konten -->
-            <div class="main-content">
-                <div class="col-md-12 p-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Cari Sertif Di Sini">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end p-3">
-                            <span><?= $_SESSION['full_name'] ?></span>
-                            <a href="../index.php" class="bi bi-person-circle ms-2" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
-                        </div>
+    <div class="content flex-grow-1">
+        <div class="header">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Daftar Sertifikat</h2>
+                <div class="d-flex justify-content-end align-items-center p-3">
+                    <span><?= $_SESSION['full_name'] ?></span>
+                    <div class="dropdown">
+                        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="..">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                    <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 style="text-align: left; margin: 0;">Daftar Template Sertifikat</h2>
-                    <a href="create.php">
-                        <button class="btn btn-primary">Tambah Template Baru</button>
-                    </a>
-                </div>
-
-
-                <div class="table-responsive">
-                    <?php if (isset($certificates)) { ?>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Preview</th>
-                                    <th scope="col">Nama Template</th>
-                                    <th scope="col">Tanggal Dibuat</th>
-                                    <th scope="col">Uploader Name</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($certificates as $key => $cert) : ?>
-                                    <tr>
-                                        <th scope="row"><?= $key + 1 ?></th>
-                                        <td><img class="center-image" src="../../assets/uploads/templates/<?= $cert['file_name'] ?>" width="200px" alt=""></td>
-                                        <td><?= $cert['template_name'] ?></td>
-                                        <td><?= hummanDate($cert['created_at']) ?></td>
-                                        <td><?= $cert['full_name'] ?></td>
-                                        <td>
-                                            <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
-                                            <button class="btn btn-sm btn-danger" onclick="deleteCertificateTemplate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateTemplateModal">Hapus</button>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php } else { ?>
-                        NOT FOUND
-                    <?php } ?>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div class="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Cari Sertif Di Sini">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
+            <a href="create.php">
+                <button class="btn btn-primary">Tambah Template Sertifikat</button>
+            </a>
+        </div>
+        <div class="table-responsive">
+            <?php if (isset($certificates)) { ?>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Preview</th>
+                            <th scope="col">Nama Template</th>
+                            <th scope="col">Tanggal Dibuat</th>
+                            <th scope="col">Uploader Name</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($certificates as $key => $cert) : ?>
+                            <tr>
+                                <th scope="row"><?= $key + 1 ?></th>
+                                <td><img class="center-image" src="../../assets/uploads/templates/<?= $cert['file_name'] ?>" width="200px" alt=""></td>
+                                <td><?= $cert['template_name'] ?></td>
+                                <td><?= hummanDate($cert['created_at']) ?></td>
+                                <td><?= $cert['full_name'] ?></td>
+                                <td>
+                                    <a href="edit.php?id=<?= $cert['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteCertificateTemplate('<?= $cert['id'] ?>')" data-bs-toggle="modal" data-bs-target="#deleteCertificateTemplateModal">Hapus</button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php } else { ?>
+                NOT FOUND
+            <?php } ?>
         </div>
     </div>
 
