@@ -131,12 +131,12 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
                     <label for="password">
                         Kata Sandi
                     </label>
-                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" required />
+                    <input id="password" name="password" placeholder="Ketik kata sandi di sini" type="password" />
 
                     <label for="confirm-password">
                         Konfirmasi Kata Sandi
                     </label>
-                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" required />
+                    <input id="confirm-password" name="c_password" placeholder="Ketik ulang kata sandi di sini" type="password" />
 
                     <label for="category">
                         Kategori Pengguna

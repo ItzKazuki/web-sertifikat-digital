@@ -73,30 +73,27 @@ function editUser()
   $c_password = htmlspecialchars($_POST['c_password']);
   $role = htmlspecialchars($_POST['role']);
 
-  if ($password !== $c_password) {
-    return redirect("dashboard/users/edit.php?id=$id", "Password yang dimasukan harus sama", 'error');
-  }
-
-  // insert hash password like this
-  // "salt;hash" ex: eb74a563c05dcb66b3f54e26fdfc39dd;197f1c1a6124171a77e28c7e2539c06c6c4c6852e63181030516495e2f049d99
-  $salt = generateSalt();
-  $hashPassword = generateHashWithSalt($password, $salt);
-
-  $avatar = get_gravatar($email);
-
-  $sql = "UPDATE users 
-SET 
+  $sql = "UPDATE users SET 
     nik = '$nik', 
     full_name = '$f_name', 
     email = '$email', 
-    phone_number = '$phone_number', 
-    password = '$salt;$hashPassword', 
-    role = '$role'  -- Make sure to specify the column name for the role
-WHERE id = $id;";
-  // echo $sql; die;
+    phone_number = '$phone_number', ";
+
+  // check if admin update password or not.
+  if($password != "" || $c_password != "") {
+    if ($password !== $c_password) {
+      return redirect("dashboard/users/edit.php?id=$id", "Password yang dimasukan harus sama", 'error');
+    }
+  
+    $salt = generateSalt();
+    $hashPassword = generateHashWithSalt($password, $salt);
+
+    $sql .= " password = '$salt;$hashPassword', ";
+  }
+
+  $sql .= "role = '$role' WHERE id = $id;";
 
   if ($conn->query($sql)) {
-    // createActivity($conn, );
     $db->createActivity([$_SESSION['id'], "update", "Success edit user with id: $id"]);
     return redirect("dashboard/users", "berhasil mengubah akun dengan id: $id");
   } else {
@@ -111,11 +108,8 @@ function createUser()
   // get all user input
   $nik = htmlspecialchars($_POST['nik']);
   $f_name = htmlspecialchars($_POST['full_name']);
-  // $phone_number = htmlspecialchars($_POST['phone_number']);
   $email = htmlspecialchars($_POST['email']);
 
-  // insert hash password like this
-  // "salt;hash" ex: eb74a563c05dcb66b3f54e26fdfc39dd;197f1c1a6124171a77e28c7e2539c06c6c4c6852e63181030516495e2f049d99
   $salt = generateSalt();
   $hashPassword = generateHashWithSalt("mytestpassword", $salt);
 

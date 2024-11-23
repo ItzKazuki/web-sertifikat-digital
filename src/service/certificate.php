@@ -162,6 +162,12 @@ function createCertificate()
   $id_courses = htmlspecialchars($_POST['id_courses']);
   $id_template = htmlspecialchars($_POST['template']);
 
+  //validate input here!
+
+  if($id_template == "  ") {
+    return redirect("dashboard/certificate/create.php", "Pilih Template terlebih dahulu", "error");
+  }
+
   $cert_id = generateRandomString() . "-" . date("Y");
 
   // $sql = "INSERT INTO courses (event_name, event_description, event_date, organizer, created_at) VALUES ('$name', '$desc', '$course_date', '$organizer', current_timestamp())";
