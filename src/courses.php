@@ -44,16 +44,13 @@ while ($row = $getAllCourses->fetch_array(MYSQLI_ASSOC)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Sertifikat</title>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-white text-dark font-sans">
-
     <header style="background-color: white; border-bottom: 1px solid #ddd; padding: 1rem;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div class="logo" style="display: flex; align-items: center;">
@@ -112,8 +109,8 @@ while ($row = $getAllCourses->fetch_array(MYSQLI_ASSOC)) {
     </main>
 
 
-    <footer style="background-color: #1d3c6e; color: white; text-align: center;">
-        <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
+    <footer class="footer text-center mt-5 py-3" style="background-color: #1d3c6e; color: #fff;">
+        <p>© 2024 SMKN 71. All rights reserved.</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

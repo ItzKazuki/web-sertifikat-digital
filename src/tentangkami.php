@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Kami - E-Sertifikat SMKN 71</title>
     <link href="./assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -104,11 +111,41 @@
         </section>
     </main>
 
-    <footer class="footer text-center mt-5 py-3" style="background-color: #333; color: #fff;">
+    <footer class="footer text-center mt-5 py-3" style="background-color: #1d3c6e; color: #fff;">
         <p>© 2024 SMKN 71. All rights reserved.</p>
     </footer>
 
     <script src="assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <?php
+    if (isset($_SESSION['success'])) {
+        if (strlen($_SESSION['success']) > 3) {
+            echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '" . $_SESSION['success'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        }
+        unset($_SESSION['success']); // Clear the session variable
+    }
+
+    if (isset($_SESSION['error'])) {
+        if (strlen($_SESSION['error']) > 3) {
+            echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '" . $_SESSION['error'] . "',
+                showConfirmButton: true
+            });
+        </script>";
+        }
+        unset($_SESSION['error']); // Clear the session variable
+    }
+    ?>
 </body>
 
 </html>

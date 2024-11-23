@@ -1,29 +1,5 @@
 <?php
 session_start();
-
-include 'service/connection.php';
-include 'service/utility.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['cari'])) {
-        $id = htmlspecialchars($_POST['id']);
-
-        $getCert = $conn->query("SELECT c.*, cf.field_name, cf.field_value, u.*, e.*
-            FROM certificates c
-            JOIN certificate_fields cf ON c.id = cf.certificate_id 
-            JOIN users u ON c.user_id = u.id 
-            JOIN courses e ON c.event_id = e.id 
-            WHERE c.certificate_code = '$id'");
-
-        if ($getCert->num_rows < 1) {
-            return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
-        }
-
-        $ceertificationDetails = $getCert->fetch_array();
-
-        print_r($ceertificationDetails);
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cek E-Sertifikat Kelulusan</title>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css"> -->
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -101,11 +76,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer style="background-color: #1d3c6e; color: white; text-align: center;">
-        <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
+    <footer class="footer text-center mt-5 py-3" style="background-color: #1d3c6e; color: #fff;">
+        <p>© 2024 SMKN 71. All rights reserved.</p>
     </footer>
-
+    
     <?php
     if (isset($_SESSION['success'])) {
         if (strlen($_SESSION['success']) > 3) {

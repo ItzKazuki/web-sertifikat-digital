@@ -4,18 +4,16 @@ session_start();
 include 'service/connection.php';
 include 'service/utility.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && !isset($_GET['id'])) {
     return redirect("src/index.php");
 }
 
 $type = "id";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['cari'])) {
-        $id = htmlspecialchars($_POST['id']);
+if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['id'])) {
+        $id = htmlspecialchars($_GET['id']) ?? htmlspecialchars($_POST['id']);
 
         if (is_numeric($id)) {
-            // skd
             $type = "nik";
 
             $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
@@ -46,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $certDetails = $getCert->fetch_array();
         }
-    }
 } else {
     return redirect("src/index.php");
 }
@@ -162,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php } else { ?>
         <!-- Main Content -->
         <main class="container text-center my-5 p-4">
-            <h1 class="display-5 font-weight-semibold mb-3">Selamat Datang <?= $certificates[0]['full_name'] ?></h1>
+            <h1 class="display-5 font-weight-semibold mb-3">Halo, <?= $certificates[0]['full_name'] ?></h1>
             <h2 class="h5 text-dark mb-4">Lihat Sertifikat yang kamu punya</h2>
 
             <?php if (isset($certificates)) { ?>
@@ -172,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="card bg-light p-4 text-center shadow-sm">
                                 <h3 class="card-title h5"><?= $certificate['event_name'] ?></h3>
                                 <img src="assets/uploads/certificates/<?= $certificate['file_name'] ?>" width="300" alt="">
-                                <div class="card-body bg-secondary text-light small mt-4">Dimiliki</div>
+                                <div class="card-body bg-success text-light small mt-4">Dimiliki</div>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -183,9 +180,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </main>
     <?php } ?>
 
-    <!-- Footer -->
-    <footer style="background-color: #1d3c6e; color: white; text-align: center;">
-        <p>© 2024 Kelompok 1. Semua hak dilindungi.</p>
+    <footer class="footer text-center mt-5 py-3" style="background-color: #1d3c6e; color: #fff;">
+        <p>© 2024 SMKN 71. All rights reserved.</p>
     </footer>
 
     <!-- Bootstrap JS (locally hosted) -->
