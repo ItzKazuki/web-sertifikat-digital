@@ -218,7 +218,7 @@ VALUES (" . $certificate['id'] . ", '$name', '$desc', '" . $certification_image[
       "cert_id" => $cert_id,
       "course_name" => $certDetail['event_name'],
       'event_organizer' => $certDetail['organizer'],
-      "app_url" => $_ENV['APP_URL']
+      "app_url" => $_ENV['APP_URL'] . "/certificate-details.php?id=" . $cert_id
     ];
     
     $mail->sendMail($certificate['email'], $certificate['full_name'], 'New Certificate: ' . $name, $content, MailSender::$createNewCertificate, $files);

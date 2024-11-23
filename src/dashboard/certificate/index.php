@@ -93,8 +93,8 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                     <div class="dropdown">
                         <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="..">Landing Page</a></li>
-                            <li><a class="dropdown-item" href="../akun.php">Homepage</a></li>
+                            <li><a class="dropdown-item" href="../../index.php">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../../akun.php">Homepage</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -114,7 +114,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                     <input type="text" class="form-control" placeholder="Cari Sertif Di Sini">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">
-                        <i class="bi bi-search"></i>
+                            <i class="bi bi-search"></i>
                         </button>
                     </div>
                 </div>
