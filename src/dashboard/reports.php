@@ -227,10 +227,14 @@ function changeBgTable(string $condition)
                 <strong>Tidak ada laporan yang ditemukan.</strong>
             <?php endif; ?>
         </div>
+    </div>
+    <div class="footer">
+        &copy; 2024 Kelompok 1. Semua hak dilindungi. Ver: v<?= $_ENV['APP_VER'] ?>
+    </div>
 
 
-        <!-- Bootstrap JS -->
-        <script src="../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

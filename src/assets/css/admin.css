@@ -133,6 +133,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   color: white;
+  margin-bottom: 40px;
 }
 
 .form-container input,
@@ -164,7 +165,7 @@ select,
 }
 
 .footer {
-  background-color: #003366;
+  background-color: #1d3c6e;
   color: white;
   text-align: center;
   padding: 10px;

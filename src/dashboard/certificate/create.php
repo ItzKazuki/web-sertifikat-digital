@@ -115,7 +115,7 @@ while ($row = $getTemplates->fetch_array()) {
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                <form class="dropdown-item" action="../../service/auth.php" method="post">
                                     <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
                                 </form>
                             </li>
@@ -185,6 +185,10 @@ while ($row = $getTemplates->fetch_array()) {
                 </div>
             </form>
         </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Kelompok 1. Semua hak dilindungi. Ver: v<?= $_ENV['APP_VER'] ?>
     </div>
 
     <!-- Bootstrap JS -->

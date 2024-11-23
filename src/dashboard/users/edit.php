@@ -80,7 +80,7 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
 
     </div>
     <div class="content flex-grow-1">
-    <div class="header">
+        <div class="header">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Edit Pengguna</h2>
                 <div class="d-flex justify-content-end align-items-center p-3">
@@ -94,7 +94,7 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                <form class="dropdown-item" action="../../service/auth.php" method="post">
                                     <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
                                 </form>
                             </li>
@@ -107,7 +107,7 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
             <div class="form-container">
                 <form method="POST" action="../../service/users.php">
                     <input type="hidden" name="id" value="<?= $getUser['id'] ?>">
-                    
+
                     <label for="nik">
                         NIK
                     </label>
@@ -159,6 +159,9 @@ $getUser = $conn->query("SELECT * FROM users WHERE id =" . $_GET['id'])->fetch_a
             </div>
         </div>
     </div>
+
+    <div class="footer">
+        &copy; 2024 Kelompok 1. Semua hak dilindungi. Ver: v<?= $_ENV['APP_VER'] ?>
     </div>
 
     <!-- Bootstrap JS -->

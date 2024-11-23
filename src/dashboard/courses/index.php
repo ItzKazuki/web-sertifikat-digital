@@ -89,7 +89,7 @@ while ($row = $getCourses->fetch_row()) {
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                <form class="dropdown-item" action="../../service/auth.php" method="post">
                                     <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
                                 </form>
                             </li>
@@ -104,9 +104,7 @@ while ($row = $getCourses->fetch_row()) {
                     <input type="text" class="form-control" placeholder="Cari Pelatihan">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">
-                            <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
-                            </svg>
+                            <i class="bi bi-search"></i>
                         </button>
                     </div>
                 </div>
@@ -149,7 +147,7 @@ while ($row = $getCourses->fetch_row()) {
     </div>
 
     <div class="footer">
-        &copy; 2024 Kelompok 1. Semua hak dilindungi.
+        &copy; 2024 Kelompok 1. Semua hak dilindungi. Ver: v<?= $_ENV['APP_VER'] ?>
     </div>
 
     <!-- Modal -->

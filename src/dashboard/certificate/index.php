@@ -99,7 +99,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <form class="dropdown-item" action="../service/auth.php" method="post">
+                                <form class="dropdown-item" action="../../service/auth.php" method="post">
                                     <button type="submit" name="type" value="logout" style="background-color: transparent; border: none; width:100%; text-align:justify; ">Logout</button>
                                 </form>
                             </li>
@@ -114,9 +114,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                     <input type="text" class="form-control" placeholder="Cari Sertif Di Sini">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">
-                            <svg class="search-icon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1-1.415-1.414l-3.85-3.85a1 1 0 0 1 1.414-1.415l3.85 3.85a1 1 0 0 1 1.415 1.414zM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" />
-                            </svg>
+                        <i class="bi bi-search"></i>
                         </button>
                     </div>
                 </div>
@@ -190,7 +188,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="viewCertificateModalLabel">Peringatan</h5>
+                    <h5 class="modal-title" id="viewCertificateModalLabel">Detail Sertifikat</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -206,6 +204,10 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Kelompok 1. Semua hak dilindungi. Ver: v<?= $_ENV['APP_VER'] ?>
     </div>
 
     <script src="../../assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>

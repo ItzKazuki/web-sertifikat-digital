@@ -24,7 +24,6 @@ $getAllCertificates = $conn->query("SELECT c.*, cf.file_name FROM certificates c
 while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
     $certificates[] = $row;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +33,6 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Sertifikat</title>
-    <!-- Bootstrap CSS -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
@@ -141,16 +138,43 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
         <!-- Sertifikat Cards -->
 
         <div class="row g-2 mt-2" style="display: flex;">
-            <?php if (isset($certificates)): ?>
+            <?php if (isset($certificates)) : ?>
                 <?php foreach ($certificates as $certificate) : ?>
                     <div class="col-xl-3">
-                        <img width="200px" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
+                        <img width="200px" onclick="downloadCertificate('<?= $certificate['file_name'] ?>', '<?= $certificate['certificate_code'] ?>')" data-bs-toggle="modal" data-bs-target="#viewCertificateModal" src="../assets/uploads/certificates/<?= $certificate['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="template1" />
                     </div>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <strong>Tidak ada sertifikat yang ditemukan.</strong>
             <?php endif; ?>
         </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewCertificateModal" tabindex="-1" aria-labelledby="viewCertificateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewCertificateModalLabel">Detail Sertifikat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="../assets/uploads/certificates/" width="400px" class="center-image" id="imgCertificate" alt="">
+                </div>
+                <div class="modal-footer">
+                    <form action="../service/certificate.php" method="post">
+                        <input type="hidden" id="setFileName" name="file_name">
+                        <input type="hidden" id="setCodeCertificate" name="code">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="type" value="download" class="btn btn-success">Download</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Kelompok 1. Semua hak dilindungi. Ver: v<?= $_ENV['APP_VER'] ?>
     </div>
 
     <!-- Bootstrap JS -->
@@ -185,6 +209,18 @@ while ($row = $getAllCertificates->fetch_array(MYSQLI_ASSOC)) {
         unset($_SESSION['error']); // Clear the session variable
     }
     ?>
+
+    <script>
+        function deleteCertificate(id) {
+            document.getElementById('deleteCertificateByID').value = id;
+        }
+
+        function downloadCertificate(fileName, code) {
+            document.getElementById('setFileName').value = fileName;
+            document.getElementById('setCodeCertificate').value = code;
+            document.getElementById('imgCertificate').src = "../assets/uploads/certificates/" + fileName;
+        }
+    </script>
 </body>
 
 </html>
