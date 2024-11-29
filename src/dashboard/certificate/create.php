@@ -109,7 +109,7 @@ while ($row = $getTemplates->fetch_array()) {
                     <div class="dropdown">
                         <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="../../index.php">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../../">Landing Page</a></li>
                             <li><a class="dropdown-item" href="../../akun.php">Homepage</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -168,7 +168,7 @@ while ($row = $getTemplates->fetch_array()) {
                     <input type="hidden" name="template" id="select_template">
                     <div class="row g-3" style="display: flex; justify-content: center;">
                         <?php foreach ($templates as $template) : ?>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <img width="200px" src="../../assets/uploads/templates/<?= $template['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="<?= $template['id'] ?>" />
                             </div>
                         <?php endforeach; ?>

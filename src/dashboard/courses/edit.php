@@ -84,7 +84,7 @@ $getCourse = $conn->query("SELECT * FROM courses WHERE id =" . $_GET['id'])->fet
                     <div class="dropdown">
                         <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-person-circle ms-2 dropdown-toggle" style="font-size: 1.5em;"></a> <!-- Tambahkan ikon akun di sini -->
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="../../index.php">Landing Page</a></li>
+                            <li><a class="dropdown-item" href="../../">Landing Page</a></li>
                             <li><a class="dropdown-item" href="../../akun.php">Homepage</a></li>
                             <li>
                                 <hr class="dropdown-divider">

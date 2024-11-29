@@ -3,7 +3,7 @@ session_start();
 
 include 'utility.php';
 
-include 'DotEnv.php';
+// include 'DotEnv.php';
 
 (new DotEnvEnvironment)->load(__DIR__ . '/../../');
 

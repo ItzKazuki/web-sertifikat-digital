@@ -25,16 +25,14 @@ if ($type == "user") {
         courses
     LEFT JOIN 
         certificates ON courses.id = certificates.event_id 
-                        AND certificates.user_id = " . $_SESSION['id'] . " 
-ORDER BY 
-    courses.event_date DESC");
+    AND certificates.user_id = " . $_SESSION['id'] . " 
+    ORDER BY 
+        courses.event_date DESC");
 }
 
 while ($row = $getAllCourses->fetch_array(MYSQLI_ASSOC)) {
     $courses[] = $row;
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +67,6 @@ while ($row = $getAllCourses->fetch_array(MYSQLI_ASSOC)) {
                         <a href="dashboard/" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Dashboard</a>
                     <?php } ?>
                 <?php } ?>
-
                 <?php if (isset($_SESSION['email'])) { ?>
                     <form style="margin-left: 1em!important;" action="service/auth.php" method="post">
                         <button type="submit" name="type" value="logout" class="btn btn-outline-primary">Logout</button>
@@ -96,7 +93,7 @@ while ($row = $getAllCourses->fetch_array(MYSQLI_ASSOC)) {
                                 <?php if (!empty($course['certificate_code'])) : ?>
                                     <span>Dimiliki</span>
                                 <?php else : ?>
-                                    <span><?= new DateTime($course['event_date']) <= new DateTime() ? "Tidak tersedia" : "Tersedia" ?></span>
+                                    <span><?= new DateTime($course['event_date']) <= new DateTime() ? "Sudah Berakhir" : (new DateTime($course['event_date']) >= new DateTime() ? "Akan Datang" : "Sedang Berlangsung") ?></span>
                                 <?php endif; ?>
                             </div>
                         </div>
