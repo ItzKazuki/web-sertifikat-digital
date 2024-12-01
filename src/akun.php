@@ -62,7 +62,7 @@ if (isset($_POST['download'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Sertifikat</title>
+    <title>Akun | Digicert SMKN 71</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

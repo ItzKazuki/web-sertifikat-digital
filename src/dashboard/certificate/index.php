@@ -31,7 +31,7 @@ while ($row = $getAllCertificateWithField->fetch_array()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Sertifikat</title>
+    <title>Management Sertifikat | Digicert SMKN 71</title>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/admin.css">

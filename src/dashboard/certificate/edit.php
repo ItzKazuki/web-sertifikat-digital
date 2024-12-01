@@ -70,7 +70,7 @@ while ($row = $getTemplates->fetch_array()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Sertifikat</title>
+    <title>Edit Sertifikat | Digicert SMKN 71</title>
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">

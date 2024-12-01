@@ -18,12 +18,8 @@ if (!isset($_GET['reset'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Password</title>
-    <!-- Bootstrap CSS -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <title>Change Password | Digicert SMKN 71</title>
     <link href="../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         .login-box {

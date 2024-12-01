@@ -25,7 +25,7 @@ while ($row = $getUser->fetch_row()) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Manajemen Pengguna</title>
+    <title>Manajemen Pengguna | Digicert SMKN 71</title>
     <link href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">

@@ -9,7 +9,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Sertifikat SMKN 71</title>
+    <title>Home | Digicert SMKN 71</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
