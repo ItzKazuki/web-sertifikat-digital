@@ -26,7 +26,7 @@ session_start();
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div class="logo" style="display: flex; align-items: center;">
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
-                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
+                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">Digicert</h1>
             </div>
             <nav style="    display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
@@ -55,7 +55,7 @@ session_start();
     <main>
         <section class="hero-section">
             <div class="container text-center">
-                <h1>SELAMAT DATANG DI <br> E-SERTIFIKAT SMKN 71</h1>
+                <h1>SELAMAT DATANG DI <br> Digicert SMKN 71</h1>
                 <hr>
             </div>
         </section>
@@ -64,8 +64,8 @@ session_start();
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <h3>Apa Itu E-Sertifikat</h3>
-                        <p>E-sertifikat adalah sertifikat yang dikeluarkan dalam bentuk digital dan disimpan dalam format elektronik. Berbeda dengan sertifikat tradisional yang berbentuk fisik, e-sertifikat dapat diakses melalui perangkat elektronik seperti komputer, tablet, atau smartphone.</p>
+                        <h3>Apa Itu Digicert</h3>
+                        <p>Digicert adalah sertifikat yang dikeluarkan dalam bentuk digital dan disimpan dalam format elektronik. Berbeda dengan sertifikat tradisional yang berbentuk fisik, e-sertifikat dapat diakses melalui perangkat elektronik seperti komputer, tablet, atau smartphone.</p>
                     </div>
                 </div>
             </div>

@@ -75,7 +75,7 @@ if (isset($_POST['download'])) {
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div class="logo" style="display: flex; align-items: center;">
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
-                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
+                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">Digicert</h1>
             </div>
             <nav style="display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>

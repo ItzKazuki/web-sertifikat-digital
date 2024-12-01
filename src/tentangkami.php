@@ -21,7 +21,7 @@ session_start();
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div class="logo" style="display: flex; align-items: center;">
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
-                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
+                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">Digicert</h1>
             </div>
             <nav style="display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
@@ -51,7 +51,7 @@ session_start();
         <section class="about-header text-center py-5" style="background-color: #f8f9fa;">
             <div class="container">
                 <h1 class="display-4">Tentang Kami</h1>
-                <p class="lead">Selamat datang di layanan E-Sertifikat SMKN 71 - solusi digitalisasi sertifikat untuk pendidikan.</p>
+                <p class="lead">Selamat datang di layanan Digicert SMKN 71 - solusi digitalisasi sertifikat untuk pendidikan.</p>
             </div>
         </section>
 
@@ -100,7 +100,7 @@ session_start();
                 <div class="row">
                     <div class="col-lg-6">
                         <h2>Sejarah Kami</h2>
-                        <p>SMKN 71 telah berdiri sejak tahun 1995 dan terus berkembang menjadi institusi pendidikan terkemuka. Dengan adanya E-Sertifikat, kami membawa inovasi terbaru untuk mendukung program digitalisasi sekolah.</p>
+                        <p>SMKN 71 telah berdiri sejak tahun 1995 dan terus berkembang menjadi institusi pendidikan terkemuka. Dengan adanya Digicert, kami membawa inovasi terbaru untuk mendukung program digitalisasi sekolah.</p>
                     </div>
                     <div class="col-lg-6">
                         <h2>Tim Kami</h2>

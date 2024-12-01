@@ -11,39 +11,39 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && !isset($_GET['id'])) {
 $type = "id";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['id'])) {
-        $id = htmlspecialchars($_GET['id']) ?? htmlspecialchars($_POST['id']);
+    $id = htmlspecialchars($_GET['id']) ?? htmlspecialchars($_POST['id']);
 
-        if (is_numeric($id)) {
-            $type = "nik";
+    if (is_numeric($id)) {
+        $type = "nik";
 
-            $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
+        $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
             FROM certificates c
             JOIN certificate_fields cf ON c.id = cf.certificate_id 
             JOIN users u ON c.user_id = u.id 
             JOIN courses e ON c.event_id = e.id 
             WHERE u.nik = '$id'");
 
-            if ($getCert->num_rows < 1) {
-                return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
-            }
+        if ($getCert->num_rows < 1) {
+            return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
+        }
 
-            while ($row = $getCert->fetch_array()) {
-                $certificates[] = $row;
-            }
-        } else {
-            $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
+        while ($row = $getCert->fetch_array()) {
+            $certificates[] = $row;
+        }
+    } else {
+        $getCert = $conn->query("SELECT c.*, cf.*, u.*, e.*
             FROM certificates c
             JOIN certificate_fields cf ON c.id = cf.certificate_id 
             JOIN users u ON c.user_id = u.id 
             JOIN courses e ON c.event_id = e.id 
             WHERE c.certificate_code = '$id'");
 
-            if ($getCert->num_rows < 1) {
-                return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
-            }
-
-            $certDetails = $getCert->fetch_array();
+        if ($getCert->num_rows < 1) {
+            return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
         }
+
+        $certDetails = $getCert->fetch_array();
+    }
 } else {
     return redirect("src/index.php");
 }
@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['id'])) {
         <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <div class="logo" style="display: flex; align-items: center;">
                 <img src="assets/logo.png" alt="Logo" style="width: 60px; height: 60px;">
-                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">E-Sertifikat</h1>
+                <h1 style="font-size: 24px; font-weight: bold; margin-left: 10px;">Digicert</h1>
             </div>
             <nav style="    display: flex; align-items: center;">
                 <a href="index.php" style="margin: 0 15px; text-decoration: none; color: black; font-weight: 500;">Home</a>
