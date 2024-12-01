@@ -78,7 +78,7 @@ while ($row = $getUser->fetch_row()) {
     <div class="content flex-grow-1">
         <div class="header">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Daftar Pelatihan</h2>
+                <h2>Management Pengguna</h2>
                 <div class="d-flex justify-content-end align-items-center p-3">
                     <span><?= $_SESSION['full_name'] ?></span>
                     <div class="dropdown">
@@ -98,6 +98,21 @@ while ($row = $getUser->fetch_row()) {
                     </div>
                 </div>
             </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div class="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Cari Pengguna Di Sini">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <a href="create.php">
+                <button class="btn btn-primary">Tambah Pengguna Baru</button>
+            </a>
         </div>
         <div class="table-container">
             <?php if (isset($users)) { ?>

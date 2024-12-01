@@ -195,13 +195,12 @@ while ($row = $getTemplates->fetch_array()) {
                     <input type="hidden" name="template" id="select_template">
                     <div class="row g-3" style="display: flex; justify-content: center;">
                         <?php foreach ($templates as $template) : ?>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <img width="200px" src="../../assets/uploads/templates/<?= $template['file_name'] ?>" class="cert-box p-2 text-center shadow-sm box" data-value="<?= $template['id'] ?>" />
                             </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
-
 
                 <div class="d-flex justify-content-end">
                     <a href="index.php" class="btn btn-danger" type="button">

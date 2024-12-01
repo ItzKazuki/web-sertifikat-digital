@@ -17,7 +17,7 @@ body {
 
 /* Sidebar styling */
 .sidebar {
-  background-color: #1d3c6e;
+  background-color: #3790e8;
   color: white;
   height: 100vh;
   width: 18%;
@@ -36,7 +36,7 @@ body {
 
 .nav-link:hover,
 .dropdown-item:hover {
-  background-color: #2a4b8e;
+  background-color: #27619b;
   color: #ffffff !important;
   width: full;
 }
@@ -50,12 +50,6 @@ body {
   margin-left: 18%;
   padding: 20px;
   width: calc(100% - 18%);
-}
-
-.stat-box {
-  background-color: #1d3c6e;
-  color: white;
-  border-radius: 8px;
 }
 
 .cert-box {
@@ -86,7 +80,7 @@ body {
 .stat-box {
   width: 300px;
   height: 150px;
-  background-color: #0a3067;
+  background-color: #165ba1;
   /* Navy blue color */
   color: white;
   display: flex;
@@ -129,7 +123,7 @@ body {
 }
 
 .form-container {
-  background-color: #003366;
+  background-color: #147ae0;
   padding: 20px;
   border-radius: 10px;
   color: white;
@@ -161,11 +155,11 @@ select,
 }
 
 .selected {
-  border: 3px solid red;
+  border: 3px solid rgb(0, 26, 255);
 }
 
 .footer {
-  background-color: #1d3c6e;
+  background-color: #3790e8;
   color: white;
   text-align: center;
   padding: 10px;
