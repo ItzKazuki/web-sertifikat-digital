@@ -10,6 +10,11 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Digicert SMKN 71</title>
+    <meta name="keywords" content="digicert, e-sertifikat smkn 71, SMKN 71, digicert 71, e-sertifikat digicert">
+    <meta name="description" content="Digital sertifikat untuk memudahkan mu di masadepan!">
+    <meta name="author" content="ItzKazuki">
+    <meta property="og:title" content="Digicert SMKN 71">
+    <meta property="og:description" content="Digital sertifikat untuk memudahkan mu di masadepan!">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="assets/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
