@@ -10,9 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && !isset($_GET['id'])) {
 
 $type = "id";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['id'])) {
-    $id = htmlspecialchars($_GET['id']) ?? htmlspecialchars($_POST['id']);
+$id = null; // Inisialisasi variabel $id
 
+// Periksa apakah ada 'id' dalam $_GET atau $_POST
+if (isset($_GET['id']) && $_GET['id'] !== "") {
+    $id = htmlspecialchars($_GET['id']);
+} elseif (isset($_POST['id']) && $_POST['id'] !== "") {
+    $id = htmlspecialchars($_POST['id']);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['id'])) {
     if (is_numeric($id)) {
         $type = "nik";
 
@@ -24,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['id'])) {
             WHERE u.nik = '$id'");
 
         if ($getCert->num_rows < 1) {
-            return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
+            return redirect("cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
         }
 
         while ($row = $getCert->fetch_array()) {
@@ -39,13 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" || isset($_GET['id'])) {
             WHERE c.certificate_code = '$id'");
 
         if ($getCert->num_rows < 1) {
-            return redirect("src/cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
+            return redirect("cek-sertifikat.php", "Sertifikat tidak tersedia", "error");
         }
 
         $certDetails = $getCert->fetch_array();
     }
 } else {
-    return redirect("src/index.php");
+    return redirect("index.php");
 }
 
 ?>
