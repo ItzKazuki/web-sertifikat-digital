@@ -100,7 +100,7 @@ session_start();
                 <div class="row">
                     <div class="col-lg-6">
                         <h2>Sejarah Kami</h2>
-                        <p>SMKN 71 telah berdiri sejak tahun 1995 dan terus berkembang menjadi institusi pendidikan terkemuka. Dengan adanya Digicert, kami membawa inovasi terbaru untuk mendukung program digitalisasi sekolah.</p>
+                        <p>SMKN 71 telah berdiri sejak tahun 2019 dan terus berkembang menjadi institusi pendidikan terkemuka. Dengan adanya Digicert, kami membawa inovasi terbaru untuk mendukung program digitalisasi sekolah.</p>
                     </div>
                     <div class="col-lg-6">
                         <h2>Tim Kami</h2>
