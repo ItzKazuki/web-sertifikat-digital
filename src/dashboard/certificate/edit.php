@@ -4,6 +4,10 @@ session_start();
 include '../../service/utility.php';
 include '../../service/connection.php';
 
+if (!extension_loaded('gd')) {
+    return redirect("certificate", "esktensi GD tidak aktif, aktifkan dahulu di file php.ini atau tanya team IT support", "error");
+}
+
 if (!isset($_SESSION['email']) && !isset($_SESSION['is_auth'])) {
     return redirect("index.php");
 }

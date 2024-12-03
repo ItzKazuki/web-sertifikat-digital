@@ -24,4 +24,6 @@ Alur project ini dapat dilihat dari gambar berikut.
 membuat desain agar aplikasi yang dibuat sesuai rencana, juga memikirkan filtur yang tersedia dari website yang akan dibuat.
 
 ## HOW TO USE
--
+- Download project ini dan ekstrak ke htdocs/www di komputer anda, pastikan lokasinya benar.
+- nyalakan ekstension `gd` agar tidak terjadi error saat membuat sertifikat
+- pastikan php kamu ada di v8.x 7.x tidak di dukung
